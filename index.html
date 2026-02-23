@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover AJL-Handicraft, a small-batch studio dedicated to honest, slow-crafted wood and leather goods. Shop our ethical, made-to-order collections designed to last generations.">
+    <title>AJL-Handicraft | Honest Work</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> -->
+    
+    <style>
+        :root {
+            --color-bg: #F9F8F6;
+            --color-text: #2F2F2F;
+            --color-accent: #4A5D4E;
+            --color-border: #E0DDD5;
+            --margin-elegant: clamp(1.5rem, 7vw, 10rem); 
+            --max-content-width: 1400px;
+            --announcement-height: 40px;
+            --header-height: 70px;
+            --drawer-top-offset: calc(var(--announcement-height) + var(--header-height));
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- SMART STICKY NAVIGATION --- */
+        #main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 4000;
+            background: var(--color-bg);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .header-hidden:not(.has-active-drawer) {
+            transform: translateY(calc(var(--announcement-height) * -1));
+        }
+
+        .announcement-bar {
+            background: var(--color-accent);
+            color: white;
+            height: var(--announcement-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-nav {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--margin-elegant);
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+            background: var(--color-bg);
+            transparent: 0.5;
+        }
+
+        .nav-border-wrapper {
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-bg);
+        }
+
+        .logo { 
+            font-family: 'EB Garamond', serif; 
+            font-size: 1.1rem;
+            font-weight: bolder;
+            letter-spacing: 1px; 
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--color-text);
+        }
+
+        .nav-controls { display: flex; align-items: center; gap: 2.5rem;}
+        .nav-links { display: flex; align-items: center; gap: 2.5rem;}
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--color-text); 
+            font-size: 0.85rem; 
+            letter-spacing: 2px;
+        }
+
+        .action-icons { display: flex; align-items: center; gap: 15px; }
+        .icon-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; color: var(--color-text); position: relative; }
+        
+        .cart-count {
+            position: absolute; top: -2px; right: -2px;
+            background: var(--color-accent); color: white;
+            font-size: 9px; min-width: 14px; height: 14px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; font-weight: bold;
+        }
+
+        .menu-toggle { 
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            gap: 5px; cursor: pointer; width: 24px; height: 24px; position: relative;
+        }
+        .menu-toggle span { 
+            width: 22px; height: 1.5px; background: var(--color-text); 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: center;
+        }
+        .active-burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .active-burger span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+        .active-burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        /* --- DRAWERS BASE STYLING --- */
+        .drawer {
+            position: fixed;
+            top: var(--drawer-top-offset);
+            height: calc(100vh - var(--drawer-top-offset));
+            background: var(--color-bg);
+            z-index: 3000;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* --- USER DRAWER UI --- */
+        .user-drawer {
+            left: -100%;
+            width: 100%; 
+            max-width: 480px; 
+            border-right: 1px solid var(--color-border);
+            padding: 40px;
+        }
+        .user-drawer.active { left: 0; }
+
+        .drawer-header {
+            margin-bottom: 40px;
+        }
+        
+        .drawer-header span {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        .drawer h2 { 
+            font-family: 'EB Garamond', serif; 
+            font-size: 2.4rem; 
+            font-weight: 400; 
+            line-height: 1.1;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .tab-btn {
+            background: none; border: none; font-family: 'Inter', sans-serif;
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+            padding-bottom: 12px; cursor: pointer; color: var(--color-text);
+            opacity: 0.4; transition: 0.3s; position: relative;
+        }
+
+        .tab-btn.active { opacity: 1; }
+        .tab-btn.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0;
+            width: 100%; height: 1px; background: var(--color-text);
+        }
+
+        .auth-pane { display: none; animation: fadeIn 0.4s ease forwards; }
+        .auth-pane.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-form { display: flex; flex-direction: column; gap: 24px; width: 100%; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { 
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; 
+            font-weight: 500; color: var(--color-text);
+        }
+
+        .form-group input {
+            width: 100%; background: transparent; border: 1px solid var(--color-border);
+            padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 0.95rem; 
+            color: var(--color-text); outline: none; transition: all 0.3s;
+        }
+
+        .form-group input:focus { border-color: var(--color-text); background: #fff; }
+
+        .form-footer { margin-top: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .form-link { font-size: 0.75rem; color: var(--color-text); text-decoration: none; opacity: 0.6; transition: 0.3s; }
+        .form-link:hover { opacity: 1; text-decoration: underline; }
+
+        .action-btn {
+            background: var(--color-accent); color: white; border: 1px solid var(--color-accent); 
+            padding: 18px; font-family: 'Inter', sans-serif; text-transform: uppercase; 
+            letter-spacing: 2px; font-size: 0.75rem; font-weight: 500; cursor: pointer; 
+            transition: all 0.3s; text-decoration: none; text-align: center;
+        }
+
+        .social-login { margin-top: 40px; text-align: center; }
+        .divider {
+            display: flex; align-items: center; gap: 15px; margin-bottom: 25px;
+            color: var(--color-border); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--color-border); }
+        .social-btns { display: flex; gap: 12px; }
+        .social-btn {
+            flex: 1; padding: 12px; border: 1px solid var(--color-border);
+            background: transparent; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* --- CART DRAWER --- */
+        .cart-drawer {
+            right: -100%; width: 100%; max-width: 450px; border-left: 1px solid var(--color-border);
+        }
+        .cart-drawer.active { right: 0; }
+        .cart-empty { display: flex; flex-direction: column; gap: 20px; }
+
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); opacity: 0; visibility: hidden;
+            transition: 0.3s; z-index: 2500; backdrop-filter: blur(2px);
+        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+
+        @media (max-width: 768px) {
+            .drawer { max-width: 100%; border: none; }
+            .menu-toggle { display: flex; z-index: 4001; }
+            .nav-links {
+                position: fixed; top: var(--drawer-top-offset); right: -100%; width: 100%;
+                height: calc(100vh - var(--drawer-top-offset)); background: var(--color-bg);
+                flex-direction: column; justify-content: flex-start; padding: 60px var(--margin-elegant);
+                gap: 30px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2900; border-top: 1px solid var(--color-border);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-family: 'EB Garamond', serif; font-size: 2rem; border-bottom: 1px solid var(--color-border); padding-bottom: 15px; }
+        }
+
+        main { padding-top: var(--announcement-height); margin: 0 auto; padding-bottom: 100px; }
+        .container { padding: 0 var(--margin-elegant); }
+        .hero { padding: 40px 0 80px 0; max-width: 850px; }
+
+        /* --- REFINED PREMIUM FOOTER --- */
+        footer {
+            background-color: #F3F1ED;
+            border-top: 1px solid var(--color-border);
+            padding: 80px 0 40px 0;
+            margin-top: 100px;
+            color: var(--color-text);
+        }
+
+        .footer-container {
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+            padding: 0 var(--margin-elegant);
+        }
+
+        /* Trust Banner: Refined Typography & Spacing */
+        .footer-trust-banner {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            padding-bottom: 80px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Left-aligned for better readability */
+            gap: 16px;
+        }
+
+        .trust-item svg { 
+            width: 24px; 
+            height: 24px; 
+            color: var(--color-accent); 
+            stroke-width: 1.25px;
+        }
+
+        .trust-item h5 { 
+            font-family: 'EB Garamond', serif; 
+            font-size: 1.4rem; 
+            font-weight: 400; 
+            letter-spacing: 0.5px;
+        }
+
+        .trust-item p { 
+            font-size: 0.9rem; 
+            line-height: 1.6; 
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        /* Main Grid: Editorial Layout */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 0.8fr 0.8fr 1.7fr;
+            gap: 50px;
+            padding: 80px 0;
+        }
+
+        .footer-col h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            font-weight: 600;
+            color: var(--color-accent);
+        }
+
+        .footer-col p.workshop-desc {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            opacity: 0.8;
+            margin-bottom: 24px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col a {
+            text-decoration: none;
+            color: var(--color-text);
+            font-size: 0.9rem;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-col a:hover { 
+            opacity: 1; 
+            transform: translateX(4px);
+            color: var(--color-accent); 
+        }
+
+        /* Newsletter: High Conversion Focus */
+        .newsletter-box {
+            background: white; /* Contrast against the beige footer */
+            padding: 40px;
+            border: 1px solid var(--color-border);
+            position: relative;
+        }
+
+        .newsletter-box h4 { margin-bottom: 12px; }
+        .newsletter-box p { 
+            font-size: 0.85rem; 
+            margin-bottom: 24px; 
+            line-height: 1.5; 
+            opacity: 0.7; 
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .newsletter-form input {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .newsletter-form input:focus { border-color: var(--color-accent); }
+
+        .newsletter-form button {
+            background: var(--color-accent);
+            color: white;
+            border: none;
+            padding: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .newsletter-form button:hover { opacity: 0.9; }
+
+        /* Bottom Bar */
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .footer-bottom p { font-size: 0.75rem; opacity: 0.5; letter-spacing: 0.5px; }
+
+        .social-links { display: flex; gap: 24px; }
+        .social-links a { color: var(--color-text); opacity: 0.5; transition: 0.3s; }
+        .social-links a:hover { opacity: 1; color: var(--color-accent); }
+        .social-links svg { width: 18px; height: 18px; }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1100px) {
+            .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+            .footer-col:last-child { grid-column: span 3; margin-top: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            footer { padding: 60px 0 30px 0; }
+            
+            .footer-trust-banner { 
+                grid-template-columns: 1fr; 
+                gap: 40px; 
+                padding-bottom: 60px;
+            }
+
+            .footer-grid { 
+                grid-template-columns: 1fr 1fr; /* Force 2 columns */
+                column-gap: 20px;
+                row-gap: 50px;
+                padding: 60px 0;
+            }
+
+            /* Make "The Workshop" and "Newsletter" span both columns to stay full-width */
+            .footer-col:first-child, 
+            .footer-col:last-child { 
+                grid-column: span 2; 
+            }
+
+            /* Adjust heading size slightly for mobile 2-col fit */
+            .footer-col h4 {
+                font-size: 0.65rem;
+                margin-bottom: 20px;
+            }
+
+            .footer-bottom { 
+                flex-direction: column-reverse; 
+                gap: 30px; 
+                text-align: center; 
+            }
+            
+            .trust-item { align-items: center; text-align: center; }
+            .newsletter-box { padding: 30px 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .drawer { max-width: 100%; border: none; padding: 50px 28px; }
+            .menu-toggle { display: flex; z-index: 4001; }
+
+            /* Fix for Mobile Navigation Links */
+            .nav-links {
+                position: fixed;
+                top: var(--drawer-top-offset);
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - var(--drawer-top-offset));
+                background: var(--color-bg);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 28px; /* Aligned with drawer padding */
+                gap: 0; /* Remove gap to use border-spacing instead */
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 3000; /* Same as drawers */
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-family: 'EB Garamond', serif;
+                font-size: 1.8rem;
+                color: var(--color-text);
+                text-decoration: none;
+                text-transform: none; /* Removed uppercase for elegant serif look */
+                letter-spacing: 0;
+                padding: 20px 0;
+                width: 100%;
+                border-bottom: 1px solid var(--color-border);
+                display: block;
+                transition: padding-left 0.3s ease;
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+            
+            .nav-links a:hover {
+                padding-left: 10px;
+                color: var(--color-accent);
+            }
+        }
+
+
+        /* Native Animation Styles (Replacement for AOS) */
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.0s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, transform;
+        }
+
+        [data-reveal].revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delay helpers (para sa data-aos-delay="100" etc.) */
+        [data-reveal-delay="100"] { transition-delay: 100ms; }
+        [data-reveal-delay="200"] { transition-delay: 200ms; }
+
+
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <style>
+        /* =========================
+           MOBILE-FIRST HERO
+        ========================= */
+
+        .ajl-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 0 80px 0;
+            background-image: url('bg-hero.webp'); /* Replace with real product */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Stronger overlay for readability */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,0.75) 0%,
+                rgba(0,0,0,0.65) 50%,
+                rgba(0,0,0,0.55) 100%
+            );
+            z-index: 1;
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding: 0 24px; /* mobile padding */
+        }
+
+        .hero-content-box {
+            max-width: 600px;
+            color: #ffffff;
+        }
+
+        /* Headline */
+        .hero-title {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.4rem;
+            line-height: 1.1;
+            font-weight: 400;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .hero-title span {
+            display: block;
+        }
+
+        /* Subheadline */
+        .hero-lead {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            opacity: 0.95;
+        }
+
+        /* CTA buttons */
+        .hero-cta-wrapper {
+            display: flex;
+            flex-direction: column; /* stacked on mobile */
+            gap: 14px;
+            margin-bottom: 35px;
+        }
+
+        .hero-btn-primary,
+        .hero-btn-secondary {
+            width: 100%;
+            text-align: center;
+            padding: 18px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Primary */
+        .hero-btn-primary {
+            background-color: var(--color-accent);
+            color: white;
+            border: 1px solid var(--color-accent);
+        }
+
+        .hero-btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Secondary */
+        .hero-btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .hero-btn-secondary:hover {
+            transform: translateY(-2px);
+            background: white;
+            color: var(--color-text);
+        }
+
+        /* Trust indicators */
+        .hero-trust-indicators {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .indicator-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* =========================
+           DESKTOP BREAKPOINT
+        ========================= */
+
+        @media (min-width: 768px) {
+
+            .hero-container {
+                padding: 0 var(--margin-elegant);
+                max-width: var(--max-content-width);
+                margin: 0 auto;
+            }
+
+            .hero-title {
+                font-size: clamp(3rem, 5vw, 4.5rem);
+                margin-top: 60px;
+            }
+
+            .hero-lead {
+                font-size: 1.15rem;
+            }
+
+            .hero-cta-wrapper {
+                flex-direction: row;
+            }
+
+            .hero-btn-primary,
+            .hero-btn-secondary {
+                width: auto;
+                padding: 18px 38px;
+            }
+
+            .hero-trust-indicators {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 25px;
+            }
+
+            /* Slight gradient adjustment for desktop */
+            .hero-overlay {
+                background: linear-gradient(
+                    90deg,
+                    rgba(0,0,0,0.75) 0%,
+                    rgba(0,0,0,0.55) 45%,
+                    rgba(0,0,0,0.2) 100%
+                );
+            }
+        }
+    </style>
+
+    <style>
+        /* --- TRUST BAR STYLING (THE LOGIC) --- */
+        .trust-bar {
+            padding: 120px 0 120px 0;
+            background-color: var(--color-bg);
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .trust-bar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+            gap: 40px;
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+        }
+
+        .trust-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 0 10px;
+        }
+
+        .trust-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: #ffffff; /* Contrast against beige background */
+            border-radius: 50%;
+            border: 1px solid var(--color-border);
+            color: var(--color-accent);
+            flex-shrink: 0;
+        }
+
+        .trust-text h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--color-text);
+        }
+
+        .trust-text p {
+            font-size: 0.85rem;
+            font-family: 'EB Garamond', serif; /* Consistent brand typography */
+            font-style: italic;
+            opacity: 0.7;
+            color: var(--color-text);
+        }
+
+        /* --- MOBILE RESPONSIVE (CONVERSION FOCUS) --- */
+        @media (max-width: 1024px) {
+            .trust-bar-grid {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .trust-bar {
+                padding: 40px 0;
+            }
+            
+            .trust-bar-grid {
+                grid-template-columns: 1fr; /* Stack vertically for mobile readability */
+                gap: 32px;
+            }
+
+            .trust-bar-item {
+                justify-content: flex-start;
+                padding: 0 5%; /* Side breathing room for mobile */
+            }
+            
+            .trust-icon {
+                width: 44px;
+                height: 44px;
+            }
+            
+            .trust-text h3 {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+
+    <style>
+        /* --- THE PROCESS SECTION (AJL UI ALIGNED) --- */
+        .process-section {
+            padding: 120px 0px 120px 0px;
+            background-color: var(--color-bg);
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr; /* Video is slightly wider for focus */
+            gap: 80px;
+            align-items: center;
+        }
+
+        /* Content Styling */
+        .process-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .process-title {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            line-height: 1.1;
+            font-weight: 400;
+            margin-bottom: 30px;
+            color: var(--color-text);
+        }
+
+        .process-title em {
+            font-style: italic;
+            color: var(--color-accent);
+        }
+
+        .process-description {
+            margin-bottom: 40px;
+        }
+
+        .process-description p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            opacity: 0.85;
+            font-weight: 300;
+        }
+
+        /* Video Styling */
+        .video-wrapper {
+            position: relative;
+        }
+
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16 / 11; /* Editorial Portrait Look */
+            background-color: var(--color-border);
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: 20px 20px 0px rgba(74, 93, 78, 0.05); /* Accent Offset Shadow */
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-caption {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        /* CTA Button */
+        .btn-process {
+            display: inline-block;
+            padding: 18px 35px;
+            background-color: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-accent);
+        }
+
+        .btn-process:hover {
+            background-color: transparent;
+            color: var(--color-accent);
+            transform: translateY(-3px);
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .process-grid {
+                gap: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .process-section {
+                padding: 80px 24px; /* Standard mobile padding */
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr; /* Stacked layout */
+                gap: 40px;
+            }
+
+            .process-content {
+                order: 2; /* Text goes below video for better mobile flow */
+                text-align: center;
+            }
+
+            .video-wrapper {
+                order: 1;
+            }
+
+            .video-container {
+                aspect-ratio: 16 / 9; /* Widescreen on mobile to save vertical space */
+                box-shadow: 10px 10px 0px rgba(74, 93, 78, 0.05);
+            }
+
+            .video-caption {
+                justify-content: center;
+            }
+
+            .btn-process {
+                width: 100%; /* Full width for easier clicking on mobile */
+                text-align: center;
+            }
+        }
+    </style>
+
+    <style>
+        /* --- CURATED COLLECTIONS STYLING --- */
+        .collections-section {
+            padding: 120px 0 120px 0;
+            background-color: var(--color-bg);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--color-accent);
+        }
+
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .collection-card {
+            position: relative;
+            display: block;
+            height: 600px; /* Tall editorial look */
+            text-decoration: none;
+            overflow: hidden;
+            color: white;
+        }
+
+        .card-image-box {
+            width: 100%;
+            height: 100%;
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .card-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Optional: bahagyang paitimin ang image para mabasa ang text */
+            filter: brightness(0.9);
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5));
+            display: flex;
+            align-items: flex-end;
+            padding: 40px;
+            transition: background 0.4s ease;
+        }
+
+        .card-content h3 {
+            font-family: 'EB Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 12px;
+            transform: translateY(10px);
+            transition: transform 0.4s ease;
+        }
+
+        .shop-link {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            padding-bottom: 4px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            display: inline-block;
+        }
+
+        /* Hover States */
+        .collection-card:hover .card-image-box {
+            transform: scale(1.08);
+        }
+
+        .collection-card:hover .card-overlay {
+            background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.6));
+        }
+
+        .collection-card:hover .card-content h3 {
+            transform: translateY(0);
+        }
+
+        .collection-card:hover .shop-link {
+            opacity: 1;
+            transform: translateY(0);
+            border-bottom-color: white;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .collection-card {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .collections-section {
+                padding: 60px 0;
+            }
+            
+            .collections-grid {
+                grid-template-columns: 1fr; /* Stacked cards on mobile */
+                gap: 16px;
+            }
+
+            .collection-card {
+                height: 400px; /* Shorter cards on mobile */
+            }
+
+            .card-content h3 {
+                font-size: 1.8rem;
+            }
+
+            /* Make link always visible on mobile for better conversion */
+            .shop-link {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <style>
+        /* --- COMPARISON SECTION STYLING --- */
+        .comparison-section {
+            padding: 120px 0 120px 0px;
+            background-color: #F3F1ED; /* Slightly darker to separate from other sections */
+        }
+
+        .comparison-intro {
+            max-width: 600px;
+            margin: 20px auto 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .comparison-table-wrapper {
+            margin-top: 60px;
+            overflow-x: auto; /* For mobile swiping */
+            border: 1px solid var(--color-border);
+            background: white;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 600px; /* Ensures table doesn't get too squished */
+        }
+
+        .comparison-table th, 
+        .comparison-table td {
+            padding: 25px 30px;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th {
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-accent);
+        }
+
+        .feature-name {
+            font-weight: 600;
+            background-color: var(--color-bg);
+            width: 25%;
+        }
+
+        .comparison-table td:not(.feature-name) {
+            width: 37.5%;
+        }
+
+        /* Highlight Column for AJL-Handicraft */
+        .comparison-table .highlight {
+            background-color: rgba(74, 93, 78, 0.03);
+            color: var(--color-text);
+            font-weight: 500;
+            border-left: 1px solid var(--color-border);
+            border-right: 1px solid var(--color-border);
+        }
+
+        .comparison-table th.highlight {
+            background-color: var(--color-accent);
+            color: white;
+            border-color: var(--color-accent);
+        }
+
+        /* Footer of Section */
+        .comparison-footer {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .comparison-footer p {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        .process-link {
+            margin-top: 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--color-accent);
+            border-bottom: 1px solid transparent;
+            width: fit-content;
+            transition: 0.3s;
+        }
+
+        .process-link:hover{
+            border-bottom-color: var(--color-accent);
+        }
+
+        /* --- MOBILE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            .comparison-section {
+                padding: 60px 0;
+            }
+
+            .comparison-table th, 
+            .comparison-table td {
+                padding: 15px 20px;
+                font-size: 0.8rem;
+            }
+
+            .feature-name {
+                width: 30%;
+            }
+        }
+    </style>
+
+    <style>
+        /* --- CUSTOMER STORIES SECTION --- */
+        .testimonials-section {
+            padding: 120px 0 120px 0;
+            background-color: var(--color-bg);
+        }
+
+        .testimonial-intro {
+            max-width: 500px;
+            margin: 15px auto 0;
+            font-size: 0.95rem;
+            opacity: 0.7;
+            font-weight: 300;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border: 1px solid var(--color-border);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-image {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .testimonial-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .testimonial-card:hover .testimonial-image img {
+            transform: scale(1.05);
+        }
+
+        .testimonial-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .testimonial-content blockquote {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            font-style: italic;
+            color: var(--color-text);
+        }
+
+        .customer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .customer-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .customer-location {
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+
+        .shop-their-pick {
+            margin-top: 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--color-accent);
+            border-bottom: 1px solid transparent;
+            width: fit-content;
+            transition: 0.3s;
+        }
+
+        .shop-their-pick:hover {
+            border-bottom-color: var(--color-accent);
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .testimonials-section {
+                padding: 60px 0;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .testimonial-content {
+                padding: 25px;
+            }
+
+            .testimonial-image {
+                aspect-ratio: 4 / 3; /* Slightly shorter on mobile */
+            }
+        }
+    </style>
+
+    <style>
+        /* --- SECONDARY CTA STYLING --- */
+        .secondary-cta {
+            padding: 120px 0 120px 0;
+            background-color: #F3F1ED; /* Subtle contrast from the main background */
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .cta-title {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(2.2rem, 5vw, 3.2rem); /* Responsive typography */
+            font-weight: 400;
+            line-height: 1.1;
+            color: var(--color-text);
+        }
+
+        .cta-description {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            opacity: 0.8;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        /* Reusing existing primary button styles for brand consistency */
+        .secondary-cta .btn-primary-hero {
+            width: auto;
+            padding: 20px 45px;
+            background-color: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .secondary-cta .btn-primary-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-color: #3d4d40;
+        }
+
+        /* --- MOBILE RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            .secondary-cta {
+                padding: 80px 0;
+            }
+            
+            .cta-content {
+                padding: 0 20px;
+            }
+            
+            .secondary-cta .btn-primary-hero {
+                width: 100%; /* Full-width button for better thumb-reach on mobile */
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <header id="main-header">
+        <div class="announcement-bar">Free shipping on all orders over $150</div>
+        <div class="nav-border-wrapper">
+            <nav class="main-nav">
+                <div class="logo-container">
+                    <a href="#" class="logo">AJL-Handicraft</a>
+                </div>
+
+                <div class="nav-controls">
+                    <div class="nav-links" id="nav-menu">
+                        <a href="#shop-all">Shop All</a>
+                        <a href="#best-sellers" style="color: var(--color-accent); font-weight: 600;">Best Sellers</a>
+                        <a href="#story">New Arrivals</a>
+                        <a href="#story">Gift Sets</a>
+                        <a href="#story" style="color: var(--color-accent); font-weight: 600;">Flash Sale</a>
+                    </div>
+
+                    <div class="action-icons">
+                        <button class="icon-btn" id="search-icon-btn">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          </svg>
+                        </button>
+
+                        <button class="icon-btn" id="user-icon-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </button>
+
+                        <button class="icon-btn" id="cart-icon-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                            <span class="cart-count">0</span>
+                        </button>
+
+                        <div class="menu-toggle" id="mobile-toggle">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <aside class="drawer user-drawer" id="user-drawer">
+        <div class="drawer-header">
+            <span>Account Access</span>
+            <h2 id="auth-title">Welcome back</h2>
+        </div>
+        <div class="auth-tabs">
+            <button class="tab-btn active" onclick="switchAuth('login')">Sign In</button>
+            <button class="tab-btn" onclick="switchAuth('signup')">Register</button>
+        </div>
+        <div class="auth-content">
+            <div id="login-pane" class="auth-pane active">
+                <form class="login-form">
+                    <div class="form-group"><label>Email</label><input type="email" placeholder="email@example.com" required></div>
+                    <div class="form-group">
+                        <label>Password</label><input type="password" placeholder="••••••••" required>
+                        <div class="form-footer"><a href="#" class="form-link">Forgot password?</a></div>
+                    </div>
+                    <button type="submit" class="action-btn">Sign In</button>
+                </form>
+            </div>
+            <div id="signup-pane" class="auth-pane">
+                <form class="login-form">
+                    <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                    <div class="form-group"><label>Email</label><input type="email" placeholder="email@example.com" required></div>
+                    <div class="form-group"><label>Password</label><input type="password" placeholder="Min. 8 characters" required></div>
+                    <button type="submit" class="action-btn">Create Account</button>
+                </form>
+            </div>
+        </div>
+        <div class="social-login">
+            <div class="divider">Or continue with</div>
+            <div class="social-btns">
+                <button class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></button>
+                <button class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg></button>
+            </div>
+        </div>
+    </aside>
+
+    <aside class="drawer cart-drawer" id="cart-drawer">
+        <h2>Your Cart</h2>
+        <br>
+        <div class="cart-empty">
+            <p>Your cart is currently empty.</p>
+            <a href="#shop" class="action-btn" id="continue-shopping">Continue Shopping</a>
+        </div>
+    </aside>
+
+    <main>
+        <!-- <div class="container"> -->
+
+            <section class="ajl-hero">
+                <div class="hero-overlay"></div>
+
+                <div class="hero-container">
+                    <div class="hero-content-box">
+
+                        <h1 class="hero-title">
+                            Crafted Once.
+                            <span>Kept for <b>Generations</b>.</span>
+                        </h1>
+
+                        <p class="hero-lead">
+                            Handcrafted wood and leather pieces designed to last a lifetime — not just a season.
+                        </p>
+
+                        <div class="hero-cta-wrapper">
+                            <a href="#best-sellers" class="hero-btn-primary">
+                                SHOP BEST SELLERS
+                            </a>
+                            <a href="#our-craftsmanship" class="hero-btn-secondary">
+                                Our Craftsmanship
+                            </a>
+                        </div>
+
+                        <div class="hero-trust-indicators">
+                            <div class="indicator-item">✔ Lifetime Guarantee</div>
+                            <div class="indicator-item">✔ Ethically Sourced Materials</div>
+                            <div class="indicator-item">✔ Small Batch Production</div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="trust-bar">
+                <div class="trust-bar-grid">
+                    
+                    <div class="trust-bar-item" data-reveal>
+                        <div class="trust-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                        </div>
+                        <div class="trust-text">
+                            <h3>Sustainably Sourced</h3>
+                            <p>Ethically harvested wood</p>
+                        </div>
+                    </div>
+
+                    <div class="trust-bar-item" data-reveal data-reveal-delay="100">
+                        <div class="trust-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </div>
+                        <div class="trust-text">
+                            <h3>Hand-stitched in [Location]</h3>
+                            <p>Authentic local craftsmanship</p>
+                        </div>
+                    </div>
+
+                    <div class="trust-bar-item" data-reveal data-reveal-delay="200">
+                        <div class="trust-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.8-2.8l-4.3 4.2c-.3.2-.6.3-1 .3H11c-.5 0-1 .2-1.4.6L7 21Z"/><path d="m15 9 2-2 3 3-2 2"/></svg>
+                        </div>
+                        <div class="trust-text">
+                            <h3>Lifetime Warranty</h3>
+                            <p>Designed to last generations</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <section class="collections-section" id="shop">
+                <div class="section-header" data-reveal>
+                    <span class="section-label">The Discovery</span>
+                    <h2 class="section-title">Curated <em>Collections</em></h2>
+                </div>
+
+                <div class="collections-grid">
+                    <a href="#" class="collection-card" data-reveal>
+                        <div class="card-image-box">
+                            <img src="https://images.unsplash.com/photo-1524289286702-f07229da36f5?q=80&w=1470&auto=format&fit=crop" alt="Hand-stitched leather goods">
+                        </div>
+                        <div class="card-overlay">
+                            <div class="card-content">
+                                <h3>Leather Goods</h3>
+                                <span class="shop-link">Explore Collection</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="collection-card" data-reveal data-reveal-delay="100">
+                        <div class="card-image-box">
+                            <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=1387&auto=format&fit=crop" alt="Minimalist home objects">
+                        </div>
+                        <div class="card-overlay">
+                            <div class="card-content">
+                                <h3>Home Objects</h3>
+                                <span class="shop-link">Explore Collection</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="collection-card" data-reveal data-reveal-delay="200">
+                        <div class="card-image-box">
+                            <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=1467&auto=format&fit=crop" alt="Rare studio finds">
+                        </div>
+                        <div class="card-overlay">
+                            <div class="card-content">
+                                <h3>Studio Finds</h3>
+                                <span class="shop-link">Explore Collection</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+
+
+            <section class="process-section" data-reveal>
+                <div class="process-grid">
+                    
+                    <div class="video-wrapper">
+                        <div class="video-container">
+                            <video autoplay muted loop playsinline poster="fallback-image.jpg">
+                                <source src="your-process-video.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <span>Authentic Hand-Craftsmanship</span>
+                        </div>
+                    </div>
+
+                    <div class="process-content">
+                        <span class="process-label">The Value of Patience</span>
+                        <h2 class="process-title">Why we <em>choose slow.</em></h2>
+                        
+                        <div class="process-description">
+                            <p>In a world of mass production, we find beauty in the deliberate. Every stitch is placed by hand, and every cut is guided by years of experience—ensuring a level of durability that machines simply cannot replicate.</p>
+                            <p>We don't just make goods; we create heirlooms. By choosing manual tools over high-speed assembly lines, we preserve the soul of the material and the integrity of the craft.</p>
+                        </div>
+
+                        <a href="#our-story" class="btn-process">Discover Our Story</a>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="comparison-section" data-reveal>
+                <div class="section-header">
+                    <span class="section-label">The Long View</span>
+                    <h2 class="section-title">Built for <em>Decades</em>, not Seasons</h2>
+                    <p class="comparison-intro">Mass production hides its true cost in replacements. We build for longevity, ensuring your first purchase is also your last.</p>
+                </div>
+
+                <div class="comparison-table-wrapper">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Mass Production</th>
+                                <th class="highlight">AJL-Handicraft</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature-name">Primary Materials</td>
+                                <td>Particle board & Synthetic leather</td>
+                                <td class="highlight">Solid Reclaimed Wood & Full-Grain Leather</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Construction</td>
+                                <td>Chemical adhesives & Staples</td>
+                                <td class="highlight">Traditional Joinery & Hand-Stitched Saddles</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Aging Process</td>
+                                <td>Degrades and peels over time</td>
+                                <td class="highlight">Develops a unique, rich patina</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Lifespan</td>
+                                <td>2 – 5 Years</td>
+                                <td class="highlight">Lifetime (Heirloom Quality)</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">True Cost</td>
+                                <td>High (Repeated replacements)</td>
+                                <td class="highlight">Low (One-time investment)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="comparison-footer">
+                    <p>Our pieces don't just last; they improve with use. Every scratch tells a story.</p>
+                    <a href="#shop" class="process-link">Invest in Quality →</a>
+                </div>
+            </section>
+
+            <section class="testimonials-section" data-reveal>
+                <div class="section-header">
+                    <span class="section-label">Living with AJL</span>
+                    <h2 class="section-title">The <em>Collector's</em> Story</h2>
+                    <p class="testimonial-intro">Real objects, real homes, and the stories they carry through the years.</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card" data-reveal data-reveal-delay="100">
+                        <div class="testimonial-image">
+                            <img src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?q=80&w=1470&auto=format&fit=crop" alt="Maria S. Wood Tray">
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="stars">★★★★★</div>
+                            <blockquote>"My AJL tray has survived three house moves and still looks better than the day I bought it. The patina it's developing is just stunning."</blockquote>
+                            <div class="customer-info">
+                                <span class="customer-name">Maria S.</span>
+                                <span class="customer-location">Manila, PH</span>
+                            </div>
+                            <a href="#shop" class="shop-their-pick">Shop her pick →</a>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card" data-reveal data-reveal-delay="200">
+                        <div class="testimonial-image">
+                            <img src="https://images.unsplash.com/photo-1622547748225-3fc4abd2cca0?q=80&w=1632&auto=format&fit=crop" alt="James L. Leather Bag">
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="stars">★★★★★</div>
+                            <blockquote>"Finding honest craftsmanship is rare these days. My leather satchel is my daily companion—built like a tank but looks like art."</blockquote>
+                            <div class="customer-info">
+                                <span class="customer-name">James L.</span>
+                                <span class="customer-location">Bicol, PH</span>
+                            </div>
+                            <a href="#shop" class="shop-their-pick">Shop his pick →</a>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card" data-reveal data-reveal-delay="300">
+                        <div class="testimonial-image">
+                            <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1374&auto=format&fit=crop" alt="Elena R. Home Object">
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="stars">★★★★★</div>
+                            <blockquote>"It's the first thing guests notice in my dining room. There's a soul in hand-turned wood that mass-produced items just can't match."</blockquote>
+                            <div class="customer-info">
+                                <span class="customer-name">Elena R.</span>
+                                <span class="customer-location">Cebu, PH</span>
+                            </div>
+                            <a href="#shop" class="shop-their-pick">Shop her pick →</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="secondary-cta" data-reveal>
+                <div class="cta-content">
+                    <span class="section-label">Your Next Heirloom</span>
+                    <h2 class="cta-title">Ready to start your collection?</h2>
+                    <p class="cta-description">
+                        Every piece is slow-crafted and made-to-order, ensuring that what you own is truly unique and built to last generations.
+                    </p>
+                    <div class="cta-action">
+                        <a href="#shop" class="btn-primary-hero">View All Arrivals</a>
+                    </div>
+                </div>
+            </section>
+        <!-- </div> -->
+    </main>
+
+    <footer>
+            <div class="footer-container">
+                <div class="footer-trust-banner">
+                    <div class="trust-item" data-reveal>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <h5>Lifetime Warranty</h5>
+                        <p>Designed to last generations. If any craftsmanship fails, we will repair it for free in our workshop.</p>
+                    </div>
+                    
+                    <div class="trust-item" data-reveal data-reveal-delay="100">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                        <h5>Slow Craft</h5>
+                        <p>Every piece is made-to-order. We believe quality takes time and shouldn't be rushed by mass production.</p>
+                    </div>
+                    
+                    <div class="trust-item" data-reveal data-reveal-delay="200">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <h5>Ethical Sourcing</h5>
+                        <p>Responsible materials from certified sustainable forests and local tanneries within our region.</p>
+                    </div>
+                </div>
+
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h4>The Workshop</h4>
+                        <p class="workshop-desc">
+                            AJL-Handicraft is a small-batch studio dedicated to the honest use of wood and leather. We value utility over ornament and longevity over trends.
+                        </p>
+                        <a href="#" style="text-decoration: underline; font-weight: 500; font-family: 'EB Garamond', serif; font-size: 1.1rem; opacity: 1;">Read Our Story</a>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>Collections</h4>
+                        <ul>
+                            <li><a href="#shop">New Arrivals</a></li>
+                            <li><a href="#shop">Best Sellers</a></li>
+                            <li><a href="#shop">Furniture</a></li>
+                            <li><a href="#shop">Leather Goods</a></li>
+                            <li><a href="#shop">Studio Finds</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>Client Care</h4>
+                        <ul>
+                            <li><a href="#">Shipping Policy</a></li>
+                            <li><a href="#">Returns & Exchanges</a></li>
+                            <li><a href="#">Care Instructions</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Wholesale</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <div class="newsletter-box">
+                            <h4>Join the Circle</h4>
+                            <p>Enjoy 10% off your first order and gain early access to our seasonal small-batch drops.</p>
+                            <form class="newsletter-form">
+                                <input type="email" placeholder="Your email address" aria-label="Email" required>
+                                <button type="submit">Unlock Offer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p>&copy; 2026 AJL-Handicraft. Every piece tells a story. All rights reserved.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22s1-5 1.4-7c-.5-1.5-.1-4 1.4-4 1.2 0 1.7 1.4 1.7 2.4 0 2.4-1.5 4.5-1.5 6.3 0 1.8 1.4 3.3 3.2 3.3 3.8 0 6.4-4 6.4-9.8 0-4.6-3-8.2-8.5-8.2-6 0-9.5 4.5-9.5 9.2 0 1.8.7 3.8 1.6 4.9.2.2.2.4.1.7-.1.4-.4 1.5-.4 1.7 0 .3-.2.4-.5.3-2.1-.9-3.4-3.8-3.4-6.1 0-7.4 5.3-14.3 15.6-14.3 8.2 0 14.5 5.9 14.5 13.5 0 8.1-5.1 14.7-12.2 14.7-2.4 0-4.6-1.2-5.4-2.7l-1.4 5.5c-.5 1.8-1.8 4.1-2.7 5.5"></path></svg></a>
+                        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    <script>
+        // Native Scroll Reveal Observer
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    // Optional: stop observing once revealed (parang 'once: true' sa AOS)
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1 // Lalabas ang animation kapag 10% ng element ay kita na
+        });
+
+        // Start observing all elements with data-reveal attribute
+        document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+        const header = document.getElementById('main-header');
+        const overlay = document.getElementById('drawer-overlay');
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const userBtn = document.getElementById('user-icon-btn');
+        const cartBtn = document.getElementById('cart-icon-btn');
+        const navMenu = document.getElementById('nav-menu');
+        const userDrawer = document.getElementById('user-drawer');
+        const cartDrawer = document.getElementById('cart-drawer');
+
+        function switchAuth(type) {
+            const loginPane = document.getElementById('login-pane');
+            const signupPane = document.getElementById('signup-pane');
+            const title = document.getElementById('auth-title');
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(t => t.classList.remove('active'));
+            if(type === 'login') {
+                loginPane.classList.add('active'); signupPane.classList.remove('active');
+                title.innerText = 'Welcome back'; tabs[0].classList.add('active');
+            } else {
+                signupPane.classList.add('active'); loginPane.classList.remove('active');
+                title.innerText = 'Create Account'; tabs[1].classList.add('active');
+            }
+        }
+
+        function closeAll() {
+            navMenu.classList.remove('active');
+            mobileToggle.classList.remove('active-burger');
+            userDrawer.classList.remove('active');
+            cartDrawer.classList.remove('active');
+            overlay.classList.remove('active');
+            header.classList.remove('has-active-drawer');
+            document.body.style.overflow = 'initial';
+        }
+
+        function openDrawer(drawerElement) {
+            closeAll();
+            drawerElement.classList.add('active');
+            overlay.classList.add('active');
+            header.classList.add('has-active-drawer');
+            header.classList.remove('header-hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        mobileToggle.addEventListener('click', () => navMenu.classList.contains('active') ? closeAll() : (openDrawer(navMenu), mobileToggle.classList.add('active-burger')));
+        userBtn.addEventListener('click', () => userDrawer.classList.contains('active') ? closeAll() : openDrawer(userDrawer));
+        cartBtn.addEventListener('click', () => cartDrawer.classList.contains('active') ? closeAll() : openDrawer(cartDrawer));
+        overlay.addEventListener('click', closeAll);
+        
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (userDrawer.classList.contains('active') || cartDrawer.classList.contains('active') || navMenu.classList.contains('active')) return;
+            currentScroll > lastScroll && currentScroll > 100 ? header.classList.add('header-hidden') : header.classList.remove('header-hidden');
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
