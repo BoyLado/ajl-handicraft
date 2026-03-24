@@ -7,21 +7,16 @@
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 
 	<style>
-		/* --- BRAND COLOR PALETTE: Deep Forest & Gold --- */
+		/* --- BRAND COLOR PALETTE --- */
 		:root {
-			/* Primary & Secondary */
-			--primary: #57624e;               /* Secondary from your list: Forest Green */
+			--primary: #57624e;
 			--on-primary: #ffffff;
-			--primary-container: #d8e4ca;     /* Light Sage */
+			--primary-container: #d8e4ca;
 			--on-primary-container: #404a37;
-			
-			/* Accents */
-			--secondary: #322214;             /* Dark Wood */
-			--tertiary: #ba1a1a;              /* Error/Red for Sales */
-			--color-accent: #705a49;          /* Surface Tint / Clay */
-			
-			/* Backgrounds & Surfaces */
-			--background: #fdf9f5;            /* Off-white Parchment */
+			--secondary: #322214;
+			--tertiary: #ba1a1a;
+			--color-accent: #705a49;
+			--background: #fdf9f5;
 			--on-background: #1c1c19;
 			--surface: #ffffff;
 			--on-surface: #1c1c19;
@@ -29,23 +24,23 @@
 			--surface-container-highest: #e6e2de;
 			--outline-variant: #d2c4bb;
 
-			/* Typography */
 			--font-headline: 'Playfair Display', serif;
 			--font-body: 'Montserrat', sans-serif;
 			--font-label: 'Manrope', sans-serif;
 
-			/* Border Radius Tokens */
 			--radius-default: 0.25rem;
 			--radius-lg: 0.5rem;
 			--radius-xl: 0.75rem;
 			--radius-full: 9999px;
 
-			/* Layout Constants */
 			--header-height: 70px;
 			--announcement-height: 40px;
 			--margin-elegant: 5%;
 			--max-content-width: 1400px;
-			--drawer-top-offset: calc(var(--header-height) + var(--announcement-height));
+			
+			/* Dynamic offset variable */
+			--current-drawer-top: calc(var(--header-height) + var(--announcement-height));
+			--current-nav-drawer-top: calc(var(--header-height) + var(--announcement-height));
 		}
 
 		* { margin: 0; padding: 0; box-sizing: border-box; }
@@ -65,13 +60,10 @@
 			width: 100%;
 			z-index: 5000;
 			background: var(--surface);
-			/* Smooth transition for the hiding effect */
-			transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-			will-change: transform;
+			transition: transform 0.3s ease-in-out;
 		}
 
-		/* Kapag nag-scroll down, itatago ang announcement bar (40px) */
-		.header-hidden:not(.has-active-drawer) {
+		.header-hidden {
 			transform: translateY(calc(var(--announcement-height) * -1));
 		}
 
@@ -161,17 +153,18 @@
 			.menu-toggle { display: flex; z-index: 5001; }
 			.nav-links {
 				position: fixed; 
-				top: var(--drawer-top-offset); 
+				top: var(--current-nav-drawer-top); /* Sumusunod na sa dynamic offset */
 				right: -100%; 
 				width: 100%;
-				height: calc(100vh - var(--drawer-top-offset)); 
+				height: calc(100vh - var(--current-drawer-top)); 
 				background: var(--surface);
 				flex-direction: column; 
 				padding: 50px var(--margin-elegant);
 				gap: 30px; 
-				transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+				transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1), top 0.3s ease-in-out; 
 				z-index: 4000; 
 				border-top: 1px solid var(--outline-variant);
+				overflow-y: auto;
 			}
 			.nav-links.active { right: 0; }
 			.nav-links a, .nav-links .mobile-user-link { 
@@ -188,11 +181,11 @@
 		/* --- DRAWERS --- */
 		.drawer {
 			position: fixed; 
-			top: var(--drawer-top-offset); 
-			height: calc(100vh - var(--drawer-top-offset)); 
+			top: var(--current-drawer-top); 
+			height: calc(100vh - var(--current-drawer-top)); 
 			background: var(--surface);
 			z-index: 4500; 
-			transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1), top 0.3s ease-in-out;
 			display: flex; 
 			flex-direction: column; 
 			overflow-y: auto;
@@ -204,7 +197,7 @@
 		.cart-drawer.active { right: 0; }
 
 		.search-drawer { top: -100%; left: 0; width: 100%; height: auto; min-height: 250px; border-bottom: 1px solid var(--outline-variant); }
-		.search-drawer.active { top: var(--drawer-top-offset); }
+		.search-drawer.active { top: var(--current-drawer-top); }
 
 		.drawer-overlay {
 			position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -224,8 +217,7 @@
 		.search-input-wrapper { position: relative; display: flex; align-items: center; }
 		.search-input-wrapper input { 
 			width: 100%; border: none; border-bottom: 2px solid var(--primary-container); 
-			padding: 15px 0; font-family: var(--font-headline); font-size: 2rem; 
-			background: transparent; outline: none; color: var(--on-surface);
+			padding: 15px 0; background: transparent; outline: none; color: var(--on-surface);
 		}
 
 		/* Auth & Buttons */
@@ -240,7 +232,8 @@
 			width: 100%; padding: 14px; 
 			border: 1px solid var(--outline-variant); 
 			border-radius: var(--radius-default);
-			font-family: var(--font-body);
+			font-family: var(--font-body); 
+			background: var(--surface-container);
 		}
 		
 		.action-btn { 
@@ -257,192 +250,813 @@
 			transition: background 0.3s;
 		}
 		.action-btn:hover { background: var(--secondary); }
+
+		
 	</style>
 
-
 	<style>
-		/* --- HERO BANNER STYLES --- */
 		.hero-banner {
-		    padding-top: var(--drawer-top-offset); /* To avoid being hidden by fixed header */
-		    background-color: var(--background);
-		    min-height: 80vh;
-		    /*display: flex;*/
-		    align-items: center;
-		    overflow: hidden;
+		    margin-top: calc(var(--margin-elegant) + 80px);
 		}
 
-		.hero-container {
-		    max-width: var(--max-content-width);
-		    margin: 0 auto;
-		    padding: 60px var(--margin-elegant);
-		    display: grid;
-		    grid-template-columns: 1fr; /* Mobile First */
-		    gap: 40px;
-		    align-items: center;
+		.hero-container { 
+		    max-width: var(--max-content-width); 
+		    margin: 0 auto; 
+		    padding: 60px var(--margin-elegant); 
+		    display: grid; 
+		    grid-template-columns: 1fr; 
+		    gap: 40px; 
+		    align-items: center; 
 		}
 
-		/* Text Content Styling */
-		.hero-content {
-		    order: 2; /* Image first on mobile */
-		    text-align: center;
+		.hero-content { 
+		    order: 1; 
+		    text-align: center; 
 		}
 
-		.hero-subtitle {
-		    display: block;
-		    font-family: var(--font-label);
-		    font-size: 0.75rem;
-		    text-transform: uppercase;
-		    letter-spacing: 4px;
-		    color: var(--outline);
+		/* Animation para sa Subtitle */
+		.hero-subtitle { 
+		    display: block; 
+		    font-family: var(--font-label); 
+		    font-size: 0.75rem; 
+		    text-transform: uppercase; 
+		    letter-spacing: 4px; 
+		    color: var(--outline-variant); 
 		    margin-bottom: 20px;
+		    opacity: 0;
+		    animation: humbleFadeUp 0.8s ease forwards;
 		}
 
-		.hero-title {
-		    font-family: var(--font-headline);
-		    font-size: clamp(2.5rem, 8vw, 4.5rem);
-		    line-height: 1.1;
-		    color: var(--primary);
+		/* Animation para sa Title */
+		.hero-title { 
+		    font-family: var(--font-headline); 
+		    font-size: clamp(2.5rem, 8vw, 4.5rem); 
+		    line-height: 1.1; 
+		    color: var(--primary); 
 		    margin-bottom: 25px;
+		    opacity: 0;
+		    animation: humbleFadeUp 0.8s ease forwards 0.2s; /* May delay na 0.2s */
 		}
 
-		.hero-description {
-		    font-family: var(--font-body);
-		    font-size: 1rem;
-		    line-height: 1.6;
-		    color: var(--on-surface-variant);
-		    max-width: 500px;
-		    margin: 0 auto 35px;
+		/* Animation para sa Description */
+		.hero-description { 
+		    font-family: var(--font-body); 
+		    font-size: 1rem; 
+		    line-height: 1.6; 
+		    color: var(--on-surface); 
+		    max-width: 500px; 
+		    margin: 0 auto 35px; 
+		    opacity: 0; 
+		    animation: humbleFadeUp 0.8s ease forwards 0.4s; /* May delay na 0.4s */
 		}
 
-		.hero-btn {
-		    display: inline-block;
-		    text-decoration: none;
-		    padding: 20px 40px !important;
+		.hero-btn { 
+		    display: inline-block; 
+		    text-decoration: none; 
+		    padding: 20px 40px !important; 
 		    font-weight: 600;
-		}
-
-		/* Image Styling with the Unique Arch Shape */
-		.hero-image-wrapper {
-		    order: 2;
-		    display: flex;
-		    justify-content: center;
-		}
-
-		.hero-image-card {
-		    position: relative;
-		    width: 100%;
-		    max-width: 550px;
-		    aspect-ratio: 4/5;
-		    background-color: var(--surface-container-highest);
-		    /* The unique arch shape from your photo */
-		    border-radius: 40% 40% 10px 10px;
-		    overflow: hidden;
-		    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-		}
-
-		.hero-image-card img {
-		    width: 100%;
-		    height: 100%;
-		    object-fit: cover;
-		    display: block;
-		}
-
-		/* Desktop Layout Adjustment */
-		@media (min-width: 1024px) {
-		    .hero-container {
-		        grid-template-columns: 1fr 1fr;
-		        gap: 80px;
-		        text-align: left;
-		    }
-
-		    .hero-content {
-		        order: 1;
-		        text-align: left;
-		    }
-
-		    .hero-image-wrapper {
-		        order: 2;
-		        justify-content: flex-end;
-		    }
-
-		    .hero-description {
-		        margin: 0 0 40px 0;
-		    }
-
-		    .hero-image-card {
-		        aspect-ratio: 1/1;
-		        /* More pronounced arch for desktop */
-		        border-radius: 50% 50% 20px 20px;
-		    }
-		}
-	</style>
-
-	<style>
-		/* --- FEATURES SECTION STYLES --- */
-		.features-section {
-		    background-color: var(--surface-container-low); /* Light parchment feel */
-		    padding: 80px var(--margin-elegant);
-		    border-top: 1px solid var(--outline-variant);
-		    border-bottom: 1px solid var(--outline-variant);
-		}
-
-		.features-container {
-		    max-width: var(--max-content-width);
-		    margin: 0 auto;
-		    display: grid;
-		    grid-template-columns: 1fr; /* Mobile first stack */
-		    gap: 60px;
-		    text-align: center;
-		}
-
-		.feature-item {
-		    display: flex;
-		    flex-direction: column;
-		    align-items: center;
-		    max-width: 320px;
-		    margin: 0 auto;
-		}
-
-		.feature-icon {
-		    color: var(--primary); /* Deep Forest Green */
-		    margin-bottom: 24px;
-		    opacity: 0.8;
+		    opacity: 0;
+		    animation: humbleFadeUp 0.8s ease forwards 0.6s;
 		    transition: transform 0.3s ease;
 		}
 
-		.feature-item:hover .feature-icon {
-		    transform: translateY(-5px);
+		.hero-btn:hover { transform: scale(1.05); }
+
+		.hero-image-wrapper { 
+		    order: 1; 
+		    display: flex; 
+		    justify-content: center;
+		    opacity: 0;
+		    animation: humbleFadeIn 1.2s ease forwards 0.5s;
+		}
+
+		.hero-image-card { 
+		    position: relative; 
+		    width: 100%; 
+		    max-width: 550px; 
+		    aspect-ratio: 4/5; 
+		    background-color: var(--surface-container-highest); 
+		    border-radius: 40% 40% 10px 10px; 
+		    overflow: hidden; 
+		    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+		    /* Floating effect */
+		    animation: subtleFloat 6s ease-in-out infinite;
+		}
+
+		.hero-image-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+		@media (min-width: 1024px) {
+			.hero-banner {
+			    margin-top: calc(var(--margin-elegant) + 20px);
+			}
+		    .hero-container { grid-template-columns: 1fr 1fr; gap: 80px; text-align: left; }
+		    .hero-content { order: 1; text-align: left; }
+		    .hero-image-wrapper { order: 2; justify-content: flex-end; }
+		    .hero-description { margin: 0 0 40px 0; }
+		    .hero-image-card { aspect-ratio: 1/1; border-radius: 50% 50% 20px 20px; }
+		}
+
+		/* --- KEYFRAMES DEFINITIONS --- */
+
+		@keyframes humbleFadeUp {
+		    from {
+		        opacity: 0;
+		        transform: translateY(20px);
+		    }
+		    to {
+		        opacity: 1; /* Para sa description, babalik sa normal opacity */
+		        transform: translateY(0);
+		    }
+		}
+
+		@keyframes humbleFadeIn {
+		    from { opacity: 0; }
+		    to { opacity: 1; }
+		}
+
+		@keyframes subtleFloat {
+		    0%, 100% { transform: translateY(0); }
+		    50% { transform: translateY(-10px); }
+		}
+	</style>
+
+	<style>
+	    /* --- FEATURES SECTION STYLES --- */
+	    .features-section { 
+	        background-color: var(--surface-container); 
+	        border-top: 1px solid var(--outline-variant); 
+	        border-bottom: 1px solid var(--outline-variant); 
+	        padding: 60px var(--margin-elegant);
+	        overflow: hidden;
+	    }
+
+	    .features-container { 
+	        max-width: var(--max-content-width); 
+	        margin: 0 auto; 
+	        display: grid; 
+	        grid-template-columns: 1fr; /* Mobile First */
+	        gap: 50px; 
+	        text-align: center;
+	    }
+
+	    .feature-item { 
+	        display: flex; 
+	        flex-direction: column; 
+	        align-items: center; 
+	        max-width: 350px;
+	        margin: 0 auto; 
+	    }
+
+	    .feature-icon { 
+	        color: var(--primary); 
+	        margin-bottom: 20px; 
+	        opacity: 0.9; 
+	        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); 
+	    }
+
+	    /* Humble Interaction */
+	    .feature-item:hover .feature-icon { 
+	        transform: translateY(-5px); 
+	        color: var(--color-accent); 
+	    }
+
+	    .feature-title { 
+	        font-family: var(--font-headline); 
+	        font-size: 1.3rem; 
+	        font-weight: 500; 
+	        color: var(--primary); 
+	        margin-bottom: 12px; 
+	        letter-spacing: 0.5px;
+	    }
+
+	    .feature-text { 
+	        font-family: var(--font-body); 
+	        font-size: 0.9rem; 
+	        line-height: 1.6; 
+	        color: var(--on-surface); 
+	        opacity: 0.8; 
+	    }
+
+	    /* Responsive Breakpoints */
+	    @media (min-width: 768px) {
+	        .features-section { padding: 100px var(--margin-elegant); }
+	        .features-container { 
+	            grid-template-columns: repeat(3, 1fr); 
+	            gap: 30px; 
+	        }
+	    }
+
+	    /* --- SCROLL ANIMATION OVERRIDES --- */
+	    /* Staggering the entrance of the features for a premium feel */
+	    @media (min-width: 768px) {
+	        .feature-item:nth-child(1) { transition-delay: 0.1s; }
+	        .feature-item:nth-child(2) { transition-delay: 0.2s; }
+	        .feature-item:nth-child(3) { transition-delay: 0.3s; }
+	    }
+
+	    /* Ensure the Reveal animation from your existing CSS is applied */
+	    .reveal-on-scroll {
+	        opacity: 0;
+	        transform: translateY(20px);
+	        transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+	    }
+
+	    .reveal-on-scroll.is-visible {
+	        opacity: 1;
+	        transform: translateY(0);
+	    }
+	</style>
+
+	<style>
+		/* --- FEATURED COLLECTIONS STYLES --- */
+		.collections-section {
+		    padding: 80px var(--margin-elegant);
+		    background-color: var(--background);
+		    max-width: var(--max-content-width);
+		    margin: 0 auto;
+		}
+
+		/* Bento Grid System - Mobile First */
+		.bento-grid {
+		    display: grid;
+		    grid-template-columns: repeat(2, 1fr);
+		    grid-auto-rows: 180px; /* Mas maikli para sa mobile bento look */
+		    gap: 12px;
+		}
+
+		/* Mobile Logic: 1 Large, 1 Medium (full width), 2 Small (side by side) */
+		.item-large { grid-column: span 2; grid-row: span 2; }
+		.item-medium { grid-column: span 2; grid-row: span 1; }
+		.item-small { grid-column: span 1; grid-row: span 1; }
+
+		/* Desktop Refinement (min-width: 1024px) */
+		@media (min-width: 1024px) {
+		    .collections-section { padding: 100px var(--margin-elegant); }
+		    
+		    .bento-grid {
+		        grid-template-columns: repeat(4, 1fr);
+		        grid-auto-rows: 220px;
+		        gap: 20px;
+		    }
+		    
+		    /* Desktop layout adjustment for more 'Bento' feel */
+		    .item-large { grid-column: span 2; grid-row: span 2; }
+		    .item-medium { grid-column: span 2; grid-row: span 1; }
+		    .item-small { grid-column: span 1; grid-row: span 1; }
+		}
+
+		/* Card Styling & Hover Effects */
+		.bento-card {
+		    position: relative;
+		    width: 100%;
+		    height: 100%;
+		    border-radius: var(--radius-lg);
+		    overflow: hidden;
+		    background-color: var(--surface-container-highest);
+		    border: 1px solid var(--outline-variant);
+		}
+
+		.bento-thumb {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+		}
+
+		.bento-overlay {
+		    position: absolute;
+		    inset: 0;
+		    padding: 24px;
+		    background: linear-gradient(to top, rgba(50, 34, 20, 0.7) 0%, transparent 60%);
+		    display: flex;
+		    flex-direction: column;
+		    justify-content: flex-end;
+		    align-items: flex-start;
+		    color: var(--on-primary);
+		}
+
+		.bento-overlay h3 {
+		    font-family: var(--font-headline);
+		    font-size: clamp(1.1rem, 4vw, 1.6rem);
+		    margin-bottom: 8px;
+		    font-weight: 500;
+		}
+
+		.bento-overlay h3.small-title {
+		    font-size: 1rem;
+		}
+
+		/* Shop Now Link (Conversion Focus) */
+		.shop-link {
+		    color: var(--on-primary);
+		    text-decoration: none;
+		    font-family: var(--font-label);
+		    font-size: 0.75rem;
+		    text-transform: uppercase;
+		    letter-spacing: 1.5px;
+		    border-bottom: 1.5px solid var(--primary-container);
+		    padding-bottom: 3px;
+		    transition: all 0.3s ease;
+		}
+
+		/* Humble Animations */
+		.bento-card:hover .bento-thumb {
+		    transform: scale(1.05);
+		}
+
+		.shop-link:hover {
+		    color: var(--primary-container);
+		    border-color: var(--on-primary);
+		    padding-right: 10px;
+		}
+
+		/* Staggered Scroll Animation (Sync with your existing JS) */
+		.bento-grid .reveal-on-scroll:nth-child(2) { transition-delay: 0.1s; }
+		.bento-grid .reveal-on-scroll:nth-child(3) { transition-delay: 0.2s; }
+		.bento-grid .reveal-on-scroll:nth-child(4) { transition-delay: 0.3s; }
+	</style>
+
+	<style>
+		/* --- BEST SELLERS SECTION --- */
+		.best-sellers-section {
+		    padding: 80px var(--margin-elegant);
+		    /*background-color: var(--background);*/
+		    background-color: var(--surface-container);
+		    overflow: hidden;
+		}
+
+		/* Header Alignment */
+		.section-header {
+		    padding: 0 var(--margin-elegant);
+		    margin-bottom: 40px;
+		    text-align: center;
+		}
+
+		.section-subtitle {
+		    display: block;
+		    font-family: var(--font-label);
+		    font-size: 0.7rem;
+		    text-transform: uppercase;
+		    letter-spacing: 3px;
+		    color: var(--color-accent);
+		    margin-bottom: 10px;
+		}
+
+		.section-title {
+		    font-family: var(--font-headline);
+		    font-size: 2.2rem;
+		    color: var(--primary);
+		    margin-bottom: 15px;
+		}
+
+		.section-desc {
+		    font-family: var(--font-body);
+		    font-size: 0.95rem;
+		    color: var(--on-surface);
+		    opacity: 0.7;
+		    max-width: 550px;
+		    margin: 0 auto;
+		}
+
+		/* Horizontal Scroll Container (Mobile Friendly) */
+		.bs-carousel-container {
+		    padding: 0 var(--margin-elegant) 20px;
+		    overflow-x: auto;
+		    scroll-snap-type: x mandatory;
+		    scrollbar-width: none; /* Hide scrollbar Firefox */
+		    -ms-overflow-style: none; /* Hide scrollbar IE */
+		}
+
+		.bs-carousel-container::-webkit-scrollbar {
+		    display: none; /* Hide scrollbar Chrome/Safari */
+		}
+
+		.bs-grid {
+		    display: flex;
+		    gap: 15px;
+		    width: max-content;
+		}
+
+		/* Product Card */
+		.bs-card {
+		    width: 260px; /* Fixed mobile width para sa horizontal scroll */
+		    scroll-snap-align: start;
+		    flex-shrink: 0;
+		    transition: transform 0.3s ease;
+		}
+
+		.bs-image-wrapper {
+		    position: relative;
+		    aspect-ratio: 1 / 1;
+		    background-color: var(--surface-container-highest);
+		    border-radius: var(--radius-lg);
+		    overflow: hidden;
+		    margin-bottom: 15px;
+		}
+
+		.bs-image-wrapper img {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+		}
+
+		.bs-badge {
+		    position: absolute;
+		    top: 10px;
+		    left: 10px;
+		    background: var(--primary);
+		    color: white;
+		    padding: 4px 10px;
+		    font-size: 0.6rem;
+		    font-family: var(--font-label);
+		    text-transform: uppercase;
+		    letter-spacing: 1px;
+		    z-index: 5;
+		    border-radius: 2px;
+		}
+
+		/* Conversion Focus: Quick Add Button */
+		.bs-quick-add-btn {
+		    position: absolute;
+		    bottom: 10px;
+		    left: 10px;
+		    right: 10px;
+		    background: var(--surface);
+		    color: var(--primary);
+		    border: none;
+		    padding: 12px;
+		    font-family: var(--font-label);
+		    font-size: 0.65rem;
+		    text-transform: uppercase;
+		    font-weight: 600;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    gap: 8px;
+		    cursor: pointer;
+		    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+		    border-radius: var(--radius-default);
+		    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		.bs-info {
+		    text-align: left;
+		    padding: 0 5px;
+		}
+
+		.bs-product-name {
+		    font-family: var(--font-headline);
+		    font-size: 1.1rem;
+		    color: var(--on-surface);
+		    margin-bottom: 4px;
+		}
+
+		.bs-price {
+		    font-family: var(--font-body);
+		    font-size: 0.95rem;
+		    color: var(--primary);
+		    font-weight: 500;
+		}
+
+
+
+		/* DESKTOP VIEW */
+		@media (min-width: 1024px) {
+		    .best-sellers-section { padding: 100px 0; }
+
+		    .bs-carousel-container {
+		        overflow: visible;
+		        max-width: var(--max-content-width);
+		        margin: 0 auto;
+		    }
+
+		    .bs-grid {
+		        display: grid; 
+		        grid-template-columns: repeat(4, 1fr);
+		        gap: 30px;
+		        width: 100%; 
+		    }
+
+		    .bs-card {
+		        width: 100%; 
+		    }
+
+		    /* Animation: Hide Quick Add on Desktop until hover for 'Humble' feel */
+		    .bs-quick-add-btn {
+		        opacity: 0;
+		        transform: translateY(10px);
+		    }
+
+		    .bs-card:hover .bs-quick-add-btn {
+		        opacity: 1;
+		        transform: translateY(0);
+		    }
+
+		    .bs-card:hover img {
+		        transform: scale(1.05);
+		    }
+
+		    .bs-quick-add-btn:hover {
+		        background: var(--primary);
+		        color: white;
+		    }
+		}
+
+		/* Animation Delay Stagger */
+		.bs-grid .bs-card:nth-child(2) { transition-delay: 0.1s; }
+		.bs-grid .bs-card:nth-child(3) { transition-delay: 0.2s; }
+		.bs-grid .bs-card:nth-child(4) { transition-delay: 0.3s; }
+
+		/* --- BEST SELLERS: VIEW ALL FEATURE --- */
+		.bs-view-all-wrapper {
+		    display: flex;
+		    justify-content: center;
+		    margin-top: 40px;
+		    padding-bottom: 20px;
+		}
+
+		.bs-view-all-link {
+		    display: inline-flex;
+		    align-items: center;
+		    gap: 12px;
+		    text-decoration: none;
+		    color: var(--primary);
+		    font-family: var(--font-label);
+		    font-size: 0.8rem;
+		    font-weight: 600;
+		    text-transform: uppercase;
+		    letter-spacing: 2px;
+		    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		    position: relative;
+		}
+
+		.bs-view-all-link span {
+		    border-bottom: 1px solid transparent;
+		    padding-bottom: 2px;
+		    transition: all 0.3s ease;
+		}
+
+		.bs-view-all-link svg {
+		    transition: transform 0.3s ease;
+		}
+
+		/* Hover Effects */
+		.bs-view-all-link:hover {
 		    color: var(--color-accent);
 		}
 
-		.feature-title {
-		    font-family: var(--font-headline);
-		    font-size: 1.4rem;
-		    font-weight: 400;
-		    color: var(--primary);
-		    margin-bottom: 12px;
+		.bs-view-all-link:hover span {
+		    border-bottom-color: var(--color-accent);
 		}
 
-		.feature-text {
-		    font-family: var(--font-body);
-		    font-size: 0.9rem;
-		    line-height: 1.6;
-		    color: var(--on-surface-variant);
-		    opacity: 0.8;
+		.bs-view-all-link:hover svg {
+		    transform: translateX(8px);
 		}
 
-		/* Tablet & Desktop Layout Adjustment */
-		@media (min-width: 768px) {
-		    .features-container {
-		        grid-template-columns: repeat(3, 1fr); /* 3 items side-by-side */
-		        gap: 30px;
-		    }
-		    
-		    .features-section {
-		        padding: 100px var(--margin-elegant);
+		@media (min-width: 1024px) {
+		    .bs-view-all-wrapper {
+		        margin-top: 60px;
 		    }
 		}
 	</style>
+
+	<style>
+		/* --- TESTIMONIALS SECTION STYLES --- */
+		.testimonials-section {
+		    padding: 80px var(--margin-elegant);
+		    background-color: var(--background);
+		    max-width: var(--max-content-width);
+		    margin: 0 auto;
+		}
+
+		.testimonials-grid {
+		    display: grid;
+		    grid-template-columns: 1fr; /* Mobile First */
+		    gap: 20px;
+		    margin-top: 40px;
+		}
+
+		.testimonial-card {
+		    background: var(--surface);
+		    padding: 40px 30px;
+		    border-radius: var(--radius-lg);
+		    border: 1px solid var(--outline-variant);
+		    display: flex;
+		    flex-direction: column;
+		    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+		}
+
+		.review-stars {
+		    color: var(--primary);
+		    font-size: 0.8rem;
+		    letter-spacing: 2px;
+		    margin-bottom: 20px;
+		}
+
+		.review-text {
+		    font-family: var(--font-body);
+		    font-size: 0.95rem;
+		    line-height: 1.7;
+		    color: var(--on-surface);
+		    font-style: italic;
+		    margin-bottom: 30px;
+		    flex-grow: 1;
+		}
+
+		.reviewer-info {
+		    display: flex;
+		    align-items: center;
+		    gap: 15px;
+		}
+
+		.reviewer-image {
+		    width: 50px;
+		    height: 50px;
+		    border-radius: var(--radius-full);
+		    overflow: hidden;
+		    background: var(--surface-container-highest);
+		}
+
+		.reviewer-image img {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		}
+
+		.reviewer-meta {
+		    display: flex;
+		    flex-direction: column;
+		    gap: 2px;
+		}
+
+		.reviewer-name {
+		    font-family: var(--font-headline);
+		    font-weight: 600;
+		    font-size: 1rem;
+		    color: var(--primary);
+		}
+
+		.verified-badge {
+		    font-family: var(--font-label);
+		    font-size: 0.65rem;
+		    text-transform: uppercase;
+		    letter-spacing: 1px;
+		    color: #4CAF50; /* Trust color */
+		    display: flex;
+		    align-items: center;
+		    gap: 5px;
+		}
+
+		/* Hover Effect for Desktop */
+		@media (min-width: 1024px) {
+		    .testimonials-section { padding: 100px var(--margin-elegant); }
+		    
+		    .testimonials-grid {
+		        grid-template-columns: repeat(3, 1fr);
+		        gap: 30px;
+		    }
+
+		    .testimonial-card:hover {
+		        transform: translateY(-10px);
+		        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+		        border-color: var(--primary-container);
+		    }
+		}
+
+		/* Staggered Scroll Animation */
+		.testimonials-grid .testimonial-card:nth-child(2) { transition-delay: 0.1s; }
+		.testimonials-grid .testimonial-card:nth-child(3) { transition-delay: 0.2s; }
+	</style>
+
+	<style>
+		/* --- REFINED PREMIUM FOOTER --- */
+		footer { 
+		    background-color: var(--surface-container); /* Uses your brand beige */
+		    border-top: 1px solid var(--outline-variant); 
+		    padding: 80px 0 40px 0; 
+		    margin-top: 100px; 
+		    color: var(--on-surface); 
+		}
+
+		.footer-container { 
+		    max-width: var(--max-content-width); 
+		    margin: 0 auto; 
+		    padding: 0 var(--margin-elegant); 
+		}
+
+		/* Trust Banner */
+		.footer-trust-banner { 
+		    display: grid; 
+		    grid-template-columns: repeat(3, 1fr); 
+		    gap: 60px; 
+		    padding-bottom: 80px; 
+		    border-bottom: 1px solid var(--outline-variant); 
+		}
+
+		.trust-item { 
+		    display: flex; 
+		    flex-direction: column; 
+		    align-items: flex-start; 
+		    gap: 16px; 
+		}
+
+		.trust-item h5 { 
+		    font-family: var(--font-headline); /* Playfair Display */
+		    font-size: 1.4rem; 
+		    font-weight: 500; 
+		    color: var(--primary); 
+		}
+
+		.trust-item p { 
+		    font-family: var(--font-body); /* Montserrat */
+		    font-size: 0.9rem; 
+		    line-height: 1.6; 
+		    opacity: 0.8; 
+		}
+
+		/* Main Grid */
+		.footer-grid { 
+		    display: grid; 
+		    grid-template-columns: 1.5fr 0.8fr 0.8fr 1.7fr; 
+		    gap: 50px; 
+		    padding: 80px 0; 
+		}
+
+		.footer-col h4 { 
+		    font-family: var(--font-label); /* Manrope */
+		    font-size: 0.75rem; 
+		    text-transform: uppercase; 
+		    letter-spacing: 2px; 
+		    margin-bottom: 32px; 
+		    font-weight: 600; 
+		    color: var(--color-accent); 
+		}
+
+		.footer-col a { 
+		    text-decoration: none; 
+		    color: var(--on-surface); 
+		    font-family: var(--font-body);
+		    font-size: 0.9rem; 
+		    opacity: 0.7; 
+		    transition: 0.3s; 
+		}
+
+		.footer-col a:hover { 
+		    opacity: 1; 
+		    color: var(--primary); 
+		    padding-left: 5px; 
+		}
+
+		/* Newsletter Box with Radius */
+		.newsletter-box { 
+		    background: var(--surface); 
+		    padding: 40px; 
+		    border: 1px solid var(--outline-variant); 
+		    border-radius: var(--radius-lg); /* Border radius from your variables */
+		    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+		}
+
+		.newsletter-form input { 
+		    background: var(--background); 
+		    border: 1px solid var(--outline-variant); 
+		    padding: 16px; 
+		    border-radius: var(--radius-default); /* Rounded corners */
+		    font-family: var(--font-body);
+		    width: 100%;
+		}
+
+		.newsletter-form button { 
+		    background: var(--primary); 
+		    color: var(--on-primary); 
+		    border: none; 
+		    padding: 16px; 
+		    border-radius: var(--radius-default);
+		    text-transform: uppercase; 
+		    letter-spacing: 2px; 
+		    font-size: 0.75rem; 
+		    cursor: pointer; 
+		    transition: 0.3s; 
+		}
+
+		.newsletter-form button:hover { 
+		    background: var(--secondary); 
+		}
+
+		/* Responsive */
+		@media (max-width: 1100px) {
+		    .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
+		    .footer-col:last-child { grid-column: span 3; }
+		}
+
+		@media (max-width: 768px) {
+		    .footer-trust-banner { grid-template-columns: 1fr; text-align: center; }
+		    .trust-item { align-items: center; }
+		    .footer-grid { grid-template-columns: 1fr 1fr; }
+		    .footer-col:first-child, .footer-col:last-child { grid-column: span 2; }
+		}
+	</style>
+
 </head>
 <body>
 
@@ -541,63 +1155,318 @@
 		</div>
 	</aside>
 
-	<section class="hero-banner">
-	    <div class="hero-container">
-	        <div class="hero-content">
-	            <span class="hero-subtitle">Tatak Filipino</span>
-	            <h1 class="hero-title">Gawang-kamay,<br>Gawang-puso.</h1>
-	            <p class="hero-description">
-	                Authentic Filipino handicrafts na nagdadala ng warmth sa iyong tahanan. 
-	                Bawat piraso ay may kwento ng sining at dedikasyon.
-	            </p>
-	            <div class="hero-actions">
-	                <a href="#shop-all" class="action-btn hero-btn">Shop Best Sellers</a>
-	            </div>
-	        </div>
+	<main>
+		<section class="hero-banner">
+		    <div class="hero-container">
+		        <div class="hero-content">
+		            <span class="hero-subtitle">Tatak Filipino</span>
+		            <h1 class="hero-title">Gawang-kamay,<br>Gawang-puso.</h1>
+		            <p class="hero-description">
+		                Authentic Filipino handicrafts na nagdadala ng warmth sa iyong tahanan. 
+		                Bawat piraso ay may kwento ng sining at dedikasyon.
+		            </p>
+		            <div class="hero-actions">
+		                <a href="#shop-all" class="action-btn hero-btn">Shop Best Sellers</a>
+		            </div>
+		        </div>
 
-	        <div class="hero-image-wrapper">
-	            <div class="hero-image-card">
-	                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5IZZivc-RZMZS6qJk8PIK3CI-HfUTqJildMcWJzZfQ48ODlj_JOLDUu-R1f0HcHxOW1W-XdAE-rf583VnqUdveY8LZRtDmDHP_mRlhKRx303y200Rh_9kh76V7rnOCPBK_1y9hqtziMH0TDlhhIOyEf_HRAMC6omi2zD5fex5pIcurA46UIiKWpfkvUf77em6QDzSScqEd8d7OVk2nPzdN7-plGpp6bOSK2ypRfbmsqkWbz5QM4BCkvESYxzv-SX2WNk8pL1few" alt="Artisan Pottery">
-	            </div>
-	        </div>
-	    </div>
-	</section>
+		        <div class="hero-image-wrapper">
+		            <div class="hero-image-card">
+		                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqYLQMauRid7ZsnyqJOLIwE_4-kgndXOlNrIpqYDWJXQ0B5cV7hGEi76n5QTlVuqPcVZQ54EU1Gy7xSQCu-9WDh_vOdc804XyIe25w64ysNdMuGPugoF5P3y8X8cHyj9nIrkaFZSiiX6pSew8y6svwH5AVRKE5sls3yRRn2_zmzrqfa6y83j1w234tEHe48f1IVN1FZQOacWPQyvbb6_-vNQ8AQYK3kFSiao28mM9-nm20AXP08ZdMzN0ii0ehJOfLezJfxPJAUQ" alt="Artisan Pottery">
+		            </div>
+		        </div>
+		    </div>
+		</section>
 
-	<section class="features-section">
-	    <div class="features-container">
-	        <div class="feature-item">
-	            <div class="feature-icon">
-	                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-	                    <path d="M21 8l-9-4-9 4v8l9 4 9-4V8zM12 4v16M3 8l9 4 9-4"/>
-	                </svg>
-	            </div>
-	            <h3 class="feature-title">Eco-friendly Packaging</h3>
-	            <p class="feature-text">Sustainable materials to protect our planet.</p>
-	        </div>
+		<section class="features-section">
+		    <div class="features-container">
+		        <div class="feature-item reveal-on-scroll">
+		            <div class="feature-icon">
+		                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+		                    <path d="M21 8l-9-4-9 4v8l9 4 9-4V8zM12 4v16M3 8l9 4 9-4"/>
+		                </svg>
+		            </div>
+		            <h3 class="feature-title">Eco-friendly Packaging</h3>
+		            <p class="feature-text">Sustainable, plastic-free materials designed to protect both your craft and our planet.</p>
+		        </div>
 
-	        <div class="feature-item">
-	            <div class="feature-icon">
-	                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-	                    <path d="M18 11V6a2 2 0 00-2-2v0a2 2 0 00-2 2v0M14 10V4a2 2 0 00-2-2v0a2 2 0 00-2 2v0M10 10.5V5.5a2 2 0 00-2-2v0a2 2 0 00-2 2v0M6 13V9a2 2 0 00-2-2v0a2 2 0 00-2 2v5a7 7 0 007 7h1a7 7 0 007-7v-3"/>
-	                </svg>
-	            </div>
-	            <h3 class="feature-title">100% Handmade</h3>
-	            <p class="feature-text">Crafted with precision by skilled local hands.</p>
-	        </div>
+		        <div class="feature-item reveal-on-scroll">
+		            <div class="feature-icon">
+		                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+		                    <path d="M18 11V6a2 2 0 00-2-2v0a2 2 0 00-2 2v0M14 10V4a2 2 0 00-2-2v0a2 2 0 00-2 2v0M10 10.5V5.5a2 2 0 00-2-2v0a2 2 0 00-2 2v0M6 13V9a2 2 0 00-2-2v0a2 2 0 00-2 2v5a7 7 0 007 7h1a7 7 0 007-7v-3"/>
+		                </svg>
+		            </div>
+		            <h3 class="feature-title">100% Handmade</h3>
+		            <p class="feature-text">No mass production. Every item is crafted with precision by skilled Filipino hands.</p>
+		        </div>
 
-	        <div class="feature-item">
-	            <div class="feature-icon">
-	                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-	                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-	                </svg>
-	            </div>
-	            <h3 class="feature-title">Supporting Local Artisans</h3>
-	            <p class="feature-text">Directly empowering community livelihoods.</p>
-	        </div>
-	    </div>
-	</section>
+		        <div class="feature-item reveal-on-scroll">
+		            <div class="feature-icon">
+		                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+		                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+		                </svg>
+		            </div>
+		            <h3 class="feature-title">Ethical Sourcing</h3>
+		            <p class="feature-text">We ensure fair trade and directly empower the livelihoods of local artisan communities.</p>
+		        </div>
+		    </div>
+		</section>
 
-	<div style="height: 200vh;"></div> <script>
+		<section class="collections-section">
+		    <div class="section-header reveal-on-scroll">
+		        <span class="section-subtitle">Curated for You</span>
+		        <h2 class="section-title">Featured Collections</h2>
+		        <p class="section-desc">Discover our handpicked artisan creations, designed to bring warmth and elegance to your everyday life.</p>
+		    </div>
+
+		    <div class="collections-container">
+		        <div class="bento-grid">
+		            <div class="bento-card item-large reveal-on-scroll">
+		                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiC2lwwGtqGAqC_0_aTUV9bUj93QEGeeRiXKZaOGCqg0CgDLDRCCyTZLFhhAP8sU4iy4gK_0nci4tciMrBnUuc6uhaB1sBQj1n1okw_sBS7Ik2sh4Jm53s-7CyoFkAciZG8P9DI3_H78JlCaB8wBmxJ_7wfxa6D1ISDWe8PQKGE5I2Dd3O5fQlqvOhan9HLvIHaRUFM80MSQ1j1TWxkx-4lqrl6cvjT33776pgbuphSmnep8c83uVv0rxexijVcXSyNh6-N5QvqQ" alt="Home Decor" class="bento-thumb">
+		                <div class="bento-overlay">
+		                    <h3>Home Decor</h3>
+		                    <a href="#home-decor" class="shop-link">Shop Now</a>
+		                </div>
+		            </div>
+
+		            <div class="bento-card item-medium reveal-on-scroll">
+		                <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop" alt="Bags & Accessories" class="bento-thumb">
+		                <div class="bento-overlay">
+		                    <h3>Bags & Accessories</h3>
+		                    <a href="#bags" class="shop-link">Shop Now</a>
+		                </div>
+		            </div>
+
+		            <div class="bento-card item-small reveal-on-scroll">
+		                <img src="https://images.unsplash.com/photo-1614676471928-2ed0ad1061a4?q=80&w=1000&auto=format&fit=crop" alt="Best Sellers" class="bento-thumb">
+		                <div class="bento-overlay">
+		                    <h3 class="small-title">Best Sellers</h3>
+		                    <a href="#best-sellers" class="shop-link">Explore</a>
+		                </div>
+		            </div>
+
+		            <div class="bento-card item-small reveal-on-scroll">
+		                <img src="https://images.unsplash.com/photo-1590736704728-f4730bb30770?q=80&w=1000&auto=format&fit=crop" alt="New Arrivals" class="bento-thumb">
+		                <div class="bento-overlay">
+		                    <h3 class="small-title">New Arrivals</h3>
+		                    <a href="#new-arrivals" class="shop-link">View All</a>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</section>
+
+		<section id="best-sellers" class="best-sellers-section">
+		    <div class="section-header reveal-on-scroll">
+		        <span class="section-subtitle">Most Loved</span>
+		        <h2 class="section-title">Best Sellers</h2>
+		        <p class="section-desc">Handpicked favorites that have found a home in many Filipino spaces.</p>
+		    </div>
+
+		    <div class="bs-carousel-container reveal-on-scroll">
+		        <div class="bs-grid">
+		            
+		            <div class="bs-card">
+		                <div class="bs-image-wrapper">
+		                    <div class="bs-badge">Top Choice</div>
+		                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuApb37aFw3Q-vB_F2CMq-YM94R6He4I9YTwwdnr78t4nSbK1ll-pWltJD-TMDdxg0L-iNsH0oeMsgI5YyVqlnra2TsliNi1NQCoolHW5ovvgAx8QWGODEYGxYLCpTrH82bO16veK4DQPKX8ezKK7-Z3Yl50jj6Ic3q9bbiNRyxNqgKopsIYzwWalSJK5y8-FMsyutQH3_yWEbFLUE3BJiI7vPqF8lzQhJ2J7Z7vavwxTKc_Kui_fx8lJ4C4uLj9ARpkmfbgsHIPMp7V" alt="Solihiya Storage Bin">
+		                    <button class="bs-quick-add-btn" aria-label="Add to cart">
+		                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+		                        <span>Quick Add</span>
+		                    </button>
+		                </div>
+		                <div class="bs-info">
+		                    <h3 class="bs-product-name">Solihiya Storage Bin</h3>
+		                    <p class="bs-price">₱1,450.00</p>
+		                </div>
+		            </div>
+
+		            <div class="bs-card">
+		                <div class="bs-image-wrapper">
+		                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD14DBd9qgZedml7eUxxcTsYysD2vViEgEsFQCyKsp-KBDS8u_kkdvneYmAUPHyLAPh7mclpthJr2yYL8Mir-i9w4OZ_c03LhZFsfd-0f_ngF_HOvuOo6nCl6xYSpRuuAe5SESHO6K8R0IT-w3_vLoc5Af3IYdCiflVBrGnRv2_8LO_gAmvt8xakctaK1l0r9lqSexI_m0xmP9aCr8Db_EJ_Yw08ciSddWD7foEKkTZkNGUdbjd3OY5VGlk6pZbaWw_d7_rYHsyU4mD" alt="Acacia Dinner Set">
+		                    <button class="bs-quick-add-btn" aria-label="Add to cart">
+		                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+		                        <span>Quick Add</span>
+		                    </button>
+		                </div>
+		                <div class="bs-info">
+		                    <h3 class="bs-product-name">Acacia Dinner Set</h3>
+		                    <p class="bs-price">₱2,200.00</p>
+		                </div>
+		            </div>
+
+		            <div class="bs-card">
+		                <div class="bs-image-wrapper">
+		                    <div class="bs-badge">Limited</div>
+		                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr3ofXoEqXimUOyPJ6ynT8JbejHfZmuC-fCS1eINKkIEuXnQzRIM9URjmwD0ZSZmEPCekb_Kn8fuTZZ1mg1XrzafN6JFng3Qy1kjbEy5avMzmju-wYCfkYr0JplTU52Qe-PUtqlnC-lRxZR95-m9QMzerkWI9Z4EazgP7aYpVglnK5eTXclus1oteoOihrRZe5S-zj7L_J2ACk0F2nojORwRMW6xeIaOZNfxto0ib4b2TvMYULwgtyvPoVluwAkY1KzRDZcfA1YNc" alt="Macramé Hanging Pot">
+		                    <button class="bs-quick-add-btn" aria-label="Add to cart">
+		                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+		                        <span>Quick Add</span>
+		                    </button>
+		                </div>
+		                <div class="bs-info">
+		                    <h3 class="bs-product-name">Macramé Hanging Pot</h3>
+		                    <p class="bs-price">₱650.00</p>
+		                </div>
+		            </div>
+
+		            <div class="bs-card">
+		                <div class="bs-image-wrapper">
+		                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5IZZivc-RZMZS6qJk8PIK3CI-HfUTqJildMcWJzZfQ48ODlj_JOLDUu-R1f0HcHxOW1W-XdAE-rf583VnqUdveY8LZRtDmDHP_mRlhKRx303y200Rh_9kh76V7rnOCPBK_1y9hqtziMH0TDlhhIOyEf_HRAMC6omi2zD5fex5pIcurA46UIiKWpfkvUf77em6QDzSScqEd8d7OVk2nPzdN7-plGpp6bOSK2ypRfbmsqkWbz5QM4BCkvESYxzv-SX2WNk8pL1few" alt="Inabel Throw Pillow">
+		                    <button class="bs-quick-add-btn" aria-label="Add to cart">
+		                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+		                        <span>Quick Add</span>
+		                    </button>
+		                </div>
+		                <div class="bs-info">
+		                    <h3 class="bs-product-name">Inabel Throw Pillow</h3>
+		                    <p class="bs-price">₱950.00</p>
+		                </div>
+		            </div>
+
+		        </div>
+		    </div>
+
+		    <div class="bs-view-all-wrapper reveal-on-scroll">
+		        <a href="#shop-all" class="bs-view-all-link">
+		            <span>Explore best sellers</span>
+		            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+		        </a>
+		    </div>
+		</section>
+
+		<section id="testimonials" class="testimonials-section">
+		    <div class="section-header reveal-on-scroll">
+		        <span class="section-subtitle">Community Love</span>
+		        <h2 class="section-title">What Our Community Says</h2>
+		        <p class="section-desc">Real stories from homes that have embraced AJL-Handicraft artistry.</p>
+		    </div>
+
+		    <div class="testimonials-grid">
+		        <div class="testimonial-card reveal-on-scroll">
+		            <div class="review-stars">★★★★★</div>
+		            <p class="review-text">"Sobrang ganda ng quality! Perfect ito sa daily routine ko. Highly recommended sa mga naghahanap ng value for money."</p>
+		            <div class="reviewer-info">
+		                <div class="reviewer-image">
+		                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Maria Clara">
+		                </div>
+		                <div class="reviewer-meta">
+		                    <span class="reviewer-name">Maria Clara</span>
+		                    <span class="verified-badge">
+		                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+		                        Verified Buyer
+		                    </span>
+		                </div>
+		            </div>
+		        </div>
+
+		        <div class="testimonial-card reveal-on-scroll">
+		            <div class="review-stars">★★★★★</div>
+		            <p class="review-text">"Fast shipping and the packaging is very secure. The product itself exceeded my expectations. Gawang-puso talaga!"</p>
+		            <div class="reviewer-info">
+		                <div class="reviewer-image">
+		                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150" alt="Juan Dela Cruz">
+		                </div>
+		                <div class="reviewer-meta">
+		                    <span class="reviewer-name">Juan Dela Cruz</span>
+		                    <span class="verified-badge">
+		                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+		                        Verified Buyer
+		                    </span>
+		                </div>
+		            </div>
+		        </div>
+
+		        <div class="testimonial-card reveal-on-scroll">
+		            <div class="review-stars">★★★★★</div>
+		            <p class="review-text">"Best investment I've made this year. Simple design pero premium ang feel. Sulit na sulit ang paghihintay."</p>
+		            <div class="reviewer-info">
+		                <div class="reviewer-image">
+		                    <img src="https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=150" alt="Elena Gomez">
+		                </div>
+		                <div class="reviewer-meta">
+		                    <span class="reviewer-name">Elena Gomez</span>
+		                    <span class="verified-badge">
+		                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+		                        Verified Buyer
+		                    </span>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</section>
+
+
+		<footer>
+		    <div class="footer-container">
+		        <div class="footer-trust-banner">
+		            <div class="trust-item">
+		                <h5>Filipino Made</h5>
+		                <p>Support local art and artisans from various regions of the Philippines.</p>
+		            </div>
+		            <div class="trust-item">
+		                <h5>Premium Quality</h5>
+		                <p>Every product undergoes a thorough inspection for your satisfaction.</p>
+		            </div>
+		            <div class="trust-item">
+		                <h5>Safe Delivery</h5>
+		                <p>Carefully packed to ensure your order arrives in perfect condition.</p>
+		            </div>
+		        </div>
+
+		        <div class="footer-grid">
+		            <div class="footer-col">
+		                <h4 style="font-family: var(--font-headline); text-transform: none; font-size: 1.5rem; color: var(--primary);">AJL-Handicraft</h4>
+		                <p style="font-size: 0.9rem; opacity: 0.8; line-height: 1.6; margin-top: 15px;">
+		                    At AJL, we value tradition and modern art. Our goal is to bring the beauty of Filipino culture to every home.
+		                </p>
+		            </div>
+		            
+		            <div class="footer-col">
+		                <h4>Explore</h4>
+		                <ul>
+		                    <li><a href="#">Shop All</a></li>
+		                    <li><a href="#">Best Sellers</a></li>
+		                    <li><a href="#">New Arrivals</a></li>
+		                    <li><a href="#">Our Story</a></li>
+		                </ul>
+		            </div>
+
+		            <div class="footer-col">
+		                <h4>Support</h4>
+		                <ul>
+		                    <li><a href="#">Shipping Policy</a></li>
+		                    <li><a href="#">Return & Exchange</a></li>
+		                    <li><a href="#">Contact Us</a></li>
+		                    <li><a href="#">FAQs</a></li>
+		                </ul>
+		            </div>
+
+		            <div class="footer-col">
+		                <div class="newsletter-box">
+		                    <h4>Join our Circle</h4>
+		                    <p>Get a 10% discount on your first order and be the first to know about our new collections.</p>
+		                    <form class="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
+		                        <input type="email" placeholder="Your Email Address" required>
+		                        <button type="submit">Subscribe</button>
+		                    </form>
+		                </div>
+		            </div>
+		        </div>
+
+		        <div class="footer-bottom" style="border-top: 1px solid var(--outline-variant); padding-top: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+		            <p style="font-size: 0.8rem; opacity: 0.6;">&copy; 2026 AJL-Handicraft. All rights reserved. Hand-made, Heart-made.</p>
+		            <div class="social-links" style="display: flex; gap: 20px;">
+		                <a href="#">FB</a>
+		                <a href="#">IG</a>
+		                <a href="#">TK</a>
+		            </div>
+		        </div>
+		    </div>
+		</footer>
+	</main>
+
+	<script>
 		const header = document.getElementById('main-header');
 		const overlay = document.getElementById('drawer-overlay');
 		const mobileToggle = document.getElementById('mobile-toggle');
@@ -657,17 +1526,38 @@
 		let lastScroll = 0;
 		window.addEventListener('scroll', () => {
 			let current = window.pageYOffset;
+			const root = document.documentElement;
 			
-			// Kung nag-scroll down at lampas na sa announcement bar
-			if (current > lastScroll && current > 40 && !overlay.classList.contains('active')) {
+			if (current > lastScroll && current > 100 && !overlay.classList.contains('active')) {
 				header.classList.add('header-hidden');
-			} 
-			// Kung nag-scroll up o nasa pinakataas
-			else {
+				root.style.setProperty('--current-drawer-top', 'var(--header-height)');
+				root.style.setProperty('--current-nav-drawer-top', 'calc(var(--header-height) + 40px)');
+			} else {
 				header.classList.remove('header-hidden');
+				root.style.setProperty('--current-drawer-top', 'calc(var(--header-height) + var(--announcement-height))');
+				root.style.setProperty('--current-nav-drawer-top', 'calc(var(--header-height) + var(--announcement-height))');
 			}
 			lastScroll = current;
-		}, { passive: true });
+		});
+	</script>
+
+	<script>
+		// Intersection Observer for Scroll Animations
+		const observerOptions = {
+		    threshold: 0.15
+		};
+
+		const observer = new IntersectionObserver((entries) => {
+		    entries.forEach(entry => {
+		        if (entry.isIntersecting) {
+		            entry.target.classList.add('is-visible');
+		        }
+		    });
+		}, observerOptions);
+
+		document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+		    observer.observe(el);
+		});
 	</script>
 </body>
 </html>

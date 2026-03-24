@@ -65,9 +65,12 @@
 			width: 100%;
 			z-index: 5000;
 			background: var(--surface);
-			transition: transform 0.3s ease-in-out;
+			/* Smooth transition for the hiding effect */
+			transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+			will-change: transform;
 		}
 
+		/* Kapag nag-scroll down, itatago ang announcement bar (40px) */
 		.header-hidden:not(.has-active-drawer) {
 			transform: translateY(calc(var(--announcement-height) * -1));
 		}
@@ -221,7 +224,7 @@
 		.search-input-wrapper { position: relative; display: flex; align-items: center; }
 		.search-input-wrapper input { 
 			width: 100%; border: none; border-bottom: 2px solid var(--primary-container); 
-			padding: 15px 0; font-family: var(--font-headline); font-size: 2rem; 
+			padding: 15px 0; 
 			background: transparent; outline: none; color: var(--on-surface);
 		}
 
@@ -237,8 +240,7 @@
 			width: 100%; padding: 14px; 
 			border: 1px solid var(--outline-variant); 
 			border-radius: var(--radius-default);
-			font-family: var(--font-body); 
-			background: var(--surface-container);
+			font-family: var(--font-body);
 		}
 		
 		.action-btn { 
@@ -255,6 +257,658 @@
 			transition: background 0.3s;
 		}
 		.action-btn:hover { background: var(--secondary); }
+	</style>
+
+	<style>
+		/* --- HERO BANNER STYLES --- */
+		.hero-banner {
+		    padding-top: var(--drawer-top-offset); /* To avoid being hidden by fixed header */
+		    background-color: var(--background);
+		    min-height: 80vh;
+		    align-items: center;
+		    overflow: hidden;
+		}
+
+		.hero-container {
+		    max-width: var(--max-content-width);
+		    margin: 0 auto;
+		    padding: 60px var(--margin-elegant);
+		    display: grid;
+		    grid-template-columns: 1fr; /* Mobile First */
+		    gap: 40px;
+		    align-items: center;
+		}
+
+		/* Text Content Styling */
+		.hero-content {
+		    order: 2; /* Image first on mobile */
+		    text-align: center;
+		}
+
+		.hero-subtitle {
+		    display: block;
+		    font-family: var(--font-label);
+		    font-size: 0.75rem;
+		    text-transform: uppercase;
+		    letter-spacing: 4px;
+		    color: var(--outline);
+		    margin-bottom: 20px;
+		}
+
+		.hero-title {
+		    font-family: var(--font-headline);
+		    font-size: clamp(2.5rem, 8vw, 4.5rem);
+		    line-height: 1.1;
+		    color: var(--primary);
+		    margin-bottom: 25px;
+		}
+
+		.hero-description {
+		    font-family: var(--font-body);
+		    font-size: 1rem;
+		    line-height: 1.6;
+		    color: var(--on-surface-variant);
+		    max-width: 500px;
+		    margin: 0 auto 35px;
+		}
+
+		.hero-btn {
+		    display: inline-block;
+		    text-decoration: none;
+		    padding: 20px 40px !important;
+		    font-weight: 600;
+		}
+
+		/* Image Styling with the Unique Arch Shape */
+		.hero-image-wrapper {
+		    order: 2;
+		    display: flex;
+		    justify-content: center;
+		}
+
+		.hero-image-card {
+		    position: relative;
+		    width: 100%;
+		    max-width: 550px;
+		    aspect-ratio: 4/5;
+		    background-color: var(--surface-container-highest);
+		    /* The unique arch shape from your photo */
+		    border-radius: 40% 40% 10px 10px;
+		    overflow: hidden;
+		    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+		}
+
+		.hero-image-card img {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    display: block;
+		}
+
+		/* Desktop Layout Adjustment */
+		@media (min-width: 1024px) {
+		    .hero-container {
+		        grid-template-columns: 1fr 1fr;
+		        gap: 80px;
+		        text-align: left;
+		    }
+
+		    .hero-content {
+		        order: 1;
+		        text-align: left;
+		    }
+
+		    .hero-image-wrapper {
+		        order: 2;
+		        justify-content: flex-end;
+		    }
+
+		    .hero-description {
+		        margin: 0 0 40px 0;
+		    }
+
+		    .hero-image-card {
+		        aspect-ratio: 1/1;
+		        /* More pronounced arch for desktop */
+		        border-radius: 50% 50% 20px 20px;
+		    }
+		}
+	</style>
+
+	<style>
+		/* --- FEATURES SECTION STYLES --- */
+		.features-section {
+		    background-color: var(--surface-container-low); /* Light parchment feel */
+		    padding: 80px var(--margin-elegant);
+		    border-top: 1px solid var(--outline-variant);
+		    border-bottom: 1px solid var(--outline-variant);
+		}
+
+		.features-container {
+		    max-width: var(--max-content-width);
+		    margin: 0 auto;
+		    display: grid;
+		    grid-template-columns: 1fr; /* Mobile first stack */
+		    gap: 60px;
+		    text-align: center;
+		}
+
+		.feature-item {
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    max-width: 320px;
+		    margin: 0 auto;
+		}
+
+		.feature-icon {
+		    color: var(--primary); /* Deep Forest Green */
+		    margin-bottom: 24px;
+		    opacity: 0.8;
+		    transition: transform 0.3s ease;
+		}
+
+		.feature-item:hover .feature-icon {
+		    transform: translateY(-5px);
+		    color: var(--color-accent);
+		}
+
+		.feature-title {
+		    font-family: var(--font-headline);
+		    font-size: 1.4rem;
+		    font-weight: 400;
+		    color: var(--primary);
+		    margin-bottom: 12px;
+		}
+
+		.feature-text {
+		    font-family: var(--font-body);
+		    font-size: 0.9rem;
+		    line-height: 1.6;
+		    color: var(--on-surface-variant);
+		    opacity: 0.8;
+		}
+
+		/* Tablet & Desktop Layout Adjustment */
+		@media (min-width: 768px) {
+		    .features-container {
+		        grid-template-columns: repeat(3, 1fr); /* 3 items side-by-side */
+		        gap: 30px;
+		    }
+		    
+		    .features-section {
+		        padding: 100px var(--margin-elegant);
+		    }
+		}
+	</style>
+
+	<style>
+		/* --- FEATURED PRODUCTS SECTION --- */
+		.products-section {
+		    padding: 60px var(--margin-elegant); /* Mobile Padding */
+		    background-color: var(--background);
+		}
+
+		.products-container {
+		    max-width: var(--max-content-width);
+		    margin: 0 auto;
+		}
+
+		/* Header Alignment */
+		.section-header {
+		    display: flex;
+		    flex-direction: column;
+		    gap: 15px;
+		    margin-bottom: 40px;
+		}
+
+		.eyebrow {
+		    font-family: var(--font-label);
+		    font-size: 0.7rem;
+		    text-transform: uppercase;
+		    letter-spacing: 3px;
+		    color: var(--color-accent);
+		    font-weight: 600;
+		}
+
+		.section-title {
+		    font-family: var(--font-headline);
+		    font-size: 2.2rem;
+		    color: var(--on-background);
+		    line-height: 1.2;
+		}
+
+		.explore-link {
+		    font-family: var(--font-label);
+		    font-size: 0.75rem;
+		    text-transform: uppercase;
+		    letter-spacing: 1.5px;
+		    text-decoration: none;
+		    color: var(--on-background);
+		    font-weight: 600;
+		    border-bottom: 1px solid var(--outline-variant);
+		    padding-bottom: 5px;
+		    width: fit-content;
+		    transition: color 0.3s;
+		}
+
+		.explore-link:hover {
+		    color: var(--primary);
+		}
+
+		/* Product Grid - Mobile First */
+		.product-grid {
+		    display: grid;
+		    grid-template-columns: 1fr; /* Single column on mobile */
+		    gap: 40px;
+		}
+
+		.product-card {
+		    display: flex;
+		    flex-direction: column;
+		    cursor: pointer;
+		}
+
+		.product-image-wrapper {
+		    position: relative;
+		    aspect-ratio: 1 / 1;
+		    background-color: var(--surface-container);
+		    border-radius: var(--radius-default);
+		    overflow: hidden;
+		    margin-bottom: 20px;
+		}
+
+		.product-image {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+		}
+
+		.product-card:hover .product-image {
+		    transform: scale(1.05);
+		}
+
+		.product-badge {
+		    position: absolute;
+		    top: 15px;
+		    left: 15px;
+		    background: var(--surface);
+		    padding: 6px 12px;
+		    font-family: var(--font-label);
+		    font-size: 0.65rem;
+		    text-transform: uppercase;
+		    letter-spacing: 1px;
+		    border-radius: var(--radius-full);
+		    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+		}
+
+		/* Product Details Alignment */
+		.product-details {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: flex-start;
+		}
+
+		.product-name {
+		    font-family: var(--font-headline);
+		    font-size: 1.15rem;
+		    color: var(--on-surface);
+		    margin-bottom: 4px;
+		}
+
+		.product-origin {
+		    font-family: var(--font-body);
+		    font-size: 0.8rem;
+		    color: var(--outline);
+		}
+
+		.product-price {
+		    font-family: var(--font-label);
+		    font-weight: 600;
+		    font-size: 0.95rem;
+		    color: var(--on-background);
+		}
+
+		/* Desktop Responsiveness */
+		@media (min-width: 768px) {
+		    .product-grid {
+		        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+		    }
+
+		    .products-container {
+		        max-width: var(--max-content-width);
+		        margin: 0 auto;
+		        padding: 60px var(--margin-elegant);
+		    }
+		}
+
+		@media (min-width: 1024px) {
+		    .products-section {
+		        padding: 100px var(--margin-elegant);
+		    }
+
+		    .section-header {
+		        flex-direction: row;
+		        justify-content: space-between;
+		        align-items: flex-end;
+		        margin-bottom: 60px;
+		    }
+
+		    .product-grid {
+		        grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+		        gap: 30px;
+		    }
+		    
+		    .section-title {
+		        font-size: 2.8rem;
+		    }
+		}
+	</style>
+
+	<style>
+		/* --- STORY SECTION --- */
+		.story-section {
+		    padding: 80px var(--margin-elegant); /* Mobile Padding */
+		    background-color: var(--surface);
+		    overflow: hidden;
+		}
+
+		.story-container {
+		    max-width: var(--max-content-width);
+		    margin: 0 auto;
+		    padding: 60px var(--margin-elegant);
+		    display: grid;
+		    grid-template-columns: 1fr; /* Mobile First: Stacked */
+		    gap: 60px;
+		    align-items: center;
+		}
+
+		/* Visual Components */
+		.story-visual {
+		    position: relative;
+		    padding-right: 20px;
+		}
+
+		.image-wrapper {
+		    position: relative;
+		    z-index: 2;
+		}
+
+		.main-story-img {
+		    width: 100%;
+		    height: auto;
+		    display: block;
+		    border-radius: var(--radius-lg);
+		    filter: sepia(20%); /* Adds a humble, vintage artisan feel */
+		}
+
+		.image-accent-box {
+		    position: absolute;
+		    bottom: -20px;
+		    right: -20px;
+		    width: 70%;
+		    height: 70%;
+		    background-color: var(--primary-container);
+		    border-radius: var(--radius-lg);
+		    z-index: -1;
+		}
+
+		.experience-badge {
+		    position: absolute;
+		    top: 20px;
+		    left: -10px;
+		    background-color: var(--secondary); /* Dark Wood */
+		    color: var(--on-primary);
+		    padding: 20px;
+		    border-radius: var(--radius-default);
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+		    z-index: 3;
+		}
+
+		.badge-number {
+		    font-family: var(--font-headline);
+		    font-size: 1.5rem;
+		    font-weight: 700;
+		}
+
+		.badge-label {
+		    font-family: var(--font-label);
+		    font-size: 0.6rem;
+		    text-transform: uppercase;
+		    letter-spacing: 1px;
+		    white-space: nowrap;
+		}
+
+		/* Text Content Components */
+		.story-eyebrow {
+		    display: block;
+		    font-family: var(--font-label);
+		    font-size: 0.75rem;
+		    text-transform: uppercase;
+		    letter-spacing: 3px;
+		    color: var(--color-accent);
+		    margin-bottom: 20px;
+		}
+
+		.story-headline {
+		    font-family: var(--font-headline);
+		    font-size: clamp(2rem, 6vw, 3rem);
+		    color: var(--primary);
+		    line-height: 1.2;
+		    margin-bottom: 25px;
+		}
+
+		.story-description {
+		    font-family: var(--font-body);
+		    font-size: 1rem;
+		    line-height: 1.8;
+		    color: var(--on-surface-variant);
+		    margin-bottom: 35px;
+		}
+
+		.secondary-btn {
+		    font-family: var(--font-label);
+		    font-size: 0.8rem;
+		    font-weight: 600;
+		    text-transform: uppercase;
+		    text-decoration: none;
+		    color: var(--on-surface);
+		    border-bottom: 2px solid var(--outline-variant);
+		    padding-bottom: 6px;
+		    transition: all 0.3s ease;
+		}
+
+		.secondary-btn:hover {
+		    color: var(--primary);
+		    border-bottom-color: var(--primary);
+		}
+
+		/* Desktop Responsiveness */
+		@media (min-width: 1024px) {
+		    .story-section {
+		        padding: 120px var(--margin-elegant);
+		    }
+
+		    .story-container {
+		        grid-template-columns: 1fr 1fr; /* Two columns */
+		        gap: 100px;
+		    }
+
+		    .story-content {
+		        padding-right: 40px;
+		    }
+		}
+	</style>
+
+	<style>
+		/* --- FOOTER STYLES --- */
+		.site-footer {
+		    background-color: var(--surface-container-low);
+		    border-top: 1px solid var(--outline-variant);
+		    font-family: var(--font-body);
+		}
+
+		/* Newsletter Area */
+		.footer-newsletter {
+		    background-color: var(--secondary); /* Dark Wood */
+		    color: var(--on-primary);
+		    padding: 60px var(--margin-elegant);
+		    text-align: center;
+		}
+
+		.newsletter-container {
+		    max-width: 600px;
+		    margin: 0 auto;
+		}
+
+		.newsletter-title {
+		    font-family: var(--font-headline);
+		    font-size: 2rem;
+		    margin-bottom: 12px;
+		}
+
+		.newsletter-desc {
+		    font-size: 0.9rem;
+		    opacity: 0.8;
+		    margin-bottom: 30px;
+		}
+
+		.newsletter-form {
+		    display: flex;
+		    flex-direction: column;
+		    gap: 12px;
+		}
+
+		.newsletter-input {
+		    padding: 16px 20px;
+		    border-radius: var(--radius-default);
+		    border: 1px solid rgba(255,255,255,0.2);
+		    background: transparent;
+		    color: white;
+		    font-family: var(--font-body);
+		}
+
+		.newsletter-btn {
+		    padding: 16px 30px;
+		    background-color: var(--primary); /* Forest Green */
+		    color: white;
+		    border: none;
+		    border-radius: var(--radius-default);
+		    font-family: var(--font-label);
+		    text-transform: uppercase;
+		    letter-spacing: 1.5px;
+		    font-weight: 600;
+		    cursor: pointer;
+		    transition: opacity 0.3s;
+		}
+
+		/* Main Footer Content */
+		.footer-main {
+		    padding: 80px var(--margin-elegant);
+		}
+
+		.footer-grid {
+		    max-width: var(--max-content-width);
+		    margin: 0 auto;
+		    display: grid;
+		    grid-template-columns: 1fr; /* Mobile first stack */
+		    gap: 40px;
+		}
+
+		.footer-logo {
+		    font-family: var(--font-headline);
+		    font-size: 1.5rem;
+		    color: var(--primary);
+		    text-decoration: none;
+		    font-weight: 700;
+		    display: block;
+		    margin-bottom: 20px;
+		}
+
+		.footer-about {
+		    font-size: 0.85rem;
+		    color: var(--on-surface-variant);
+		    line-height: 1.6;
+		    margin-bottom: 20px;
+		    max-width: 300px;
+		}
+
+		.footer-heading {
+		    font-family: var(--font-label);
+		    font-size: 0.75rem;
+		    text-transform: uppercase;
+		    letter-spacing: 2px;
+		    color: var(--primary);
+		    margin-bottom: 25px;
+		}
+
+		.footer-links {
+		    list-style: none;
+		}
+
+		.footer-links li {
+		    margin-bottom: 12px;
+		}
+
+		.footer-links a, .footer-contact p, .footer-contact a {
+		    text-decoration: none;
+		    color: var(--on-surface-variant);
+		    font-size: 0.9rem;
+		    transition: color 0.3s ease;
+		    font-style: normal;
+		}
+
+		.footer-links a:hover {
+		    color: var(--primary);
+		}
+
+		/* Bottom Bar */
+		.footer-bottom {
+		    padding: 30px var(--margin-elegant);
+		    border-top: 1px solid var(--outline-variant);
+		    background-color: var(--surface-container);
+		}
+
+		.bottom-container {
+		    max-width: var(--max-content-width);
+		    margin: 0 auto;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    gap: 20px;
+		    font-size: 0.75rem;
+		    color: var(--outline);
+		}
+
+		/* Desktop Styles */
+		@media (min-width: 768px) {
+		    .newsletter-form {
+		        flex-direction: row;
+		    }
+		    
+		    .newsletter-input {
+		        flex: 1;
+		    }
+
+		    .footer-grid {
+		        grid-template-columns: 2fr 1fr 1fr 1fr;
+		    }
+
+		    .bottom-container {
+		        flex-direction: row;
+		        justify-content: space-between;
+		    }
+		}
+
+		@media (min-width: 1024px) {
+		    .footer-main {
+		        padding: 100px var(--margin-elegant);
+		    }
+		}
 	</style>
 </head>
 <body>
@@ -354,6 +1008,208 @@
 		</div>
 	</aside>
 
+	<section class="hero-banner">
+	    <div class="hero-container">
+	        <div class="hero-content">
+	            <span class="hero-subtitle">Tatak Filipino</span>
+	            <h1 class="hero-title">Gawang-kamay,<br>Gawang-puso.</h1>
+	            <p class="hero-description">
+	                Authentic Filipino handicrafts na nagdadala ng warmth sa iyong tahanan. 
+	                Bawat piraso ay may kwento ng sining at dedikasyon.
+	            </p>
+	            <div class="hero-actions">
+	                <a href="#shop-all" class="action-btn hero-btn">Shop Best Sellers</a>
+	            </div>
+	        </div>
+
+	        <div class="hero-image-wrapper">
+	            <div class="hero-image-card">
+	                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5IZZivc-RZMZS6qJk8PIK3CI-HfUTqJildMcWJzZfQ48ODlj_JOLDUu-R1f0HcHxOW1W-XdAE-rf583VnqUdveY8LZRtDmDHP_mRlhKRx303y200Rh_9kh76V7rnOCPBK_1y9hqtziMH0TDlhhIOyEf_HRAMC6omi2zD5fex5pIcurA46UIiKWpfkvUf77em6QDzSScqEd8d7OVk2nPzdN7-plGpp6bOSK2ypRfbmsqkWbz5QM4BCkvESYxzv-SX2WNk8pL1few" alt="Artisan Pottery">
+	            </div>
+	        </div>
+	    </div>
+	</section>
+
+	<section class="features-section">
+	    <div class="features-container">
+	        <div class="feature-item">
+	            <div class="feature-icon">
+	                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+	                    <path d="M21 8l-9-4-9 4v8l9 4 9-4V8zM12 4v16M3 8l9 4 9-4"/>
+	                </svg>
+	            </div>
+	            <h3 class="feature-title">Eco-friendly Packaging</h3>
+	            <p class="feature-text">Sustainable materials to protect our planet.</p>
+	        </div>
+
+	        <div class="feature-item">
+	            <div class="feature-icon">
+	                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+	                    <path d="M18 11V6a2 2 0 00-2-2v0a2 2 0 00-2 2v0M14 10V4a2 2 0 00-2-2v0a2 2 0 00-2 2v0M10 10.5V5.5a2 2 0 00-2-2v0a2 2 0 00-2 2v0M6 13V9a2 2 0 00-2-2v0a2 2 0 00-2 2v5a7 7 0 007 7h1a7 7 0 007-7v-3"/>
+	                </svg>
+	            </div>
+	            <h3 class="feature-title">100% Handmade</h3>
+	            <p class="feature-text">Crafted with precision by skilled local hands.</p>
+	        </div>
+
+	        <div class="feature-item">
+	            <div class="feature-icon">
+	                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+	                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+	                </svg>
+	            </div>
+	            <h3 class="feature-title">Supporting Local Artisans</h3>
+	            <p class="feature-text">Directly empowering community livelihoods.</p>
+	        </div>
+	    </div>
+	</section>
+
+
+	<section class="products-section">
+	    <div class="products-container">
+	        <div class="section-header">
+	            <div class="header-text">
+	                <span class="eyebrow">Curated Collection</span>
+	                <h2 class="section-title">Pinakatampok na Likha</h2>
+	            </div>
+	            <a href="#shop-all" class="explore-link">Explore All Products <span>→</span></a>
+	        </div>
+
+	        <div class="product-grid">
+	            <div class="product-card">
+	                <div class="product-image-wrapper">
+	                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAAX7J4YcYiLy7i9bqxorXS-KbfjoUtVWjHop5lkqHn3LHt3GjLchKAnEL0FrwUJNR9bgU_t_TF4kdMVaLmTGb3zkae7PStfmT4GMQ3Pj4bHBd1txkfUjnAXt2mO0HWLSByj9icBjVxkj7caezYdeZdpjcvjrc1sJozCGd9dm4ODtAz02jCk_dRTFJsUthn_l4OzZQNUeD6OCMpZcPrv9LxlFJ6pdfd9bIShtRwIDPSZoUPA84w_P1oSvu4tDz8vMNl58o8vykDw" alt="Abaca Picnic Tote" class="product-image">
+	                    <div class="product-badge">Best Seller</div>
+	                </div>
+	                <div class="product-details">
+	                    <div class="product-main">
+	                        <h3 class="product-name">Abaca Picnic Tote</h3>
+	                        <p class="product-origin">Handwoven in Albay</p>
+	                    </div>
+	                    <span class="product-price">₱1,450.00</span>
+	                </div>
+	            </div>
+
+	            <div class="product-card">
+	                <div class="product-image-wrapper">
+	                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtWokKeimve6bETNIntgOgh6T8zrU7qJWQWwUc74RVt5GIx6Auo5reXm21rUv9pyg1HR6gnC5wISTOWRqbWfZC4zg4rhMEgFeg84ijGOdn5LGxYCykrAsglR-P6FZZVCEZFPjpr0onRVb11PvViLOAg6zV2jtj6LDlP4twf6-4EPQe8ry3xaMrpd8PGQM7Q7AVArJYgAV68PKRqqWDftSv3sajUloknYZhjjj02PSOXB_aRziSCz9BY1lPLA7GPMI2gRMGLru0eQ" alt="Vigan Terra-cotta Vase" class="product-image">
+	                </div>
+	                <div class="product-details">
+	                    <div class="product-main">
+	                        <h3 class="product-name">Vigan Terra-cotta Vase</h3>
+	                        <p class="product-origin">Clay Pottery, Ilocos Region</p>
+	                    </div>
+	                    <span class="product-price">₱850.00</span>
+	                </div>
+	            </div>
+
+	            <div class="product-card">
+	                <div class="product-image-wrapper">
+	                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiC2lwwGtqGAqC_0_aTUV9bUj93QEGeeRiXKZaOGCqg0CgDLDRCCyTZLFhhAP8sU4iy4gK_0nci4tciMrBnUuc6uhaB1sBQj1n1okw_sBS7Ik2sh4Jm53s-7CyoFkAciZG8P9DI3_H78JlCaB8wBmxJ_7wfxa6D1ISDWe8PQKGE5I2Dd3O5fQlqvOhan9HLvIHaRUFM80MSQ1j1TWxkx-4lqrl6cvjT33776pgbuphSmnep8c83uVv0rxexijVcXSyNh6-N5QvqQ" alt="Traditional Planter" class="product-image">
+	                </div>
+	                <div class="product-details">
+	                    <div class="product-main">
+	                        <h3 class="product-name">Kattand Planter</h3>
+	                        <p class="product-origin">Local Rattan Weave</p>
+	                    </div>
+	                    <span class="product-price">₱1,200.00</span>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</section>
+
+	<section class="story-section">
+	    <div class="story-container">
+	        <div class="story-visual">
+	            <div class="image-wrapper">
+	                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBaAHmqDTnHJldM8-ssx8mmxBICgEosVkpE2_Rmib0_-3Ti_O7X7SDrrkej6av56jOiiReh8jM__khAN0SYytV9UJ2zmPDbhCUtTd1VFooN83UszOOFtsrSTkEfKt5vwZ0zeEZUs0tiRAG58iDPT2jrys3p1h52l6aqd9ipy4V3gGCH8DJsVJIkTZjU4eD7auxLylQa9erBCsJRUnAa1U26OoUIyOzt4cUm0lS8pL6Ju-kE22nOl-DDB3sXkhNS-gjEHRjWJIRdg" alt="Artisan at work" class="main-story-img">
+	                <div class="image-accent-box"></div>
+	            </div>
+	            <div class="experience-badge">
+	                <span class="badge-number">100%</span>
+	                <span class="badge-label">Gawang Lokal</span>
+	            </div>
+	        </div>
+
+	        <div class="story-content">
+	            <span class="story-eyebrow">Ang Aming Simula</span>
+	            <h2 class="story-headline">Sining na nagmumula sa kamay, hinubog ng kultura.</h2>
+	            <p class="story-description">
+	                Sa AJL-Handicraft, bawat produkto ay higit pa sa palamuti. Ito ay bunga ng dedikasyon ng ating mga lokal na artisan na patuloy na binubuhay ang tradisyon sa gitna ng modernong panahon. Naniniwala kami na ang tunay na ganda ay matatagpuan sa mga detalye ng bawat ukit at habi.
+	            </p>
+	            <div class="story-cta">
+	                <a href="#about-us" class="secondary-btn">Alamin ang aming Kasaysayan</a>
+	            </div>
+	        </div>
+	    </div>
+	</section>
+
+	<footer class="site-footer">
+	    <div class="footer-newsletter">
+	        <div class="newsletter-container">
+	            <h3 class="newsletter-title">Sining sa iyong Inbox</h3>
+	            <p class="newsletter-desc">Maging unang makaalam sa aming mga bagong koleksyon at kwentong artisan.</p>
+	            <form class="newsletter-form">
+	                <input type="email" placeholder="Iyong Email Address" class="newsletter-input" required>
+	                <button type="submit" class="newsletter-btn">Mag-subscribe</button>
+	            </form>
+	        </div>
+	    </div>
+
+	    <div class="footer-main">
+	        <div class="footer-grid">
+	            <div class="footer-col brand-col">
+	                <a href="#" class="footer-logo">AJL-Handicraft</a>
+	                <p class="footer-about">Nagdadala ng sining at tradisyong Pilipino sa bawat tahanan. Gawang-kamay, gawang-puso.</p>
+	                <div class="social-links">
+	                    <a href="#" aria-label="Facebook">FB</a>
+	                    <a href="#" aria-label="Instagram">IG</a>
+	                    <a href="#" aria-label="TikTok">TT</a>
+	                </div>
+	            </div>
+
+	            <div class="footer-col">
+	                <h4 class="footer-heading">Shop</h4>
+	                <ul class="footer-links">
+	                    <li><a href="#">New Arrivals</a></li>
+	                    <li><a href="#">Best Sellers</a></li>
+	                    <li><a href="#">Home Decor</a></li>
+	                    <li><a href="#">Gift Cards</a></li>
+	                </ul>
+	            </div>
+
+	            <div class="footer-col">
+	                <h4 class="footer-heading">Tulong</h4>
+	                <ul class="footer-links">
+	                    <li><a href="#">Shipping Policy</a></li>
+	                    <li><a href="#">Return & Exchange</a></li>
+	                    <li><a href="#">Contact Us</a></li>
+	                    <li><a href="#">FAQs</a></li>
+	                </ul>
+	            </div>
+
+	            <div class="footer-col">
+	                <h4 class="footer-heading">Koneksyon</h4>
+	                <address class="footer-contact">
+	                    <p>Sorsogon City, Bicol</p>
+	                    <p>Philippines</p>
+	                    <a href="mailto:hello@ajl-handicraft.com">hello@ajl-handicraft.com</a>
+	                </address>
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="footer-bottom">
+	        <div class="bottom-container">
+	            <p class="copyright">&copy; 2026 AJL-Handicraft. All rights reserved.</p>
+	            <div class="payment-icons">
+	                <span>GCash</span> <span>Maya</span> <span>COD</span>
+	            </div>
+	        </div>
+	    </div>
+	</footer>
+
 	<script>
 		const header = document.getElementById('main-header');
 		const overlay = document.getElementById('drawer-overlay');
@@ -414,13 +1270,17 @@
 		let lastScroll = 0;
 		window.addEventListener('scroll', () => {
 			let current = window.pageYOffset;
-			if (current > lastScroll && current > 100 && !overlay.classList.contains('active')) {
+			
+			// Kung nag-scroll down at lampas na sa announcement bar
+			if (current > lastScroll && current > 40 && !overlay.classList.contains('active')) {
 				header.classList.add('header-hidden');
-			} else {
+			} 
+			// Kung nag-scroll up o nasa pinakataas
+			else {
 				header.classList.remove('header-hidden');
 			}
 			lastScroll = current;
-		});
+		}, { passive: true });
 	</script>
 </body>
 </html>
