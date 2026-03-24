@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>AJL-Handicraft | Artisan Collection</title>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+
+	<style>
+		/* --- BRAND COLOR PALETTE: Deep Forest & Gold --- */
+		:root {
+			/* Primary & Secondary */
+			--primary: #57624e;               /* Secondary from your list: Forest Green */
+			--on-primary: #ffffff;
+			--primary-container: #d8e4ca;     /* Light Sage */
+			--on-primary-container: #404a37;
+			
+			/* Accents */
+			--secondary: #322214;             /* Dark Wood */
+			--tertiary: #ba1a1a;              /* Error/Red for Sales */
+			--color-accent: #705a49;          /* Surface Tint / Clay */
+			
+			/* Backgrounds & Surfaces */
+			--background: #fdf9f5;            /* Off-white Parchment */
+			--on-background: #1c1c19;
+			--surface: #ffffff;
+			--on-surface: #1c1c19;
+			--surface-container: #f1ede9;
+			--surface-container-highest: #e6e2de;
+			--outline-variant: #d2c4bb;
+
+			/* Typography */
+			--font-headline: 'Playfair Display', serif;
+			--font-body: 'Montserrat', sans-serif;
+			--font-label: 'Manrope', sans-serif;
+
+			/* Border Radius Tokens */
+			--radius-default: 0.25rem;
+			--radius-lg: 0.5rem;
+			--radius-xl: 0.75rem;
+			--radius-full: 9999px;
+
+			/* Layout Constants */
+			--header-height: 70px;
+			--announcement-height: 40px;
+			--margin-elegant: 5%;
+			--max-content-width: 1400px;
+			--drawer-top-offset: calc(var(--header-height) + var(--announcement-height));
+		}
+
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+
+		body {
+			font-family: var(--font-body);
+			background-color: var(--background);
+			color: var(--on-background);
+			overflow-x: hidden;
+		}
+
+		/* --- MAIN HEADER --- */
+		#main-header {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 5000;
+			background: var(--surface);
+			transition: transform 0.3s ease-in-out;
+		}
+
+		.header-hidden:not(.has-active-drawer) {
+			transform: translateY(calc(var(--announcement-height) * -1));
+		}
+
+		.announcement-bar {
+			background: var(--primary);
+			color: var(--on-primary);
+			height: var(--announcement-height);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.7rem;
+			font-family: var(--font-label);
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			font-weight: 500;
+		}
+
+		.nav-border-wrapper {
+			border-bottom: 1px solid var(--outline-variant);
+			background: var(--surface);
+		}
+
+		.main-nav {
+			height: var(--header-height);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 var(--margin-elegant);
+			max-width: var(--max-content-width);
+			margin: 0 auto;
+		}
+
+		.logo { 
+			font-family: var(--font-headline); 
+			font-size: 1.5rem;
+			font-weight: 800;
+			letter-spacing: -0.5px; 
+			text-decoration: none;
+			color: var(--primary);
+		}
+
+		.nav-controls { display: flex; align-items: center; gap: 2.5rem; }
+		.nav-links { display: flex; align-items: center; gap: 2.5rem; }
+		.nav-links a, .nav-links .mobile-user-link { 
+			text-decoration: none; 
+			color: var(--on-surface); 
+			font-family: var(--font-label);
+			font-size: 0.75rem; 
+			letter-spacing: 1.5px;
+			text-transform: uppercase;
+			transition: color 0.3s ease;
+			cursor: pointer;
+		}
+		.nav-links a:hover, .nav-links .mobile-user-link:hover { color: var(--color-accent); }
+
+		.mobile-user-link { display: none; align-items: center; gap: 10px; border: none; background: none; }
+
+		.action-icons { display: flex; align-items: center; gap: 15px; }
+		.icon-btn { 
+			background: none; border: none; cursor: pointer; color: var(--on-surface); 
+			position: relative; display: flex; align-items: center; transition: color 0.3s;
+		}
+		.icon-btn:hover { color: var(--primary); }
+
+		.cart-count {
+			position: absolute; top: -2px; right: -2px;
+			background: var(--primary); color: white;
+			font-size: 9px; min-width: 14px; height: 14px;
+			display: flex; align-items: center; justify-content: center;
+			border-radius: var(--radius-full); font-weight: bold;
+		}
+
+		.menu-toggle { 
+			display: none; flex-direction: column; gap: 5px; cursor: pointer; width: 24px;
+		}
+		.menu-toggle span { width: 22px; height: 1.5px; background: var(--on-surface); transition: 0.3s; }
+
+		.active-burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+		.active-burger span:nth-child(2) { opacity: 0; }
+		.active-burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+		/* --- MOBILE NAVIGATION --- */
+		@media (max-width: 768px) {
+			.desktop-user-icon { display: none; }
+			.mobile-user-link { display: flex; margin-top: 10px; width: 100%; }
+
+			.menu-toggle { display: flex; z-index: 5001; }
+			.nav-links {
+				position: fixed; 
+				top: var(--drawer-top-offset); 
+				right: -100%; 
+				width: 100%;
+				height: calc(100vh - var(--drawer-top-offset)); 
+				background: var(--surface);
+				flex-direction: column; 
+				padding: 50px var(--margin-elegant);
+				gap: 30px; 
+				transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+				z-index: 4000; 
+				border-top: 1px solid var(--outline-variant);
+			}
+			.nav-links.active { right: 0; }
+			.nav-links a, .nav-links .mobile-user-link { 
+				font-family: var(--font-headline); 
+				font-size: 2.2rem; 
+				border-bottom: 1px solid var(--outline-variant); 
+				width: 100%; 
+				padding-bottom: 15px;
+				text-transform: none; 
+				letter-spacing: 0;
+			}
+		}
+
+		/* --- DRAWERS --- */
+		.drawer {
+			position: fixed; 
+			top: var(--drawer-top-offset); 
+			height: calc(100vh - var(--drawer-top-offset)); 
+			background: var(--surface);
+			z-index: 4500; 
+			transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			display: flex; 
+			flex-direction: column; 
+			overflow-y: auto;
+		}
+		.user-drawer { left: -100%; width: 100%; max-width: 480px; }
+		.user-drawer.active { left: 0; }
+		
+		.cart-drawer { right: -100%; width: 100%; max-width: 450px; }
+		.cart-drawer.active { right: 0; }
+
+		.search-drawer { top: -100%; left: 0; width: 100%; height: auto; min-height: 250px; border-bottom: 1px solid var(--outline-variant); }
+		.search-drawer.active { top: var(--drawer-top-offset); }
+
+		.drawer-overlay {
+			position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+			background: rgba(28, 28, 25, 0.5); opacity: 0; visibility: hidden;
+			transition: 0.3s; z-index: 3500; backdrop-filter: blur(3px);
+		}
+		.drawer-overlay.active { opacity: 1; visibility: visible; }
+
+		.drawer-header { padding: 50px 28px 20px 28px; border-bottom: 1px solid var(--outline-variant); }
+		.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+		.header-top span { font-size: 0.65rem; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 2px; color: var(--primary); font-weight: 600; }
+		.close-drawer { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--on-surface); }
+		.drawer h2 { font-family: var(--font-headline); font-size: 2.5rem; font-weight: 400; color: var(--on-surface); }
+
+		/* Search Form */
+		.search-container { padding: 40px var(--margin-elegant); }
+		.search-input-wrapper { position: relative; display: flex; align-items: center; }
+		.search-input-wrapper input { 
+			width: 100%; border: none; border-bottom: 2px solid var(--primary-container); 
+			padding: 15px 0; font-family: var(--font-headline); font-size: 2rem; 
+			background: transparent; outline: none; color: var(--on-surface);
+		}
+
+		/* Auth & Buttons */
+		.auth-tabs { display: flex; gap: 25px; padding: 20px 28px 0; border-bottom: 1px solid var(--outline-variant); }
+		.tab-btn { background: none; border: none; font-family: var(--font-label); font-size: 0.8rem; text-transform: uppercase; padding-bottom: 12px; cursor: pointer; opacity: 0.5; color: var(--on-surface); }
+		.tab-btn.active { opacity: 1; border-bottom: 2px solid var(--primary); color: var(--primary); }
+		
+		.auth-content { padding: 35px 28px; }
+		.login-form { display: flex; flex-direction: column; gap: 24px; }
+		.form-group label { font-family: var(--font-label); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 6px; display: block; }
+		.form-group input { 
+			width: 100%; padding: 14px; 
+			border: 1px solid var(--outline-variant); 
+			border-radius: var(--radius-default);
+			font-family: var(--font-body); 
+			background: var(--surface-container);
+		}
+		
+		.action-btn { 
+			background: var(--primary); 
+			color: var(--on-primary); 
+			border: none; 
+			border-radius: var(--radius-lg);
+			padding: 20px; 
+			font-family: var(--font-label);
+			text-transform: uppercase; 
+			letter-spacing: 2px; 
+			font-size: 0.75rem; 
+			cursor: pointer;
+			transition: background 0.3s;
+		}
+		.action-btn:hover { background: var(--secondary); }
+	</style>
+</head>
+<body>
+
+	<div class="drawer-overlay" id="drawer-overlay"></div>
+
+	<header id="main-header">
+		<div class="announcement-bar">New Artisan Collection Just Landed</div>
+		<div class="nav-border-wrapper">
+			<nav class="main-nav">
+				<a href="#" class="logo">AJL-Handicraft</a>
+
+				<div class="nav-controls">
+					<div class="nav-links" id="nav-menu">
+						<a href="#shop-all">Shop All</a>
+						<a href="#best-sellers" style="color: var(--primary); font-weight: 600;">Best Sellers</a>
+						<a href="#new">New Arrivals</a>
+						<a href="#sale" style="color: var(--tertiary); font-weight: 600;">Flash Sale</a>
+						
+						<button class="mobile-user-link user-trigger-btn">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+							Account
+						</button>
+					</div>
+
+					<div class="action-icons">
+						<button class="icon-btn" id="search-trigger-btn">
+						  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+						</button>
+
+						<button class="icon-btn desktop-user-icon user-trigger-btn">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+						</button>
+
+						<button class="icon-btn" id="cart-icon-btn">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+							<span class="cart-count">0</span>
+						</button>
+
+						<div class="menu-toggle" id="mobile-toggle">
+							<span></span><span></span><span></span>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
+
+	<aside class="drawer search-drawer" id="search-drawer">
+		<div class="search-container">
+			<div class="header-top"><span>Search</span><button class="close-drawer" onclick="closeAll()">✕</button></div>
+			<form action="#" class="search-input-wrapper">
+				<input type="text" placeholder="Explore handcrafted goods..." autofocus>
+				<button type="submit" class="icon-btn" style="position: absolute; right: 0;">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+				</button>
+			</form>
+		</div>
+	</aside>
+
+	<aside class="drawer user-drawer" id="user-drawer">
+		<div class="drawer-header">
+			<div class="header-top"><span>Account</span><button class="close-drawer" onclick="closeAll()">✕</button></div>
+			<h2 id="auth-title">Welcome back</h2>
+		</div>
+		<div class="auth-tabs">
+			<button class="tab-btn active" onclick="switchAuth('login')">Sign In</button>
+			<button class="tab-btn" onclick="switchAuth('signup')">Register</button>
+		</div>
+		<div class="auth-content">
+			<div id="login-pane">
+				<form class="login-form">
+					<div class="form-group"><label>Email</label><input type="email" required></div>
+					<div class="form-group"><label>Password</label><input type="password" required></div>
+					<button type="submit" class="action-btn">Sign In</button>
+				</form>
+			</div>
+			<div id="signup-pane" style="display:none">
+				<form class="login-form">
+					<div class="form-group"><label>Name</label><input type="text" required></div>
+					<div class="form-group"><label>Email</label><input type="email" required></div>
+					<div class="form-group"><label>Password</label><input type="password" required></div>
+					<button type="submit" class="action-btn">Create Account</button>
+				</form>
+			</div>
+		</div>
+	</aside>
+
+	<aside class="drawer cart-drawer" id="cart-drawer">
+		<div class="drawer-header">
+			<div class="header-top"><span>Your Cart</span><button class="close-drawer" onclick="closeAll()">✕</button></div>
+			<h2>Your Selection</h2>
+		</div>
+		<div style="padding: 40px 28px; text-align: center;">
+			<p style="opacity: 0.6; margin-bottom: 25px; font-size: 0.9rem;">Your cart is empty.</p>
+			<a href="#" class="action-btn" style="text-decoration: none; display: block;">Start Shopping</a>
+		</div>
+	</aside>
+
+	<script>
+		const header = document.getElementById('main-header');
+		const overlay = document.getElementById('drawer-overlay');
+		const mobileToggle = document.getElementById('mobile-toggle');
+		const navMenu = document.getElementById('nav-menu');
+		const userDrawer = document.getElementById('user-drawer');
+		const cartDrawer = document.getElementById('cart-drawer');
+		const searchDrawer = document.getElementById('search-drawer');
+		const userTriggers = document.querySelectorAll('.user-trigger-btn');
+		const searchTrigger = document.getElementById('search-trigger-btn');
+
+		function switchAuth(type) {
+			const loginPane = document.getElementById('login-pane');
+			const signupPane = document.getElementById('signup-pane');
+			const tabs = document.querySelectorAll('.tab-btn');
+			const title = document.getElementById('auth-title');
+			if(type === 'login') {
+				loginPane.style.display = 'block'; signupPane.style.display = 'none';
+				tabs[0].classList.add('active'); tabs[1].classList.remove('active');
+				title.innerText = 'Welcome back';
+			} else {
+				loginPane.style.display = 'none'; signupPane.style.display = 'block';
+				tabs[1].classList.add('active'); tabs[0].classList.remove('active');
+				title.innerText = 'Create Account';
+			}
+		}
+
+		function closeAll() {
+			navMenu.classList.remove('active');
+			mobileToggle.classList.remove('active-burger');
+			[userDrawer, cartDrawer, searchDrawer, overlay].forEach(el => el.classList.remove('active'));
+			document.body.style.overflow = '';
+		}
+
+		function openDrawer(el) {
+			closeAll();
+			el.classList.add('active');
+			overlay.classList.add('active');
+			document.body.style.overflow = 'hidden';
+			if(el.id === 'search-drawer') setTimeout(() => el.querySelector('input').focus(), 400);
+		}
+
+		mobileToggle.addEventListener('click', () => {
+			if(navMenu.classList.contains('active')) closeAll();
+			else {
+				navMenu.classList.add('active');
+				mobileToggle.classList.add('active-burger');
+				overlay.classList.add('active');
+				document.body.style.overflow = 'hidden';
+			}
+		});
+
+		userTriggers.forEach(btn => btn.addEventListener('click', () => openDrawer(userDrawer)));
+		searchTrigger.addEventListener('click', () => openDrawer(searchDrawer));
+		document.getElementById('cart-icon-btn').addEventListener('click', () => openDrawer(cartDrawer));
+		overlay.addEventListener('click', closeAll);
+		
+		let lastScroll = 0;
+		window.addEventListener('scroll', () => {
+			let current = window.pageYOffset;
+			if (current > lastScroll && current > 100 && !overlay.classList.contains('active')) {
+				header.classList.add('header-hidden');
+			} else {
+				header.classList.remove('header-hidden');
+			}
+			lastScroll = current;
+		});
+	</script>
+</body>
+</html>

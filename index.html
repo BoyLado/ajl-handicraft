@@ -8,239 +8,44 @@
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> -->
     
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="main-header.css">
+    <link rel="stylesheet" type="text/css" href="user-drawer.css">
+    <link rel="stylesheet" type="text/css" href="cart-drawer.css">
+
     <style>
-        :root {
-            --color-bg: #F9F8F6;
-            --color-text: #2F2F2F;
-            --color-accent: #4A5D4E;
-            --color-border: #E0DDD5;
-            --margin-elegant: clamp(1.5rem, 7vw, 10rem); 
-            --max-content-width: 1400px;
-            --announcement-height: 40px;
-            --header-height: 70px;
-            --drawer-top-offset: calc(var(--announcement-height) + var(--header-height));
-        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* --- SMART STICKY NAVIGATION --- */
-        #main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 4000;
-            background: var(--color-bg);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .header-hidden:not(.has-active-drawer) {
-            transform: translateY(calc(var(--announcement-height) * -1));
-        }
-
-        .announcement-bar {
-            background: var(--color-accent);
-            color: white;
-            height: var(--announcement-height);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .main-nav {
-            height: var(--header-height);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 var(--margin-elegant);
-            max-width: var(--max-content-width);
-            margin: 0 auto;
-            background: var(--color-bg);
-            transparent: 0.5;
-        }
-
-        .nav-border-wrapper {
-            border-bottom: 1px solid var(--color-border);
-            background: var(--color-bg);
-        }
-
-        .logo { 
-            font-family: 'EB Garamond', serif; 
-            font-size: 1.1rem;
-            font-weight: bolder;
-            letter-spacing: 1px; 
-            text-transform: uppercase;
-            text-decoration: none;
-            color: var(--color-text);
-        }
-
-        .nav-controls { display: flex; align-items: center; gap: 2.5rem;}
-        .nav-links { display: flex; align-items: center; gap: 2.5rem;}
-        .nav-links a { 
-            text-decoration: none; 
-            color: var(--color-text); 
-            font-size: 0.85rem; 
-            letter-spacing: 2px;
-        }
-
-        .action-icons { display: flex; align-items: center; gap: 15px; }
-        .icon-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; color: var(--color-text); position: relative; }
-        
-        .cart-count {
-            position: absolute; top: -2px; right: -2px;
-            background: var(--color-accent); color: white;
-            font-size: 9px; min-width: 14px; height: 14px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; font-weight: bold;
-        }
-
-        .menu-toggle { 
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            gap: 5px; cursor: pointer; width: 24px; height: 24px; position: relative;
-        }
-        .menu-toggle span { 
-            width: 22px; height: 1.5px; background: var(--color-text); 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: center;
-        }
-        .active-burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-        .active-burger span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
-        .active-burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-        /* --- DRAWERS BASE STYLING --- */
+        /* --- DRAWERS BASE STYLING START --- */
         .drawer {
             position: fixed;
             top: var(--drawer-top-offset);
             height: calc(100vh - var(--drawer-top-offset));
             background: var(--color-bg);
-            z-index: 3000;
+            z-index: 9999;
             transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 60px 40px;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
         }
-
-        /* --- USER DRAWER UI --- */
-        .user-drawer {
-            left: -100%;
-            width: 100%; 
-            max-width: 480px; 
-            border-right: 1px solid var(--color-border);
-            padding: 40px;
-        }
-        .user-drawer.active { left: 0; }
-
-        .drawer-header {
-            margin-bottom: 40px;
-        }
-        
-        .drawer-header span {
-            display: block;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            color: var(--color-accent);
-            font-weight: 500;
-        }
-
-        .drawer h2 { 
-            font-family: 'EB Garamond', serif; 
-            font-size: 2.4rem; 
-            font-weight: 400; 
-            line-height: 1.1;
-        }
-
-        .auth-tabs {
+        .header-top {
             display: flex;
-            gap: 25px;
-            margin-bottom: 35px;
-            border-bottom: 1px solid var(--color-border);
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
-        .tab-btn {
-            background: none; border: none; font-family: 'Inter', sans-serif;
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
-            padding-bottom: 12px; cursor: pointer; color: var(--color-text);
-            opacity: 0.4; transition: 0.3s; position: relative;
+        .close-drawer {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--color-text);
+            opacity: 0.5;
         }
+        /* --- DRAWERS BASE STYLING END --- */
 
-        .tab-btn.active { opacity: 1; }
-        .tab-btn.active::after {
-            content: ''; position: absolute; bottom: -1px; left: 0;
-            width: 100%; height: 1px; background: var(--color-text);
-        }
-
-        .auth-pane { display: none; animation: fadeIn 0.4s ease forwards; }
-        .auth-pane.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .login-form { display: flex; flex-direction: column; gap: 24px; width: 100%; }
-        .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-group label { 
-            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; 
-            font-weight: 500; color: var(--color-text);
-        }
-
-        .form-group input {
-            width: 100%; background: transparent; border: 1px solid var(--color-border);
-            padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 0.95rem; 
-            color: var(--color-text); outline: none; transition: all 0.3s;
-        }
-
-        .form-group input:focus { border-color: var(--color-text); background: #fff; }
-
-        .form-footer { margin-top: 4px; display: flex; justify-content: space-between; align-items: center; }
-        .form-link { font-size: 0.75rem; color: var(--color-text); text-decoration: none; opacity: 0.6; transition: 0.3s; }
-        .form-link:hover { opacity: 1; text-decoration: underline; }
-
-        .action-btn {
-            background: var(--color-accent); color: white; border: 1px solid var(--color-accent); 
-            padding: 18px; font-family: 'Inter', sans-serif; text-transform: uppercase; 
-            letter-spacing: 2px; font-size: 0.75rem; font-weight: 500; cursor: pointer; 
-            transition: all 0.3s; text-decoration: none; text-align: center;
-        }
-
-        .social-login { margin-top: 40px; text-align: center; }
-        .divider {
-            display: flex; align-items: center; gap: 15px; margin-bottom: 25px;
-            color: var(--color-border); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
-        }
-        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--color-border); }
-        .social-btns { display: flex; gap: 12px; }
-        .social-btn {
-            flex: 1; padding: 12px; border: 1px solid var(--color-border);
-            background: transparent; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        /* --- CART DRAWER --- */
-        .cart-drawer {
-            right: -100%; width: 100%; max-width: 450px; border-left: 1px solid var(--color-border);
-        }
-        .cart-drawer.active { right: 0; }
-        .cart-empty { display: flex; flex-direction: column; gap: 20px; }
-
-        .drawer-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4); opacity: 0; visibility: hidden;
-            transition: 0.3s; z-index: 2500; backdrop-filter: blur(2px);
-        }
-        .drawer-overlay.active { opacity: 1; visibility: visible; }
+        
 
         @media (max-width: 768px) {
             .drawer { max-width: 100%; border: none; }
@@ -1483,7 +1288,10 @@
 
     <aside class="drawer user-drawer" id="user-drawer">
         <div class="drawer-header">
-            <span>Account Access</span>
+            <div class="header-top">
+                <span>Account Access</span>
+                <button class="close-drawer" onclick="closeAll()">✕</button>
+            </div>
             <h2 id="auth-title">Welcome back</h2>
         </div>
         <div class="auth-tabs">
@@ -1520,11 +1328,18 @@
     </aside>
 
     <aside class="drawer cart-drawer" id="cart-drawer">
-        <h2>Your Cart</h2>
-        <br>
+        <div class="drawer-header">
+            <div class="header-top">
+                <span>Your Selection</span>
+                <button class="close-drawer" onclick="closeAll()">✕</button>
+            </div>
+            <h2>Shopping Cart</h2>
+        </div>
+
         <div class="cart-empty">
-            <p>Your cart is currently empty.</p>
-            <a href="#shop" class="action-btn" id="continue-shopping">Continue Shopping</a>
+            <div class="empty-icon">🧺</div>
+            <p>Your cart is feeling a bit light.</p>
+            <a href="/collections/all" class="action-btn">Browse Collections</a>
         </div>
     </aside>
 

@@ -1,345 +1,2335 @@
-<!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>AJL-HANDICRAFT | Artisanal Elegance</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto_Serif:wght@400;700&amp;family=Manrope:wght@300;400;500;700&amp;family=Playfair+Display:wght@400;700&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "on-primary": "#ffffff",
-              "inverse-surface": "#30302f",
-              "outline-variant": "#d2c4ba",
-              "primary-container": "#8a6f58",
-              "on-secondary-fixed": "#191d19",
-              "error": "#ba1a1a",
-              "surface-dim": "#dbdad8",
-              "on-secondary": "#ffffff",
-              "surface-container-highest": "#e4e2e0",
-              "on-error": "#ffffff",
-              "on-tertiary-container": "#4e3d00",
-              "on-tertiary-fixed": "#241a00",
-              "primary": "#705741",
-              "inverse-primary": "#e1c1a5",
-              "secondary-fixed-dim": "#c4c7c2",
-              "surface-bright": "#fbf9f7",
-              "on-secondary-fixed-variant": "#444843",
-              "secondary-fixed": "#e0e3dd",
-              "surface-container-low": "#f5f3f1",
-              "tertiary-fixed": "#ffe088",
-              "surface-container-lowest": "#ffffff",
-              "on-primary-container": "#fffbff",
-              "tertiary": "#735c00",
-              "on-secondary-container": "#5e625d",
-              "surface-container": "#efedec",
-              "on-surface-variant": "#4e453d",
-              "surface": "#fbf9f7",
-              "error-container": "#ffdad6",
-              "background": "#fbf9f7",
-              "on-surface": "#1b1c1b",
-              "inverse-on-surface": "#f2f0ee",
-              "on-tertiary": "#ffffff",
-              "on-background": "#1b1c1b",
-              "secondary": "#5b5f5b",
-              "tertiary-fixed-dim": "#e9c349",
-              "surface-tint": "#725a43",
-              "on-error-container": "#93000a",
-              "primary-fixed": "#ffdcbf",
-              "on-primary-fixed": "#291806",
-              "tertiary-container": "#cca72f",
-              "secondary-container": "#dbded8",
-              "primary-fixed-dim": "#e1c1a5",
-              "on-tertiary-fixed-variant": "#574500",
-              "surface-container-high": "#eae8e6",
-              "on-primary-fixed-variant": "#59422d",
-              "surface-variant": "#e4e2e0",
-              "outline": "#80756c"
-            },
-            fontFamily: {
-              "headline": ["Noto Serif", "Playfair Display", "serif"],
-              "body": ["Manrope", "Montserrat", "sans-serif"],
-              "label": ["Manrope", "sans-serif"]
-            },
-            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-          },
-        },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .editorial-shadow {
-            box-shadow: 0 20px 40px rgba(45, 49, 45, 0.06);
-        }
-        .glass-nav {
-            background: rgba(251, 249, 247, 0.95);
-            backdrop-filter: blur(12px);
-        }
-        .mobile-menu-active {
-            transform: translateX(0);
-        }
-        .mobile-menu-hidden {
-            transform: translateX(100%);
-        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover AJL-Handicraft, a small-batch studio dedicated to honest, slow-crafted wood and leather goods. Shop our ethical, made-to-order collections designed to last generations.">
+    <title>AJL Handicraft | AJL Handicraft</title>
+    
+    <link rel="preload" as="image" href="/cdn/shop/t/9/assets/hero.webp?v=9415123433838979621773756045" fetchpriority="high">
+    
+    
+    <style>
+      :root {
+    --color-bg: #F9F8F6;
+    --color-text: #2F2F2F;
+    --color-accent: #4A5D4E;
+    --color-border: #E0DDD5;
+    --margin-elegant: clamp(1.5rem, 7vw, 10rem); 
+    --max-content-width: 1400px;
+    --announcement-height: 40px;
+    --header-height: 70px;
+    --drawer-top-offset: calc(var(--announcement-height) + var(--header-height));
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* --- SMART STICKY NAVIGATION --- */
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 4000;
+    background: var(--color-bg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.header-hidden:not(.has-active-drawer) {
+    transform: translateY(calc(var(--announcement-height) * -1));
+}
+
+.announcement-bar {
+    background: var(--color-accent);
+    color: white;
+    height: var(--announcement-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.main-nav {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--margin-elegant);
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+}
+
+.nav-border-wrapper {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
+}
+
+.logo { 
+    font-family: 'EB Garamond', serif; 
+    font-size: 1.1rem;
+    letter-spacing: 1px; 
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.nav-controls { display: flex; align-items: center; gap: 1.5rem;}
+.nav-links { display: flex; align-items: center; gap: 1.5rem;}
+.nav-links a { 
+    text-decoration: none; 
+    color: var(--color-text); 
+    font-size: 0.85rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+}
+
+.action-icons { display: flex; align-items: center; gap: 15px; }
+.icon-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; color: var(--color-text); position: relative; }
+
+.cart-count {
+    position: absolute; top: -2px; right: -2px;
+    background: var(--color-accent); color: white;
+    font-size: 9px; min-width: 14px; height: 14px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; font-weight: bold;
+}
+
+.menu-toggle { 
+    display: none; flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; cursor: pointer; width: 24px; height: 24px; position: relative;
+}
+.menu-toggle span { 
+    width: 22px; height: 1.5px; background: var(--color-text); 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: center;
+}
+.active-burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.active-burger span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+.active-burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* --- DRAWERS BASE STYLING --- */
+.drawer {
+    position: fixed;
+    top: var(--drawer-top-offset);
+    height: calc(100vh - var(--drawer-top-offset));
+    background: var(--color-bg);
+    z-index: 3000;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* --- USER DRAWER UI --- */
+.user-drawer {
+    left: -100%;
+    width: 100%; 
+    max-width: 480px; 
+    border-right: 1px solid var(--color-border);
+    padding: 0 !important;
+}
+.user-drawer .drawer-header {
+    padding: 50px 28px 20px 28px;
+    border-bottom : 1px solid var(--color-border);
+}
+.user-drawer.active { left: 0; }
+
+.drawer-header span {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    color: var(--color-accent);
+    font-weight: 500;
+}
+
+.drawer h2 { 
+    font-family: 'EB Garamond', serif; 
+    font-size: 2.4rem; 
+    font-weight: 400; 
+    line-height: 1.1;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 25px;
+    border-bottom: 1px solid var(--color-border);
+    padding: 20px 28px 0px 28px;
+    background: #fff;
+}
+
+.auth-content {
+    padding: 35px 28px 0px 28px;
+    background: #fff;
+}
+
+.tab-btn {
+    background: none; border: none; font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+    padding-bottom: 12px; cursor: pointer; color: var(--color-text);
+    opacity: 0.4; transition: 0.3s; position: relative;
+}
+
+.tab-btn.active { opacity: 1; }
+.tab-btn.active::after {
+    content: ''; position: absolute; bottom: -1px; left: 0;
+    width: 100%; height: 1px; background: var(--color-text);
+}
+
+.auth-pane { display: none; animation: fadeIn 0.4s ease forwards; }
+.auth-pane.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-form { display: flex; flex-direction: column; gap: 24px; width: 100%; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { 
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; 
+    font-weight: 500; color: var(--color-text);
+}
+
+.form-group input {
+    width: 100%; background: transparent; border: 1px solid var(--color-border);
+    padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 0.95rem; 
+    color: var(--color-text); outline: none; transition: all 0.3s;
+}
+
+.form-group input:focus { border-color: var(--color-text); background: #fff; }
+
+.form-footer { margin-top: 4px; display: flex; justify-content: space-between; align-items: center; }
+.form-link { font-size: 0.75rem; color: var(--color-text); text-decoration: none; opacity: 0.6; transition: 0.3s; }
+.form-link:hover { opacity: 1; text-decoration: underline; }
+
+.action-btn {
+    background: var(--color-accent); color: white; border: 1px solid var(--color-accent); 
+    padding: 18px; font-family: 'Inter', sans-serif; text-transform: uppercase; 
+    letter-spacing: 2px; font-size: 0.75rem; font-weight: 500; cursor: pointer; 
+    transition: all 0.3s; text-decoration: none; text-align: center;
+}
+
+.social-login { margin-top: 25px; margin-bottom: 50px; text-align: center; padding: 0px 28px 20px 28px;}
+.divider {
+    display: flex; align-items: center; gap: 15px; margin-bottom: 25px;
+    color: var(--color-border); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+}
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--color-border); }
+.social-btns { display: flex; gap: 12px; }
+.social-btn {
+    flex: 1; padding: 12px; border: 1px solid var(--color-border);
+    background: transparent; cursor: pointer; transition: 0.3s;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* --- CART DRAWER --- */
+.cart-drawer {
+    right: -100%; width: 100%; max-width: 450px; border-left: 1px solid var(--color-border);
+}
+.cart-drawer.active { right: 0; }
+.cart-empty { display: flex; flex-direction: column; gap: 20px; }
+
+.drawer-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4); opacity: 0; visibility: hidden;
+    transition: 0.3s; z-index: 2500; backdrop-filter: blur(2px);
+}
+.drawer-overlay.active { opacity: 1; visibility: visible; }
+
+@media (max-width: 768px) {
+    .drawer { max-width: 100%; border: none; }
+    .menu-toggle { display: flex; z-index: 4001; }
+    .nav-links {
+        position: fixed; top: var(--drawer-top-offset); right: -100%; width: 100%;
+        height: calc(100vh - var(--drawer-top-offset)); background: var(--color-bg);
+        flex-direction: column; justify-content: flex-start; padding: 60px var(--margin-elegant);
+        gap: 30px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2900; border-top: 1px solid var(--color-border);
+    }
+    .nav-links.active { right: 0; }
+    .nav-links a { font-family: 'EB Garamond', serif; font-size: 2rem; border-bottom: 1px solid var(--color-border); padding-bottom: 15px; }
+}
+
+main { padding-top: calc(var(--drawer-top-offset) + 10px); max-width: var(--max-content-width); margin: 0 auto; padding-bottom: 100px; }
+.container { padding: 0 var(--margin-elegant); }
+.hero { padding: 40px 0 80px 0; max-width: 850px; }
+
+/* --- REFINED PREMIUM FOOTER --- */
+footer {
+    background-color: #F3F1ED;
+    border-top: 1px solid var(--color-border);
+    padding: 80px 0 40px 0;
+    margin-top: 100px;
+    color: var(--color-text);
+}
+
+.footer-container {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 0 var(--margin-elegant);
+}
+
+/* Trust Banner: Refined Typography & Spacing */
+.footer-trust-banner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Left-aligned for better readability */
+    gap: 16px;
+}
+
+.trust-item svg { 
+    width: 24px; 
+    height: 24px; 
+    color: var(--color-accent); 
+    stroke-width: 1.25px;
+}
+
+.trust-item h5 { 
+    font-family: 'EB Garamond', serif; 
+    font-size: 1.4rem; 
+    font-weight: 400; 
+    letter-spacing: 0.5px;
+}
+
+.trust-item p { 
+    font-size: 0.9rem; 
+    line-height: 1.6; 
+    opacity: 0.8;
+    font-weight: 300;
+}
+
+/* Main Grid: Editorial Layout */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 0.8fr 0.8fr 1.7fr;
+    gap: 50px;
+    padding: 80px 0;
+}
+
+.footer-col h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+.footer-col p.workshop-desc {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.8;
+    margin-bottom: 24px;
+    font-family: 'Inter', sans-serif;
+}
+
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-col a:hover { 
+    opacity: 1; 
+    transform: translateX(4px);
+    color: var(--color-accent); 
+}
+
+/* Newsletter: High Conversion Focus */
+.newsletter-box {
+    background: white; /* Contrast against the beige footer */
+    padding: 40px;
+    border: 1px solid var(--color-border);
+    position: relative;
+}
+
+.newsletter-box h4 { margin-bottom: 12px; }
+.newsletter-box p { 
+    font-size: 0.85rem; 
+    margin-bottom: 24px; 
+    line-height: 1.5; 
+    opacity: 0.7; 
+}
+
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.newsletter-form input {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.newsletter-form input:focus { border-color: var(--color-accent); }
+
+.newsletter-form button {
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    padding: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.newsletter-form button:hover { opacity: 0.9; }
+
+/* Bottom Bar */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.footer-bottom p { font-size: 0.75rem; opacity: 0.5; letter-spacing: 0.5px; }
+
+.social-links { display: flex; gap: 24px; }
+.social-links a { color: var(--color-text); opacity: 0.5; transition: 0.3s; }
+.social-links a:hover { opacity: 1; color: var(--color-accent); }
+.social-links svg { width: 18px; height: 18px; }
+
+/* Responsive Adjustments */
+@media (max-width: 1100px) {
+    .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+    .footer-col:last-child { grid-column: span 3; margin-top: 20px; }
+}
+
+@media (max-width: 768px) {
+    footer { padding: 60px 0 30px 0; }
+    
+    .footer-trust-banner { 
+        grid-template-columns: 1fr; 
+        gap: 40px; 
+        padding-bottom: 60px;
+    }
+
+    .footer-grid { 
+        grid-template-columns: 1fr 1fr; /* Force 2 columns */
+        column-gap: 20px;
+        row-gap: 50px;
+        padding: 60px 0;
+    }
+
+    /* Make "The Workshop" and "Newsletter" span both columns to stay full-width */
+    .footer-col:first-child, 
+    .footer-col:last-child { 
+        grid-column: span 2; 
+    }
+
+    /* Adjust heading size slightly for mobile 2-col fit */
+    .footer-col h4 {
+        font-size: 0.65rem;
+        margin-bottom: 20px;
+    }
+
+    .footer-bottom { 
+        flex-direction: column-reverse; 
+        gap: 30px; 
+        text-align: center; 
+    }
+    
+    .trust-item { align-items: center; text-align: center; }
+    .newsletter-box { padding: 30px 20px; }
+}
+
+/* Drawer */
+@media (max-width: 768px) {
+    .drawer { max-width: 100%; border: none; padding: 50px 28px; }
+    .menu-toggle { display: flex; z-index: 4001; }
+
+    /* Fix for Mobile Navigation Links */
+    .nav-links {
+        position: fixed;
+        top: var(--drawer-top-offset);
+        right: -100%;
+        width: 100%;
+        height: calc(100vh - var(--drawer-top-offset));
+        background: var(--color-bg);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 28px; /* Aligned with drawer padding */
+        gap: 0; /* Remove gap to use border-spacing instead */
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 3000; /* Same as drawers */
+        overflow-y: auto;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links a {
+        font-family: 'EB Garamond', serif;
+        font-size: 1.8rem;
+        color: var(--color-text);
+        text-decoration: none;
+        text-transform: none; /* Removed uppercase for elegant serif look */
+        letter-spacing: 0;
+        padding: 20px 0;
+        width: 100%;
+        border-bottom: 1px solid var(--color-border);
+        display: block;
+        transition: padding-left 0.3s ease;
+    }
+
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+    
+    .nav-links a:hover {
+        padding-left: 10px;
+        color: var(--color-accent);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- ENHANCED CART DRAWER --- */
+.cart-drawer {
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important; /* Managed by internal sections */
+}
+
+.cart-drawer .drawer-header {
+    padding: 50px 28px 20px 28px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.close-drawer {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--color-text);
+    opacity: 0.5;
+}
+
+/* Shipping Goal UX */
+.shipping-goal {
+    padding: 20px 28px;
+    background: #fff;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.8rem;
+}
+.progress-bar {
+    height: 4px;
+    background: var(--color-border);
+    margin-top: 10px;
+    border-radius: 2px;
+}
+.progress-fill {
+    height: 100%;
+    background: var(--color-accent);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cart Items */
+.cart-items-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 28px;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.cart-item-image img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background: #f0f0f0;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cart-item-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.cart-item-variant {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    margin: 4px 0 12px 0;
+}
+
+.cart-item-price {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Controls */
+.cart-item-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.quantity-selector {
+    display: flex;
+    border: 1px solid var(--color-border);
+    align-items: center;
+}
+
+.qty-btn {
+    padding: 5px 12px;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 1rem;
+    transition: 0.2s;
+}
+
+.qty-btn:hover { background: rgba(0,0,0,0.05); }
+
+.quantity-selector input {
+    width: 35px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.remove-item {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #cc0000;
+    text-decoration: none;
+    opacity: 0.7;
+}
+
+/* Footer */
+.cart-footer {
+    padding: 30px 28px;
+    background: #fff;
+    border-top: 1px solid var(--color-border);
+}
+
+.cart-summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.total-amt {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.shipping-line {
+    opacity: 0.6;
+    font-size: 0.8rem;
+    margin-bottom: 25px;
+}
+
+.checkout-btn {
+    width: 100%;
+    display: block;
+}
+
+.secure-text {
+    text-align: center;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.4;
+    margin-top: 15px;
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 60px 40px;
+}
+.empty-icon { font-size: 3rem; margin-bottom: 20px; }
+
+
+
+
+
+
+/* Native Animation Styles (Replacement for AOS) */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1.0s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+[data-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delay helpers (para sa data-aos-delay="100" etc.) */
+[data-reveal-delay="100"] { transition-delay: 100ms; }
+[data-reveal-delay="200"] { transition-delay: 200ms; }
     </style>
+
+    <script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.start');</script><meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/69147689034/digital_wallets/dialog">
+<script async="async" src="/checkouts/internal/preloads.js?locale=en-US"></script>
+<link rel="preconnect" href="https://shop.app">
+<script id="shopify-features" type="application/json">{"accessToken":"5d11745d2c3b3fd27bea6689c7635f17","betas":["rich-media-storefront-analytics"],"domain":"ajl-handicraft.myshopify.com","predictiveSearch":true,"shopId":69147689034,"locale":"en"}</script>
+<script>var Shopify = Shopify || {};
+Shopify.shop = "ajl-handicraft.myshopify.com";
+Shopify.locale = "en";
+Shopify.currency = {"active":"USD","rate":"1.0"};
+Shopify.country = "US";
+Shopify.theme = {"name":"Development (1ae863-DESKTOP-1LT3NIS)","id":144069820490,"schema_name":"Skeleton","schema_version":"0.1.0","theme_store_id":null,"role":"development"};
+Shopify.theme.handle = "null";
+Shopify.theme.style = {"id":null,"handle":null};
+Shopify.cdnHost = "ajl-handicraft.myshopify.com/cdn";
+Shopify.routes = Shopify.routes || {};
+Shopify.routes.root = "/";
+Shopify.previewMode = true;
+Shopify.shopJsCdnBaseUrl = "https://cdn.shopify.com/shopifycloud/shop-js";</script>
+<script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script>
+<script>!function(o){function n(){var o=[];function n(){o.push(Array.prototype.slice.apply(arguments))}return n.q=o,n}var t=o.Shopify=o.Shopify||{};t.loadFeatures=n(),t.autoloadFeatures=n()}(window);</script>
+<script id="shop-js-analytics" type="application/json">{"pageType":"index"}</script>
+<script defer="defer" async type="module" src="/cdn/shopifycloud/shop-js/modules/v2/loader.init-shop-cart-sync.en.esm.js"></script>
+<script type="module">
+  await import("/cdn/shopifycloud/shop-js/modules/v2/loader.init-shop-cart-sync.en.esm.js");
+
+  window.Shopify.SignInWithShop?.initShopCartSync?.({"fedCMEnabled":true,"windoidEnabled":true});
+
+</script>
+<script id="hot-reload-client" src="/cdn/shopifycloud/theme-hot-reload/theme-hot-reload.js" defer crossorigin></script>
+<script id="__st">var __st={"a":69147689034,"offset":-14400,"reqid":"afd770a1-de5f-40c4-9998-6a8d8840f04f-1774313144","pageurl":"ajl-handicraft.myshopify.com\/?_fd=0\u0026pb=0","u":"b2fdb567f905","p":"home"};</script>
+<script>window.ShopifyPaypalV4VisibilityTracking = true;</script>
+<script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.2.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script>
+<script integrity="sha256-Rd0I1U3I5BUKM/ZklNQ9ssBhyhvFP+5roZEEsW2MGUw=" data-source-attribution="shopify.loadfeatures" defer="defer" src="/cdn/shopifycloud/storefront/assets/storefront/load_feature-496de5fe.js" crossorigin="anonymous"></script>
+<script data-source-attribution="shopify.dynamic_checkout.dynamic.init">var Shopify=Shopify||{};Shopify.PaymentButton=Shopify.PaymentButton||{isStorefrontPortableWallets:!0,init:function(){window.Shopify.PaymentButton.init=function(){};var t=document.createElement("script");t.src="/cdn/shopifycloud/portable-wallets/latest/portable-wallets.en.js",t.type="module",document.head.appendChild(t)}};
+</script>
+<script data-source-attribution="shopify.dynamic_checkout.buyer_consent">
+  function portableWalletsHideBuyerConsent(e){var t=document.getElementById("shopify-buyer-consent"),n=document.getElementById("shopify-subscription-policy-button");t&&n&&(t.classList.add("hidden"),t.setAttribute("aria-hidden","true"),n.removeEventListener("click",e))}function portableWalletsShowBuyerConsent(e){var t=document.getElementById("shopify-buyer-consent"),n=document.getElementById("shopify-subscription-policy-button");t&&n&&(t.classList.remove("hidden"),t.removeAttribute("aria-hidden"),n.addEventListener("click",e))}window.Shopify?.PaymentButton&&(window.Shopify.PaymentButton.hideBuyerConsent=portableWalletsHideBuyerConsent,window.Shopify.PaymentButton.showBuyerConsent=portableWalletsShowBuyerConsent);
+</script>
+<script data-source-attribution="shopify.dynamic_checkout.cart.bootstrap">document.addEventListener("DOMContentLoaded",(function(){function t(){return document.querySelector("shopify-accelerated-checkout-cart, shopify-accelerated-checkout")}if(t())Shopify.PaymentButton.init();else{new MutationObserver((function(e,n){t()&&(Shopify.PaymentButton.init(),n.disconnect())})).observe(document.body,{childList:!0,subtree:!0})}}));
+</script>
+
+<script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.end');</script>
+<link rel="canonical" href="https://ajl-handicraft.myshopify.com/">
+<link href="https://monorail-edge.shopifysvc.com" rel="dns-prefetch">
+<script>(function(){if ("sendBeacon" in navigator && "performance" in window) {try {var session_token_from_headers = performance.getEntriesByType('navigation')[0].serverTiming.find(x => x.name == '_s').description;} catch {var session_token_from_headers = undefined;}var session_cookie_matches = document.cookie.match(/_shopify_s=([^;]*)/);var session_token_from_cookie = session_cookie_matches && session_cookie_matches.length === 2 ? session_cookie_matches[1] : "";var session_token = session_token_from_headers || session_token_from_cookie || "";function handle_abandonment_event(e) {var entries = performance.getEntries().filter(function(entry) {return /monorail-edge.shopifysvc.com/.test(entry.name);});if (!window.abandonment_tracked && entries.length === 0) {window.abandonment_tracked = true;var currentMs = Date.now();var navigation_start = performance.timing.navigationStart;var payload = {shop_id: 69147689034,url: window.location.href,navigation_start,duration: currentMs - navigation_start,session_token,page_type: "index"};window.navigator.sendBeacon("https://monorail-edge.shopifysvc.com/v1/produce", JSON.stringify({schema_id: "online_store_buyer_site_abandonment/1.1",payload: payload,metadata: {event_created_at_ms: currentMs,event_sent_at_ms: currentMs}}));}}window.addEventListener('pagehide', handle_abandonment_event);}}());</script>
+<script id="web-pixels-manager-setup">(function e(e,d,r,n,o){if(void 0===o&&(o={}),!Boolean(null===(a=null===(i=window.Shopify)||void 0===i?void 0:i.analytics)||void 0===a?void 0:a.replayQueue)){var i,a;window.Shopify=window.Shopify||{};var t=window.Shopify;t.analytics=t.analytics||{};var s=t.analytics;s.replayQueue=[],s.publish=function(e,d,r){return s.replayQueue.push([e,d,r]),!0};try{self.performance.mark("wpm:start")}catch(e){}var l=function(){var e={modern:/Edge?\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Firefox\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Chrom(ium|e)\/(9{2}|\d{3,})\.\d+(\.\d+|)|(Maci|X1{2}).+ Version\/(15\.\d+|(1[6-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(9{2}|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(15[._]\d+|(1[6-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Android.+Firefox\/(13[5-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|SamsungBrowser\/([2-9]\d|\d{3,})\.\d+/,legacy:/Edge?\/(1[6-9]|[2-9]\d|\d{3,})\.\d+(\.\d+|)|Firefox\/(5[4-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)|Chrom(ium|e)\/(5[1-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)([\d.]+$|.*Safari\/(?![\d.]+ Edge\/[\d.]+$))|(Maci|X1{2}).+ Version\/(10\.\d+|(1[1-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(3[89]|[4-9]\d|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(10[._]\d+|(1[1-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Mobile Safari.+OPR\/([89]\d|\d{3,})\.\d+\.\d+|Android.+Firefox\/(13[5-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+(UC? ?Browser|UCWEB|U3)[ /]?(15\.([5-9]|\d{2,})|(1[6-9]|[2-9]\d|\d{3,})\.\d+)\.\d+|SamsungBrowser\/(5\.\d+|([6-9]|\d{2,})\.\d+)|Android.+MQ{2}Browser\/(14(\.(9|\d{2,})|)|(1[5-9]|[2-9]\d|\d{3,})(\.\d+|))(\.\d+|)|K[Aa][Ii]OS\/(3\.\d+|([4-9]|\d{2,})\.\d+)(\.\d+|)/},d=e.modern,r=e.legacy,n=navigator.userAgent;return n.match(d)?"modern":n.match(r)?"legacy":"unknown"}(),u="modern"===l?"modern":"legacy",c=(null!=n?n:{modern:"",legacy:""})[u],f=function(e){return[e.baseUrl,"/wpm","/b",e.hashVersion,"modern"===e.buildTarget?"m":"l",".js"].join("")}({baseUrl:d,hashVersion:r,buildTarget:u}),m=function(e){var d=e.version,r=e.bundleTarget,n=e.surface,o=e.pageUrl,i=e.monorailEndpoint;return{emit:function(e){var a=e.status,t=e.errorMsg,s=(new Date).getTime(),l=JSON.stringify({metadata:{event_sent_at_ms:s},events:[{schema_id:"web_pixels_manager_load/3.1",payload:{version:d,bundle_target:r,page_url:o,status:a,surface:n,error_msg:t},metadata:{event_created_at_ms:s}}]});if(!i)return console&&console.warn&&console.warn("[Web Pixels Manager] No Monorail endpoint provided, skipping logging."),!1;try{return self.navigator.sendBeacon.bind(self.navigator)(i,l)}catch(e){}var u=new XMLHttpRequest;try{return u.open("POST",i,!0),u.setRequestHeader("Content-Type","text/plain"),u.send(l),!0}catch(e){return console&&console.warn&&console.warn("[Web Pixels Manager] Got an unhandled error while logging to Monorail."),!1}}}}({version:r,bundleTarget:l,surface:e.surface,pageUrl:self.location.href,monorailEndpoint:e.monorailEndpoint});try{o.browserTarget=l,function(e){var d=e.src,r=e.async,n=void 0===r||r,o=e.onload,i=e.onerror,a=e.sri,t=e.scriptDataAttributes,s=void 0===t?{}:t,l=document.createElement("script"),u=document.querySelector("head"),c=document.querySelector("body");if(l.async=n,l.src=d,a&&(l.integrity=a,l.crossOrigin="anonymous"),s)for(var f in s)if(Object.prototype.hasOwnProperty.call(s,f))try{l.dataset[f]=s[f]}catch(e){}if(o&&l.addEventListener("load",o),i&&l.addEventListener("error",i),u)u.appendChild(l);else{if(!c)throw new Error("Did not find a head or body element to append the script");c.appendChild(l)}}({src:f,async:!0,onload:function(){if(!function(){var e,d;return Boolean(null===(d=null===(e=window.Shopify)||void 0===e?void 0:e.analytics)||void 0===d?void 0:d.initialized)}()){var d=window.webPixelsManager.init(e)||void 0;if(d){var r=window.Shopify.analytics;r.replayQueue.forEach((function(e){var r=e[0],n=e[1],o=e[2];d.publishCustomEvent(r,n,o)})),r.replayQueue=[],r.publish=d.publishCustomEvent,r.visitor=d.visitor,r.initialized=!0}}},onerror:function(){return m.emit({status:"failed",errorMsg:"".concat(f," has failed to load")})},sri:function(e){var d=/^sha384-[A-Za-z0-9+/=]+$/;return"string"==typeof e&&d.test(e)}(c)?c:"",scriptDataAttributes:o}),m.emit({status:"loading"})}catch(e){m.emit({status:"failed",errorMsg:(null==e?void 0:e.message)||"Unknown error"})}}})({shopId: 69147689034,storefrontBaseUrl: "https://ajl-handicraft.myshopify.com",extensionsBaseUrl: "https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager",monorailEndpoint: "https://monorail-edge.shopifysvc.com/unstable/produce_batch",surface: "storefront-renderer",enabledBetaFlags: ["2dca8a86","5476ea20","ed8389fc"],webPixelsConfigList: [{"id":"shopify-app-pixel","configuration":"{}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"0450","apiClientId":"shopify-pixel","type":"APP","privacyPurposes":["ANALYTICS","MARKETING"]},{"id":"shopify-custom-pixel","eventPayloadVersion":"v1","runtimeContext":"LAX","scriptVersion":"0450","apiClientId":"shopify-pixel","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING"]}],isMerchantRequest: true,initData: {"shop":{"name":"AJL Handicraft","paymentSettings":{"currencyCode":"USD"},"myshopifyDomain":"ajl-handicraft.myshopify.com","countryCode":"US","storefrontUrl":"https:\/\/ajl-handicraft.myshopify.com"},"customer":null,"cart":null,"checkout":null,"productVariants":[],"purchasingCompany":null},},"https://ajl-handicraft.myshopify.com/cdn","2f2288a8w2fafd01bp23157a73mcb0adebf",{"modern":"","legacy":""},{"shopId":"69147689034","storefrontBaseUrl":"https:\/\/ajl-handicraft.myshopify.com","extensionBaseUrl":"https:\/\/extensions.shopifycdn.com\/cdn\/shopifycloud\/web-pixels-manager","surface":"storefront-renderer","enabledBetaFlags":"[\"2dca8a86\", \"5476ea20\", \"ed8389fc\"]","isMerchantRequest":"true","hashVersion":"2f2288a8w2fafd01bp23157a73mcb0adebf","publish":"custom","events":"[[\"page_viewed\",{}]]"});</script><script>
+  window.ShopifyAnalytics = window.ShopifyAnalytics || {};
+  window.ShopifyAnalytics.meta = window.ShopifyAnalytics.meta || {};
+  window.ShopifyAnalytics.meta.currency = 'USD';
+  var meta = {"page":{"pageType":"home","requestId":"afd770a1-de5f-40c4-9998-6a8d8840f04f-1774313144"}};
+  for (var attr in meta) {
+    window.ShopifyAnalytics.meta[attr] = meta[attr];
+  }
+</script>
+<script class="analytics">
+  (function () {
+    var customDocumentWrite = function(content) {
+      var jquery = null;
+
+      if (window.jQuery) {
+        jquery = window.jQuery;
+      } else if (window.Checkout && window.Checkout.$) {
+        jquery = window.Checkout.$;
+      }
+
+      if (jquery) {
+        jquery('body').append(content);
+      }
+    };
+
+    var hasLoggedConversion = function(token) {
+      if (token) {
+        return document.cookie.indexOf('loggedConversion=' + token) !== -1;
+      }
+      return false;
+    }
+
+    var setCookieIfConversion = function(token) {
+      if (token) {
+        var twoMonthsFromNow = new Date(Date.now());
+        twoMonthsFromNow.setMonth(twoMonthsFromNow.getMonth() + 2);
+
+        document.cookie = 'loggedConversion=' + token + '; expires=' + twoMonthsFromNow;
+      }
+    }
+
+    var trekkie = window.ShopifyAnalytics.lib = window.trekkie = window.trekkie || [];
+    if (trekkie.integrations) {
+      return;
+    }
+    trekkie.methods = [
+      'identify',
+      'page',
+      'ready',
+      'track',
+      'trackForm',
+      'trackLink'
+    ];
+    trekkie.factory = function(method) {
+      return function() {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift(method);
+        trekkie.push(args);
+        return trekkie;
+      };
+    };
+    for (var i = 0; i < trekkie.methods.length; i++) {
+      var key = trekkie.methods[i];
+      trekkie[key] = trekkie.factory(key);
+    }
+    trekkie.load = function(config) {
+      trekkie.config = config || {};
+      trekkie.config.initialDocumentCookie = document.cookie;
+      var first = document.getElementsByTagName('script')[0];
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.onerror = function(e) {
+        var scriptFallback = document.createElement('script');
+        scriptFallback.type = 'text/javascript';
+        scriptFallback.onerror = function(error) {
+                var Monorail = {
+      produce: function produce(monorailDomain, schemaId, payload) {
+        var currentMs = new Date().getTime();
+        var event = {
+          schema_id: schemaId,
+          payload: payload,
+          metadata: {
+            event_created_at_ms: currentMs,
+            event_sent_at_ms: currentMs
+          }
+        };
+        return Monorail.sendRequest("https://" + monorailDomain + "/v1/produce", JSON.stringify(event));
+      },
+      sendRequest: function sendRequest(endpointUrl, payload) {
+        // Try the sendBeacon API
+        if (window && window.navigator && typeof window.navigator.sendBeacon === 'function' && typeof window.Blob === 'function' && !Monorail.isIos12()) {
+          var blobData = new window.Blob([payload], {
+            type: 'text/plain'
+          });
+
+          if (window.navigator.sendBeacon(endpointUrl, blobData)) {
+            return true;
+          } // sendBeacon was not successful
+
+        } // XHR beacon
+
+        var xhr = new XMLHttpRequest();
+
+        try {
+          xhr.open('POST', endpointUrl);
+          xhr.setRequestHeader('Content-Type', 'text/plain');
+          xhr.send(payload);
+        } catch (e) {
+          console.log(e);
+        }
+
+        return false;
+      },
+      isIos12: function isIos12() {
+        return window.navigator.userAgent.lastIndexOf('iPhone; CPU iPhone OS 12_') !== -1 || window.navigator.userAgent.lastIndexOf('iPad; CPU OS 12_') !== -1;
+      }
+    };
+    Monorail.produce('monorail-edge.shopifysvc.com',
+      'trekkie_storefront_load_errors/1.1',
+      {shop_id: 69147689034,
+      theme_id: 144069820490,
+      app_name: "storefront",
+      context_url: window.location.href,
+      source_url: "/cdn/s/trekkie.storefront.debbda03e9ac9faaa11b0ff77bcb79c971117f47.min.js"});
+
+        };
+        scriptFallback.async = true;
+        scriptFallback.src = '/cdn/s/trekkie.storefront.debbda03e9ac9faaa11b0ff77bcb79c971117f47.min.js';
+        first.parentNode.insertBefore(scriptFallback, first);
+      };
+      script.async = true;
+      script.src = '/cdn/s/trekkie.storefront.debbda03e9ac9faaa11b0ff77bcb79c971117f47.min.js';
+      first.parentNode.insertBefore(script, first);
+    };
+    trekkie.load(
+      {"Trekkie":{"appName":"storefront","development":false,"defaultAttributes":{"shopId":69147689034,"isMerchantRequest":null,"themeId":144069820490,"themeCityHash":"4243189299255319463","contentLanguage":"en","currency":"USD","eventMetadataId":"d057fa41-590e-4f2d-8ebf-b1d95cc5a45e"},"isServerSideCookieWritingEnabled":true,"monorailRegion":"shop_domain","enabledBetaFlags":["65f19447","b5387b81"]},"Session Attribution":{},"S2S":{"facebookCapiEnabled":false,"source":"trekkie-storefront-renderer","apiClientId":580111}}
+    );
+
+    var loaded = false;
+    trekkie.ready(function() {
+      if (loaded) return;
+      loaded = true;
+
+      window.ShopifyAnalytics.lib = window.trekkie;
+
+      var originalDocumentWrite = document.write;
+      document.write = customDocumentWrite;
+      try { window.ShopifyAnalytics.merchantGoogleAnalytics.call(this); } catch(error) {};
+      document.write = originalDocumentWrite;
+
+      window.ShopifyAnalytics.lib.page(null,{"pageType":"home","requestId":"afd770a1-de5f-40c4-9998-6a8d8840f04f-1774313144","shopifyEmitted":true});
+
+      var match = window.location.pathname.match(/checkouts\/(.+)\/(thank_you|post_purchase)/)
+      var token = match? match[1]: undefined;
+      if (!hasLoggedConversion(token)) {
+        setCookieIfConversion(token);
+        
+      }
+    });
+
+
+        var eventsListenerScript = document.createElement('script');
+        eventsListenerScript.async = true;
+        eventsListenerScript.src = "/cdn/shopifycloud/storefront/assets/shop_events_listener-3da45d37.js";
+        document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);
+
+})();</script>
+<script
+  defer
+  src="/cdn/shopifycloud/perf-kit/shopify-perf-kit-3.3.0.min.js"
+  data-application="storefront-renderer"
+  data-shop-id="69147689034"
+  data-render-region="gcp-us-east1"
+  data-page-type="index"
+  data-theme-instance-id="144069820490"
+  data-theme-name="Skeleton"
+  data-theme-version="0.1.0"
+  data-monorail-region="shop_domain"
+  data-resource-timing-sampling-rate="10"
+  data-shs="true"
+  data-shs-beacon="true"
+  data-shs-export-with-fetch="true"
+  data-shs-logs-sample-rate="1"
+  data-shs-beacon-endpoint="https://ajl-handicraft.myshopify.com/api/collect"
+></script>
 </head>
-<body class="bg-background text-on-background font-body antialiased overflow-x-hidden">
-<!-- TopAppBar -->
-<nav class="fixed top-0 w-full z-50 glass-nav border-b border-outline-variant/20 transition-all duration-300">
-<div class="flex justify-between items-center px-4 md:px-12 py-4 md:py-6 w-full max-w-[1440px] mx-auto">
-<div class="flex items-center gap-4 md:gap-8">
-<button class="md:hidden text-secondary p-1" onclick="document.getElementById('mobile-menu').classList.remove('hidden')">
-<span class="material-symbols-outlined" data-icon="menu">menu</span>
-</button>
-<span class="text-xl md:text-2xl font-headline font-bold tracking-tighter text-secondary">AJL-HANDICRAFT</span>
-<div class="hidden md:flex gap-6">
-<a class="font-label uppercase tracking-[0.05rem] text-[0.875rem] text-primary border-b border-primary pb-1" href="#">Home</a>
-<a class="font-label uppercase tracking-[0.05rem] text-[0.875rem] text-secondary hover:text-primary transition-colors duration-300" href="#">Shop All</a>
-<a class="font-label uppercase tracking-[0.05rem] text-[0.875rem] text-secondary hover:text-primary transition-colors duration-300" href="#">Our Story</a>
-<a class="font-label uppercase tracking-[0.05rem] text-[0.875rem] text-secondary hover:text-primary transition-colors duration-300" href="#">Collections</a>
+<body>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <header id="main-header">
+      <div id="shopify-section-announcement-bar" class="shopify-section">
+  <div class="announcement-bar">
+    Free shipping on all orders over $150
+  </div>
+
+
 </div>
+      <div id="shopify-section-header" class="shopify-section"><div class="nav-border-wrapper">
+  <nav class="main-nav">
+      <div class="logo-container">
+        <a href="/" class="logo">
+          
+            AJL Handicraft
+          
+        </a>
+      </div>
+
+      <div class="nav-controls">
+          <div class="nav-links" id="nav-menu">
+            
+              <a href="/">Home</a>
+            
+              <a href="/collections/all">All Products</a>
+            
+              <a href="/pages/contact">Contact</a>
+            
+          </div>
+
+          <div class="action-icons">
+              <button class="icon-btn" id="user-icon-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </button>
+
+              <button class="icon-btn" id="cart-icon-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  <span class="cart-count">0</span>
+              </button>
+
+              <div class="menu-toggle" id="mobile-toggle">
+                  <span></span><span></span><span></span>
+              </div>
+          </div>
+      </div>
+  </nav>
 </div>
-<div class="flex items-center gap-4 md:gap-6">
-<button class="text-secondary hover:text-primary transition-colors p-1">
-<span class="material-symbols-outlined" data-icon="search">search</span>
-</button>
-<button class="text-secondary hover:text-primary transition-colors p-1">
-<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
-</button>
-<button class="hidden md:block text-secondary hover:text-primary transition-colors p-1">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-</button>
+
 </div>
-</div>
-</nav>
-<!-- Mobile Navigation Overlay -->
-<div class="fixed inset-0 z-[60] bg-surface hidden" id="mobile-menu">
-<div class="flex flex-col h-full p-6">
-<div class="flex justify-between items-center mb-12">
-<span class="text-xl font-headline font-bold tracking-tighter text-secondary">AJL-HANDICRAFT</span>
-<button class="text-secondary p-1" onclick="document.getElementById('mobile-menu').classList.add('hidden')">
-<span class="material-symbols-outlined" data-icon="close">close</span>
-</button>
-</div>
-<div class="flex flex-col gap-8">
-<a class="font-headline text-3xl text-primary" href="#" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Home</a>
-<a class="font-headline text-3xl text-secondary" href="#" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Shop All</a>
-<a class="font-headline text-3xl text-secondary" href="#" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Our Story</a>
-<a class="font-headline text-3xl text-secondary" href="#" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Collections</a>
-</div>
-<div class="mt-auto pt-12 border-t border-outline-variant/30 flex gap-6">
-<a class="text-secondary" href="#"><span class="material-symbols-outlined" data-icon="person">person</span> Account</a>
-</div>
-</div>
-</div>
-<main class="pt-16">
-<!-- Hero Section -->
-<section class="relative min-h-[90vh] md:h-[700px] flex items-center px-6 md:px-12 bg-surface-container-low overflow-hidden">
-<div class="absolute inset-0 w-full h-full overflow-hidden">
-<img alt="Artisanal Interior" class="w-full h-full object-cover opacity-90" data-alt="Interior of a minimalist modern living room with organic textures, featuring a large hand-woven abaca floor lamp and neutral toned furniture in soft morning light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAy7x6cRXhDaB2w2PK1hQxAKCl9fngxk8EF7ym4kXf9IZuaynnygSL0BfQWzq0sYjs0EwHmOpC_faw2yVgsFz2LUNOWqVw2jp3_pT-Q27JuAdrSKRcBAuVK25xjx61_uktyodFLKpQdCBFVbIV7I0EyVDhhYumf6hHcNGhZIhi0p-Z-z2Y6Ty69AiXhuMlyIRJ9l-f-dZtjyY-Nc0eVVigwl_QvoqcEC3Xgzz4SXp_Oxjg90WDYhxu9xAeqY2G7II-tRiBDLtSau4bH"/>
-<div class="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-surface/60 md:from-surface/40 to-transparent"></div>
-</div>
-<div class="relative z-10 max-w-2xl mx-auto md:mx-0 text-center md:text-left pt-12 md:pt-0">
-<h1 class="font-headline text-4xl md:text-7xl text-on-background leading-tight mb-6">
-                    Artisanal Elegance for Your <span class="text-primary italic">Modern Home.</span>
-</h1>
-<p class="font-body text-base md:text-xl text-on-surface-variant mb-10 max-w-lg mx-auto md:mx-0">
-                    Handcrafted by local weavers, designed for timeless living. Bringing the soul of the Philippines to your sanctuary.
-                </p>
-<div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
-<button class="bg-secondary text-on-primary px-8 md:px-10 py-4 font-label uppercase tracking-widest text-sm rounded-lg hover:scale-105 transition-transform duration-300 w-full sm:w-auto">
-                        Shop the Collection
-                    </button>
-</div>
-</div>
+    </header>
+
+    
+    <aside class="drawer cart-drawer" id="cart-drawer">
+    <div class="drawer-header">
+        <div class="header-top">
+            <span>Your Selection</span>
+            <button class="close-drawer" onclick="closeAll()">✕</button>
+        </div>
+        <h2>Shopping Cart</h2>
+    </div>
+
+    
+        <div class="cart-empty">
+            <div class="empty-icon">🧺</div>
+            <p>Your cart is feeling a bit light.</p>
+            <a href="/collections/all" class="action-btn">Browse Collections</a>
+        </div>
+    
+</aside>
+    <aside class="drawer user-drawer" id="user-drawer">
+    <div class="drawer-header">
+        <div class="header-top">
+            <span>Account Access</span>
+            <button class="close-drawer" onclick="closeAll()">✕</button>
+        </div>
+        <h2 id="auth-title">Welcome back</h2>
+    </div>
+    <div class="auth-tabs">
+        <button class="tab-btn active" onclick="switchAuth('login')">Sign In</button>
+        <button class="tab-btn" onclick="switchAuth('signup')">Register</button>
+    </div>
+    <div class="auth-content">
+        <div id="login-pane" class="auth-pane active">
+            <form class="login-form">
+                <div class="form-group"><label>Email</label><input type="email" placeholder="email@example.com" required></div>
+                <div class="form-group">
+                    <label>Password</label><input type="password" placeholder="••••••••" required>
+                    <div class="form-footer"><a href="#" class="form-link">Forgot password?</a></div>
+                </div>
+                <button type="submit" class="action-btn">Sign In</button>
+            </form>
+        </div>
+        <div id="signup-pane" class="auth-pane">
+            <form class="login-form">
+                <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                <div class="form-group"><label>Email</label><input type="email" placeholder="email@example.com" required></div>
+                <div class="form-group"><label>Password</label><input type="password" placeholder="Min. 8 characters" required></div>
+                <button type="submit" class="action-btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+    <div class="social-login">
+        <div class="divider">Or continue with</div>
+        <div class="social-btns">
+            <button class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></button>
+            <button class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg></button>
+        </div>
+    </div>
+</aside>
+
+    <main>
+      <div class="container">
+        <div id="shopify-section-template--19312862986314__main" class="shopify-section"><style data-shopify>
+  /* --- HERO SECTION BASE --- */
+    .hero-section {
+        position: relative;
+        padding: 20px 0 60px 0;
+        overflow: hidden;
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        align-items: center;
+    }
+
+    /* --- IMAGE STYLING (SHORTENED) --- */
+    .hero-image-wrapper {
+        position: relative;
+        width: 100%;
+        /* Binuwasan ang haba: Ginawang 16:9 ratio para mas maikli */
+        aspect-ratio: 16 / 9; 
+        min-height: 250px; 
+        overflow: hidden;
+        border-radius: 4px;
+        background-color: #E0DDD5;
+    }
+
+    .hero-image-wrapper img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1.2s ease;
+    }
+
+    .hero-section:hover .hero-image-wrapper img {
+        transform: scale(1.05);
+    }
+
+    /* --- CONTENT STYLING --- */
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .social-proof {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+        background: rgba(74, 93, 78, 0.08);
+        padding: 8px 16px;
+        border-radius: 100px;
+    }
+
+    .stars {
+        color: #C19A6B;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+    }
+
+    .proof-text {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        color: var(--color-accent);
+    }
+
+    .hero-section h1 {
+        font-family: 'EB Garamond', serif;
+        font-size: clamp(2.3rem, 6vw, 3.5rem);
+        line-height: 1.1;
+        font-weight: 400;
+        margin-bottom: 20px;
+        color: var(--color-text);
+    }
+
+    .hero-section h1 em {
+        font-style: italic;
+        color: var(--color-accent);
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        opacity: 0.8;
+        font-weight: 300;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* --- CTA BUTTONS --- */
+    .cta-group {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .btn-primary-hero {
+        display: inline-block;
+        background-color: var(--color-accent);
+        color: #ffffff;
+        width: 100%;
+        max-width: 280px;
+        padding: 18px 30px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary-hero:hover {
+        transform: translateY(-3px);
+        background-color: #3d4d40;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .secondary-link {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--color-text);
+        text-decoration: none;
+        opacity: 0.6;
+        font-weight: 500;
+    }
+
+    .hero-filler
+    {
+        padding: 0px;
+    }
+
+    /* --- DESKTOP ADJUSTMENTS --- */
+    @media (min-width: 769px) {
+        .hero-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            text-align: left;
+        }
+        
+        .hero-image-wrapper {
+            order: 2;
+            /* Desktop aspect ratio: pwedeng 4:3 para hindi masyadong flat */
+            aspect-ratio: 4 / 3; 
+        }
+
+        .hero-content {
+            order: 1;
+            text-align: left;
+        }
+
+        .hero-description {
+            margin-left: 0;
+        }
+
+        .cta-group {
+            flex-direction: row;
+            gap: 25px;
+        }
+
+        .btn-primary-hero {
+            width: auto;
+        }
+
+        .hero-filler
+        {
+            padding: 30px;
+        }
+    }
+</style>
+
+<section class="hero-section">
+    <div class="hero-filler"></div>
+    <div class="hero-grid">
+        
+        <div class="hero-image-wrapper" data-reveal>
+            
+
+            
+                <img src="/cdn/shop/t/9/assets/hero.webp?v=9415123433838979621773756045" alt="Placeholder image" loading="eager" fetchpriority="high">
+            
+        </div>
+
+        <div class="hero-content" data-reveal data-reveal-delay="200">
+            <div class="social-proof">
+                <span class="stars">★★★★★</span>
+                <span class="proof-text">500+ collectors trust us</span>
+            </div>
+            
+            <h1>Objects that grow <em>more beautiful</em> with age.</h1>
+            
+            <p class="hero-description">
+                Heirloom-quality wood and leather goods, slow-crafted in small batches to endure for generations.
+            </p>
+            
+            <div class="cta-group">
+                <a href="#shop" class="btn-primary-hero">Shop the New Batch</a>
+                <a href="#" class="secondary-link">Our Story →</a>
+            </div>
+        </div>
+
+    </div>
 </section>
-<!-- Trust Bar -->
-<section class="bg-surface-container py-10 px-6 md:px-12">
-<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4 text-center md:text-left">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-tertiary" data-icon="eco">eco</span>
-<span class="font-label text-[10px] md:text-xs uppercase tracking-widest text-secondary">100% Sustainable Materials</span>
-</div>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-tertiary" data-icon="public">public</span>
-<span class="font-label text-[10px] md:text-xs uppercase tracking-widest text-secondary">Proudly Filipino Made</span>
-</div>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-tertiary" data-icon="local_shipping">local_shipping</span>
-<span class="font-label text-[10px] md:text-xs uppercase tracking-widest text-secondary">Nationwide Delivery</span>
-</div>
-</div>
+
+</div><div id="shopify-section-template--19312862986314__trust-bar" class="shopify-section"><style data-shopify>
+  /* --- TRUST BAR STYLING (THE LOGIC) --- */
+    .trust-bar {
+        padding: 60px 0;
+        background-color: var(--color-bg);
+        border-top: 1px solid var(--color-border);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .trust-bar-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+        gap: 40px;
+        max-width: var(--max-content-width);
+        margin: 0 auto;
+    }
+
+    .trust-bar-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 0 10px;
+    }
+
+    .trust-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        background: #ffffff; /* Contrast against beige background */
+        border-radius: 50%;
+        border: 1px solid var(--color-border);
+        color: var(--color-accent);
+        flex-shrink: 0;
+    }
+
+    .trust-text h3 {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: var(--color-text);
+    }
+
+    .trust-text p {
+        font-size: 0.85rem;
+        font-family: 'EB Garamond', serif; /* Consistent brand typography */
+        font-style: italic;
+        opacity: 0.7;
+        color: var(--color-text);
+    }
+
+    /* --- MOBILE RESPONSIVE (CONVERSION FOCUS) --- */
+    @media (max-width: 1024px) {
+        .trust-bar-grid {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .trust-bar {
+            padding: 40px 0;
+        }
+        
+        .trust-bar-grid {
+            grid-template-columns: 1fr; /* Stack vertically for mobile readability */
+            gap: 32px;
+        }
+
+        .trust-bar-item {
+            justify-content: flex-start;
+            padding: 0 5%; /* Side breathing room for mobile */
+        }
+        
+        .trust-icon {
+            width: 44px;
+            height: 44px;
+        }
+        
+        .trust-text h3 {
+            font-size: 0.7rem;
+        }
+    }
+</style>
+
+<section class="trust-bar">
+    <div class="trust-bar-grid">
+        
+        <div class="trust-bar-item" data-reveal>
+            <div class="trust-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="trust-text">
+                <h3>Sustainably Sourced</h3>
+                <p>Ethically harvested wood</p>
+            </div>
+        </div>
+
+        <div class="trust-bar-item" data-reveal data-reveal-delay="100">
+            <div class="trust-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="trust-text">
+                <h3>Hand-stitched in [Location]</h3>
+                <p>Authentic local craftsmanship</p>
+            </div>
+        </div>
+
+        <div class="trust-bar-item" data-reveal data-reveal-delay="200">
+            <div class="trust-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.8-2.8l-4.3 4.2c-.3.2-.6.3-1 .3H11c-.5 0-1 .2-1.4.6L7 21Z"/><path d="m15 9 2-2 3 3-2 2"/></svg>
+            </div>
+            <div class="trust-text">
+                <h3>Lifetime Warranty</h3>
+                <p>Designed to last generations</p>
+            </div>
+        </div>
+
+    </div>
+</section></div><div id="shopify-section-template--19312862986314__custom-collections" class="shopify-section"><style data-shopify>
+  /* --- CURATED COLLECTIONS STYLING --- */
+    .collections-section {
+        padding: 100px 0;
+        background-color: var(--color-bg);
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .section-title {
+        font-family: 'EB Garamond', serif;
+        font-size: clamp(2.2rem, 4vw, 3rem);
+        font-weight: 400;
+        margin-top: 10px;
+    }
+
+    .section-title em {
+        font-style: italic;
+        color: var(--color-accent);
+    }
+
+    .collections-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .collection-card {
+        position: relative;
+        display: block;
+        height: 600px; /* Tall editorial look */
+        text-decoration: none;
+        overflow: hidden;
+        color: white;
+    }
+
+    .card-image-box {
+        width: 100%;
+        height: 100%;
+        transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .card-image-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Optional: bahagyang paitimin ang image para mabasa ang text */
+        filter: brightness(0.9);
+    }
+
+    .card-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5));
+        display: flex;
+        align-items: flex-end;
+        padding: 40px;
+        transition: background 0.4s ease;
+    }
+
+    .card-content h3 {
+        font-family: 'EB Garamond', serif;
+        font-size: 2rem;
+        font-weight: 400;
+        margin-bottom: 12px;
+        transform: translateY(10px);
+        transition: transform 0.4s ease;
+    }
+
+    .shop-link {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(255,255,255,0.5);
+        padding-bottom: 4px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.4s ease;
+        display: inline-block;
+    }
+
+    /* Hover States */
+    .collection-card:hover .card-image-box {
+        transform: scale(1.08);
+    }
+
+    .collection-card:hover .card-overlay {
+        background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.6));
+    }
+
+    .collection-card:hover .card-content h3 {
+        transform: translateY(0);
+    }
+
+    .collection-card:hover .shop-link {
+        opacity: 1;
+        transform: translateY(0);
+        border-bottom-color: white;
+    }
+
+    /* --- MOBILE RESPONSIVE --- */
+    @media (max-width: 1024px) {
+        .collection-card {
+            height: 500px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .collections-section {
+            padding: 60px 0;
+        }
+        
+        .collections-grid {
+            grid-template-columns: 1fr; /* Stacked cards on mobile */
+            gap: 16px;
+        }
+
+        .collection-card {
+            height: 400px; /* Shorter cards on mobile */
+        }
+
+        .card-content h3 {
+            font-size: 1.8rem;
+        }
+
+        /* Make link always visible on mobile for better conversion */
+        .shop-link {
+            opacity: 0.8;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<section class="collections-section" id="shop">
+    <div class="section-header" data-reveal>
+        <span class="section-label">The Discovery</span>
+        <h2 class="section-title">Curated <em>Collections</em></h2>
+    </div>
+
+    <div class="collections-grid">
+        <a href="#" class="collection-card" data-reveal>
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1524289286702-f07229da36f5?q=80&w=1470&auto=format&fit=crop" alt="Hand-stitched leather goods" loading="lazy">
+            </div>
+            <div class="card-overlay">
+                <div class="card-content">
+                    <h3>Leather Goods</h3>
+                    <span class="shop-link">Explore Collection</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="collection-card" data-reveal data-reveal-delay="100">
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=1387&auto=format&fit=crop" alt="Minimalist home objects" loading="lazy">
+            </div>
+            <div class="card-overlay">
+                <div class="card-content">
+                    <h3>Home Objects</h3>
+                    <span class="shop-link">Explore Collection</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="collection-card" data-reveal data-reveal-delay="200">
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=1467&auto=format&fit=crop" alt="Rare studio finds" loading="lazy">
+            </div>
+            <div class="card-overlay">
+                <div class="card-content">
+                    <h3>Studio Finds</h3>
+                    <span class="shop-link">Explore Collection</span>
+                </div>
+            </div>
+        </a>
+    </div>  
+</section></div><div id="shopify-section-template--19312862986314__process-section" class="shopify-section"><style data-shopify>
+  /* --- THE PROCESS SECTION (AJL UI ALIGNED) --- */
+    .process-section {
+        padding: 100px 0px;
+        background-color: var(--color-bg);
+        max-width: var(--max-content-width);
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+    .process-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr; /* Video is slightly wider for focus */
+        gap: 80px;
+        align-items: center;
+    }
+
+    /* Content Styling */
+    .process-label {
+        display: block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--color-accent);
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .process-title {
+        font-family: 'EB Garamond', serif;
+        font-size: clamp(2.5rem, 5vw, 3.8rem);
+        line-height: 1.1;
+        font-weight: 400;
+        margin-bottom: 30px;
+        color: var(--color-text);
+    }
+
+    .process-title em {
+        font-style: italic;
+        color: var(--color-accent);
+    }
+
+    .process-description {
+        margin-bottom: 40px;
+    }
+
+    .process-description p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+        opacity: 0.85;
+        font-weight: 300;
+    }
+
+    /* Video Styling */
+    .video-wrapper {
+        position: relative;
+    }
+
+    .video-container {
+        width: 100%;
+        aspect-ratio: 16 / 12; /* Editorial Portrait Look */
+        background-color: var(--color-border);
+        border-radius: 2px;
+        overflow: hidden;
+        box-shadow: 20px 20px 0px rgba(74, 93, 78, 0.05); /* Accent Offset Shadow */
+    }
+
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-caption {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.6;
+    }
+
+    /* CTA Button */
+    .btn-process {
+        display: inline-block;
+        padding: 18px 35px;
+        background-color: var(--color-accent);
+        color: white;
+        text-decoration: none;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 1px solid var(--color-accent);
+    }
+
+    .btn-process:hover {
+        background-color: transparent;
+        color: var(--color-accent);
+        transform: translateY(-3px);
+    }
+
+    /* --- MOBILE RESPONSIVE --- */
+    @media (max-width: 992px) {
+        .process-grid {
+            gap: 50px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .process-section {
+            padding: 80px 24px; /* Standard mobile padding */
+        }
+
+        .process-grid {
+            grid-template-columns: 1fr; /* Stacked layout */
+            gap: 40px;
+        }
+
+        .process-content {
+            order: 2; /* Text goes below video for better mobile flow */
+            text-align: center;
+        }
+
+        .video-wrapper {
+            order: 1;
+        }
+
+        .video-container {
+            aspect-ratio: 16 / 9; /* Widescreen on mobile to save vertical space */
+            box-shadow: 10px 10px 0px rgba(74, 93, 78, 0.05);
+        }
+
+        .video-caption {
+            justify-content: center;
+        }
+
+        .btn-process {
+            width: 100%; /* Full width for easier clicking on mobile */
+            text-align: center;
+        }
+    }
+</style>
+
+<section class="process-section" data-reveal>
+    <div class="process-grid">
+        
+        <div class="video-wrapper">
+            <div class="video-container">
+                <video autoplay muted loop playsinline poster="fallback-image.jpg">
+                    <source src="your-process-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="video-caption">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Authentic Hand-Craftsmanship</span>
+            </div>
+        </div>
+
+        <div class="process-content">
+            <span class="process-label">The Value of Patience</span>
+            <h2 class="process-title">Why we <em>choose slow.</em></h2>
+            
+            <div class="process-description">
+                <p>In a world of mass production, we find beauty in the deliberate. Every stitch is placed by hand, and every cut is guided by years of experience—ensuring a level of durability that machines simply cannot replicate.</p>
+                <p>We don't just make goods; we create heirlooms. By choosing manual tools over high-speed assembly lines, we preserve the soul of the material and the integrity of the craft.</p>
+            </div>
+
+            <a href="#our-story" class="btn-process">Discover Our Story</a>
+        </div>
+
+    </div>
+</section></div><div id="shopify-section-template--19312862986314__comparison" class="shopify-section"><style data-shopify>
+    .comparison-section {
+        padding: 100px 0;
+        background-color: #F3F1ED; Slightly darker to separate from other sections
+    }
+
+    .comparison-intro {
+        /* max-width: 600px; */
+        margin: 20px auto 0;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        opacity: 0.8;
+        font-weight: 300;
+    }
+
+    .comparison-table-wrapper {
+        margin-top: 60px;
+        overflow-x: auto; /* For mobile swiping */
+        border: 1px solid var(--color-border);
+        background: white;
+    }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        min-width: 600px; /* Ensures table doesn't get too squished */
+    }
+
+    .comparison-table th, 
+    .comparison-table td {
+        padding: 25px 30px;
+        border-bottom: 1px solid var(--color-border);
+        font-size: 0.9rem;
+    }
+
+    .comparison-table th {
+        font-family: 'Inter', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--color-accent);
+    }
+
+    .feature-name {
+        font-weight: 600;
+        background-color: var(--color-bg);
+        width: 25%;
+    }
+
+    .comparison-table td:not(.feature-name) {
+        width: 37.5%;
+    }
+
+    /* Highlight Column for AJL-Handicraft */
+    .comparison-table .highlight {
+        background-color: rgba(74, 93, 78, 0.03);
+        color: var(--color-text);
+        font-weight: 500;
+        border-left: 1px solid var(--color-border);
+        border-right: 1px solid var(--color-border);
+    }
+
+    .comparison-table th.highlight {
+        background-color: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
+    }
+
+    /* Footer of Section */
+    .comparison-footer {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .comparison-footer p {
+        font-family: 'EB Garamond', serif;
+        font-style: italic;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        opacity: 0.7;
+    }
+
+    .process-link {
+        margin-top: 10px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 600;
+        text-decoration: none;
+        color: var(--color-accent);
+        border-bottom: 1px solid transparent;
+        width: fit-content;
+        transition: 0.3s;
+    }
+
+    .process-link:hover{
+        border-bottom-color: var(--color-accent);
+    }
+
+    /* --- MOBILE ADJUSTMENTS --- */
+    @media (max-width: 768px) {
+        .comparison-section {
+            padding: 60px 0;
+        }
+
+        .comparison-table th, 
+        .comparison-table td {
+            padding: 15px 20px;
+            font-size: 0.8rem;
+        }
+
+        .feature-name {
+            width: 30%;
+        }
+    }
+</style>
+
+<section class="comparison-section" data-reveal>
+    <div class="section-header">
+        <span class="section-label">The Long View</span>
+        <h2 class="section-title">Built for <em>Decades</em>, not Seasons</h2>
+        <p class="comparison-intro">Mass production hides its true cost in replacements. We build for longevity, ensuring your first purchase is also your last.</p>
+    </div>
+
+    <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Mass Production</th>
+                    <th class="highlight">AJL-Handicraft</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="feature-name">Primary Materials</td>
+                    <td>Particle board & Synthetic leather</td>
+                    <td class="highlight">Solid Reclaimed Wood & Full-Grain Leather</td>
+                </tr>
+                <tr>
+                    <td class="feature-name">Construction</td>
+                    <td>Chemical adhesives & Staples</td>
+                    <td class="highlight">Traditional Joinery & Hand-Stitched Saddles</td>
+                </tr>
+                <tr>
+                    <td class="feature-name">Aging Process</td>
+                    <td>Degrades and peels over time</td>
+                    <td class="highlight">Develops a unique, rich patina</td>
+                </tr>
+                <tr>
+                    <td class="feature-name">Lifespan</td>
+                    <td>2 – 5 Years</td>
+                    <td class="highlight">Lifetime (Heirloom Quality)</td>
+                </tr>
+                <tr>
+                    <td class="feature-name">True Cost</td>
+                    <td>High (Repeated replacements)</td>
+                    <td class="highlight">Low (One-time investment)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="comparison-footer">
+        <p>Our pieces don't just last; they improve with use. Every scratch tells a story.</p>
+        <a href="#shop" class="process-link">Invest in Quality →</a>
+    </div>
+</section></div><div id="shopify-section-template--19312862986314__customer-stories" class="shopify-section"><style data-shopify>
+  .testimonials-section {
+        padding: 100px 0;
+        background-color: var(--color-bg);
+    }
+
+    .testimonial-intro {
+        max-width: 500px;
+        margin: 15px auto 0;
+        font-size: 0.95rem;
+        opacity: 0.7;
+        font-weight: 300;
+    }
+
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 60px;
+    }
+
+    .testimonial-card {
+        background: white;
+        border: 1px solid var(--color-border);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    .testimonial-image {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .testimonial-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+
+    .testimonial-card:hover .testimonial-image img {
+        transform: scale(1.05);
+    }
+
+    .testimonial-content {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .testimonial-content blockquote {
+        font-family: 'EB Garamond', serif;
+        font-size: 1.15rem;
+        line-height: 1.5;
+        font-style: italic;
+        color: var(--color-text);
+    }
+
+    .customer-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .customer-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .customer-location {
+        font-size: 0.75rem;
+        opacity: 0.5;
+    }
+
+    .shop-their-pick {
+        margin-top: 10px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 600;
+        text-decoration: none;
+        color: var(--color-accent);
+        border-bottom: 1px solid transparent;
+        width: fit-content;
+        transition: 0.3s;
+    }
+
+    .shop-their-pick:hover {
+        border-bottom-color: var(--color-accent);
+    }
+
+    /* --- MOBILE RESPONSIVE --- */
+    @media (max-width: 1024px) {
+        .testimonials-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .testimonials-section {
+            padding: 60px 0;
+        }
+
+        .testimonials-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .testimonial-content {
+            padding: 25px;
+        }
+
+        .testimonial-image {
+            aspect-ratio: 4 / 3; /* Slightly shorter on mobile */
+        }
+    }
+</style>
+
+<section class="testimonials-section" data-reveal>
+    <div class="section-header">
+        <span class="section-label">Living with AJL</span>
+        <h2 class="section-title">The <em>Collector's</em> Story</h2>
+        <p class="testimonial-intro">Real objects, real homes, and the stories they carry through the years.</p>
+    </div>
+
+    <div class="testimonials-grid">
+        <div class="testimonial-card" data-reveal data-reveal-delay="100">
+            <div class="testimonial-image">
+                <img src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?q=80&w=1470&auto=format&fit=crop" loading="lazy" alt="Maria S. Wood Tray">
+            </div>
+            <div class="testimonial-content">
+                <div class="stars">★★★★★</div>
+                <blockquote>"My AJL tray has survived three house moves and still looks better than the day I bought it. The patina it's developing is just stunning."</blockquote>
+                <div class="customer-info">
+                    <span class="customer-name">Maria S.</span>
+                    <span class="customer-location">Manila, PH</span>
+                </div>
+                <a href="#shop" class="shop-their-pick">Shop her pick →</a>
+            </div>
+        </div>
+
+        <div class="testimonial-card" data-reveal data-reveal-delay="200">
+            <div class="testimonial-image">
+                <img src="https://images.unsplash.com/photo-1622547748225-3fc4abd2cca0?q=80&w=1632&auto=format&fit=crop" loading="lazy" alt="James L. Leather Bag">
+            </div>
+            <div class="testimonial-content">
+                <div class="stars">★★★★★</div>
+                <blockquote>"Finding honest craftsmanship is rare these days. My leather satchel is my daily companion—built like a tank but looks like art."</blockquote>
+                <div class="customer-info">
+                    <span class="customer-name">James L.</span>
+                    <span class="customer-location">Bicol, PH</span>
+                </div>
+                <a href="#shop" class="shop-their-pick">Shop his pick →</a>
+            </div>
+        </div>
+
+        <div class="testimonial-card" data-reveal data-reveal-delay="300">
+            <div class="testimonial-image">
+                <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1374&auto=format&fit=crop" loading="lazy" alt="Elena R. Home Object">
+            </div>
+            <div class="testimonial-content">
+                <div class="stars">★★★★★</div>
+                <blockquote>"It's the first thing guests notice in my dining room. There's a soul in hand-turned wood that mass-produced items just can't match."</blockquote>
+                <div class="customer-info">
+                    <span class="customer-name">Elena R.</span>
+                    <span class="customer-location">Cebu, PH</span>
+                </div>
+                <a href="#shop" class="shop-their-pick">Shop her pick →</a>
+            </div>
+        </div>
+    </div>
 </section>
-<!-- Featured Categories -->
-<section class="py-16 md:py-24 px-6 md:px-12 max-w-[1440px] mx-auto">
-<div class="flex flex-col md:flex-row gap-6 md:gap-8">
-<!-- Category 1 -->
-<div class="relative group cursor-pointer overflow-hidden aspect-[4/5] md:aspect-[3/4] flex-1">
-<img alt="Home Decor" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Collection of minimalist home decor items including hand-woven buri bowls and neutral ceramic vases on a light wood table with natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwaaPwgeYrgu0VlaIt62ve5Tmm6TjBVVrWqs8aBkRWXT5wW_ohuYRQ-tkN9Cf1yEajSYNHZhp5CK_2cWA3IGXukVZqrIPObU1UnEZJ-ipHR5LXEJZ7B24npqXhaAQMrQEPgccLH-IAeu26vO_QUMU61jMNa2uSHdmam86ztekHG9ceRLvqWQ0vRp1PNBH1EY1RFB-zAL87YHdfpPwcz7ds9KMSHEbK9daY18zkpi3UitGMrANfJ8NHHDYEkmu7lmiQhFvd8DIQx3Lm"/>
-<div class="absolute inset-0 bg-black/20 md:bg-secondary/10 group-hover:bg-transparent transition-colors"></div>
-<div class="absolute bottom-6 left-6 md:bottom-10 md:left-10">
-<h3 class="font-headline text-2xl md:text-3xl text-surface mb-2">Home Decor</h3>
-<span class="text-surface font-label uppercase text-[10px] tracking-[0.2rem] border-b border-surface pb-1">Explore</span>
-</div>
-</div>
-<!-- Category 2 -->
-<div class="relative group cursor-pointer overflow-hidden aspect-[4/5] md:aspect-[3/4] flex-1 md:mt-12">
-<img alt="Bags" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Modern hand-woven abaca tote bag with leather handles hanging against a warm parchment-colored wall." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWyjclcrCg0K0sW5QendZelFY7UYMLakAaS6nTjszcbon03sw7AYyB_nRRlJj7GyHAUMBETwkjgh6CNz7udJWAEtB5Ux5LDsGYJFTMGYbXtb1inmSpL-ush8pbaxXf73hKdLYZ3iY8-P_4fxa-JuNPel1pbTd59GuNrVQh9PXUM0piPDHkWsvNFt35efXoadfeTx3PldjLPH1mUdS7gY30Ab3P3bB_CdtZZ2Qs9Bdc2XkIYspMPyiZj3L5xE0VC7oPhv-3sqqgNgfQ"/>
-<div class="absolute inset-0 bg-black/20 md:bg-secondary/10 group-hover:bg-transparent transition-colors"></div>
-<div class="absolute bottom-6 left-6 md:bottom-10 md:left-10">
-<h3 class="font-headline text-2xl md:text-3xl text-surface mb-2">Artisan Bags</h3>
-<span class="text-surface font-label uppercase text-[10px] tracking-[0.2rem] border-b border-surface pb-1">Explore</span>
-</div>
-</div>
-<!-- Category 3 -->
-<div class="relative group cursor-pointer overflow-hidden aspect-[4/5] md:aspect-[3/4] flex-1">
-<img alt="Storage" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Set of organized buri storage baskets with various sizes in a bright modern laundry room with clean white aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-GXc6iX6x4pTLM_PCO3jRkwqEd9g7xujOGbJ742M1YegNBFnci2Ex4moOlsz6wYJeJwgD8H-LSDShcLS1WBK7cq2EXAnOcp3xnHW_wWOTds80S-u-BiYeF56v6-rHHM6CW-HOP8J-x3SXBzRSdJnfWSSjTFcMd8gvBS3h38ruiPNy2Q1jlneHYnQ3YbbJ4vIXl1ayomykRYj1n7uUCWeXyfO6Fhg_4lDsEBUFD27YTQV72uhBj8GD6VVG2ztj2r8LcgdWFw_Hinkl"/>
-<div class="absolute inset-0 bg-black/20 md:bg-secondary/10 group-hover:bg-transparent transition-colors"></div>
-<div class="absolute bottom-6 left-6 md:bottom-10 md:left-10">
-<h3 class="font-headline text-2xl md:text-3xl text-surface mb-2">Eco-Storage</h3>
-<span class="text-surface font-label uppercase text-[10px] tracking-[0.2rem] border-b border-surface pb-1">Explore</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Best Sellers -->
-<section class="py-16 md:py-24 bg-surface-container-low px-6 md:px-12">
-<div class="max-w-[1440px] mx-auto">
-<div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 md:mb-16 gap-6">
-<div>
-<span class="font-label text-tertiary uppercase tracking-widest text-xs md:sm mb-2 md:mb-4 block">Our Best-Sellers</span>
-<h2 class="font-headline text-3xl md:text-5xl text-on-background">Curated Favorites</h2>
-</div>
-<a class="font-label text-sm md:text-base text-secondary hover:text-primary underline underline-offset-8 transition-colors" href="#">View All Products</a>
-</div>
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12">
-<!-- Product 1 -->
-<div class="group cursor-pointer">
-<div class="relative overflow-hidden aspect-square mb-4 md:mb-6 bg-surface-container-highest">
-<img alt="Buri Basket" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Close-up detail of a hand-woven buri storage basket showing intricate pattern and natural organic texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD14DBd9qgZedml7eUxxcTsYysD2vViEgEsFQCyKsp-KBDS8u_kkdvneYmAUPHyLAPh7mclpthJr2yYL8Mir-i9w4OZ_c03LhZFsfd-0f_ngF_HOvuOo6nCl6xYSpRuuAe5SESHO6K8R0IT-w3_vLoc5Af3IYdCiflVBrGnRv2_8LO_gAmvt8xakctaK1l0r9lqSexI_m0xmP9aCr8Db_EJ_Yw08ciSddWD7foEKkTZkNGUdbjd3OY5VGlk6pZbaWw_d7_rYHsyU4mD"/>
-<div class="hidden md:flex absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center">
-<button class="bg-surface text-secondary px-6 py-2 text-xs font-label uppercase tracking-widest editorial-shadow">Quick View</button>
-</div>
-</div>
-<h4 class="font-body text-sm md:text-base font-semibold text-secondary mb-1">Buri Storage Basket</h4>
-<p class="font-label text-xs md:text-sm text-primary">₱1,450.00</p>
-</div>
-<!-- Product 2 -->
-<div class="group cursor-pointer">
-<div class="relative overflow-hidden aspect-square mb-4 md:mb-6 bg-surface-container-highest">
-<img alt="Abaca Tote" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Elegant abaca hand-woven tote bag in a minimalist outdoor setting with soft tropical plant shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApb37aFw3Q-vB_F2CMq-YM94R6He4I9YTwwdnr78t4nSbK1ll-pWltJD-TMDdxg0L-iNsH0oeMsgI5YyVqlnra2TsliNi1NQCoolHW5ovvgAx8QWGODEYGxYLCpTrH82bO16veK4DQPKX8ezKK7-Z3Yl50jj6Ic3q9bbiNRyxNqgKopsIYzwWalSJK5y8-FMsyutQH3_yWEbFLUE3BJiI7vPqF8lzQhJ2J7Z7vavwxTKc_Kui_fx8lJ4C4uLj9ARpkmfbgsHIPMp7V"/>
-<div class="hidden md:flex absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center">
-<button class="bg-surface text-secondary px-6 py-2 text-xs font-label uppercase tracking-widest editorial-shadow">Quick View</button>
-</div>
-</div>
-<h4 class="font-body text-sm md:text-base font-semibold text-secondary mb-1">Abaca Hand-woven Tote</h4>
-<p class="font-label text-xs md:text-sm text-primary">₱2,200.00</p>
-</div>
-<!-- Product 3 -->
-<div class="group cursor-pointer">
-<div class="relative overflow-hidden aspect-square mb-4 md:mb-6 bg-surface-container-highest">
-<img alt="Wooden Tray" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Handcrafted wooden serving tray made of mahogany with subtle wood grain details on a marble countertop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4BIdeUtF570Vyssy2I8GYDS9Px_IT3zcajNNz6Bwxpnz31kzch-zcKTGx-1JtgTqvpKrBJcRpBMtOTkbOz5JJ5LqCvbqBASO4X3FISAiD0wmx0jnVmoupYjcNbe7zNKIm7tm-ppUdn69I1hJpCct_H2W3vK6I5sbQmRQWFpSXfoW9kStdLAD4mdjyyTQ_vsUbv4BP90S_KpMFCIJaGDE2ekZSdvXQCrQKF7mODH1J27z07OGg5hx3I1F-O5oMmAtoGj5pSvquHGZG"/>
-<div class="hidden md:flex absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center">
-<button class="bg-surface text-secondary px-6 py-2 text-xs font-label uppercase tracking-widest editorial-shadow">Quick View</button>
-</div>
-</div>
-<h4 class="font-body text-sm md:text-base font-semibold text-secondary mb-1">Wooden Serving Tray</h4>
-<p class="font-label text-xs md:text-sm text-primary">₱1,850.00</p>
-</div>
-<!-- Product 4 -->
-<div class="group cursor-pointer">
-<div class="relative overflow-hidden aspect-square mb-4 md:mb-6 bg-surface-container-highest">
-<img alt="Table Runner" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Artisan hand-loomed table runner with intricate traditional Filipino weave patterns in cream and earth tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4ME9w7ZBxz0ZgRSrt3lXNjhYVIFiYuTfDrWpADkaso5OoVTYOoNMefgwc2la9BxzNnsRnZ1AhgQhsy0xddadFxFIFLzxjLM9MXhf_g-Ca1zLBp1r9yaK9y2ffgWJzyO2qxBpgc_fAZ0lGMWKvdaTgqdu-ZP4WmkI_t5GuqrE33rl0joLSBBOBp8XCTUBJQBnZuzjVZLZeJbeHLWQDFWDVrcOYtevAq5y-7wNz71SsARxaVxzD9ggw7vPZuXNlELfkCpAGVEdvNy4Y"/>
-<div class="hidden md:flex absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center">
-<button class="bg-surface text-secondary px-6 py-2 text-xs font-label uppercase tracking-widest editorial-shadow">Quick View</button>
-</div>
-</div>
-<h4 class="font-body text-sm md:text-base font-semibold text-secondary mb-1">Hand-loomed Table Runner</h4>
-<p class="font-label text-xs md:text-sm text-primary">₱950.00</p>
-</div>
-</div>
-</div>
-</section>
-<!-- The Maker's Touch -->
-<section class="py-16 md:py-32 px-6 md:px-12 max-w-[1440px] mx-auto overflow-hidden">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-<div class="relative order-1">
-<img alt="The Maker" class="w-full aspect-[4/5] object-cover editorial-shadow" data-alt="A Filipino artisan woman's hands meticulously weaving natural fibers in a sunlit workshop, surrounded by raw materials." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdZKXkzM_eTTsDYGq93TCmTxGpNxELuPHEgv6Zs6U-T47EcKZ6S-ySu6OMWAtWvFNpPr-A9sPUQPix1fJb1cLhq-seYWJValgkYuCQqi2_-M-aqz15XiNbmmrYp35eXLvfsnSBTu-dUh-d5DApsc351kLKZtu1hkyTDEE6NVnlIFU-EyDxPIsemdEuIAYY1T98J2ja-ch5UUcHazTIIb3a0jXS3_17KWWr1rP5Ewyhb8C4m3Nh67mN9Yfq3morM_E9J1RoKN9LWdPM"/>
-</div>
-<div class="space-y-6 md:space-y-8 order-2 text-center md:text-left">
-<span class="font-label text-tertiary uppercase tracking-[0.3rem] text-[10px] md:text-xs">Our Heritage</span>
-<h2 class="font-headline text-3xl md:text-6xl text-on-background leading-tight">Behind every weave is a story of <span class="italic">patience and heritage.</span></h2>
-<p class="font-body text-on-surface-variant leading-relaxed text-base md:text-lg">
-                        AJL-HANDICRAFT is dedicated to preserving the ancient art of Filipino weaving. By working directly with local communities, we ensure that every piece is crafted with respect for the environment.
-                    </p>
-<button class="border border-secondary text-secondary px-8 md:px-10 py-4 font-label uppercase tracking-widest text-sm rounded-lg hover:bg-secondary hover:text-surface transition-all duration-300 w-full sm:w-auto">
-                        Read Our Story
-                    </button>
-</div>
-</div>
-</section>
-<!-- Customer Love -->
-<section class="py-16 md:py-24 bg-surface-container px-6 md:px-12 text-center">
-<div class="max-w-4xl mx-auto mb-12 md:mb-20">
-<span class="material-symbols-outlined text-primary mb-4 md:mb-6" data-icon="format_quote" style="font-size: 2.5rem;">format_quote</span>
-<p class="font-headline text-xl md:text-3xl italic text-secondary leading-relaxed mb-8">
-                    "The quality is world-class. The abaca bag I bought is not just a fashion statement but a testament to incredible Filipino craftsmanship."
-                </p>
-<div class="flex items-center justify-center gap-4">
-<div class="w-8 md:w-12 h-[1px] bg-outline-variant"></div>
-<span class="font-label uppercase tracking-widest text-[10px] md:text-sm text-on-surface-variant">Maria Z. | Interior Stylist</span>
-<div class="w-8 md:w-12 h-[1px] bg-outline-variant"></div>
-</div>
-</div>
-<div class="max-w-[1440px] mx-auto pt-10 md:pt-16 border-t border-outline-variant/30">
-<p class="font-label uppercase tracking-[0.4rem] text-[10px] text-secondary mb-8 md:mb-12">As seen on Instagram</p>
-<div class="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-4">
-<img alt="IG 1" class="w-full aspect-square object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0ifLTCHS9r_n607XIxJVqZNxOlt0ha7MPTd2HRY6gar023NHVxNOaSfW6HCuRx9rY2168ORdqBAl3eht3DMHggbJ_SROUIwRYdWbxr1ZSL9ilcZrvSd_b7QGLIp0ZvhmBG2yShf5uQMSr2uPEU4Lk5lfsxs8zAPX3mMy1wZoVS0GuC1F4Y6ZxA1T1of40u-UpqdGaXJKWIsRgUy8XzoMW0Z0mA9wk_vhrwQ45ZssFUrNvIHnA6TEcv1wKk5XLuE00pOysO-XYhQnY"/>
-<img alt="IG 2" class="w-full aspect-square object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs4dssYbjzDxqGhsFhcyLz4TjuBlxf59YrIcepWviY-klrFeOBtbB2cSgkZBCGu9CQpAbNYCLhr2I6yEwzXkDuJsTmiQLXfipCr1F5E8sUHHx3vZZc5oGnGrIhc8UtXtMGU7fq3ytunjg4Ef9SUCsp6aZsf6sTAOQoCw7OdB6aGrAq7cwZ5SaA0nFs6TGM-8A7u5p6SJC2xpXJjZAuPgeI-xAnbO-4lXVnKWPGnttUxI9Z7vdMpAPy2C_zPz2Sn0fw8uWsOGpg4IJE"/>
-<img alt="IG 3" class="w-full aspect-square object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxlPgCMgsfc0lTyygbDOUI8UzFNUfNvoOhXLlya3dWTx59EUh5qqNcoNURu3fLjmgmgAOAgSEqU13stGCF2eq6udvnhVKdYRgHDUw6HuHy-lNzqA7SR2rIr82eKOejZm4BtvPiR25y476ef8fzsiZrRoKuXZRh1pZ6RopK5EnFk52LV9-PbvyMweIyveaAAvyPy2e3-OXU3-2kFupcOGI6zeEDNSkmQxLhEjyTTzx2WN4BDa9b5zM_ZoWfoIGNVENdwNcyiMCRHusD"/>
-<img alt="IG 4" class="w-full aspect-square object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAogWK_4nj9fHvl9Z6OdXyczaR64L77L9ZXXLUWaKgjO5J8c22onrMPICQ5cpicg0LMbCiN2ptJNA2J7RGXfq0QHRQSIe5ONjp90xhDRHQl1UETAMHnViyctfZeMgF8IBdQKQqr_hQh_KTfkFpPeCUv3973bv-wtuvEwQMasJGdUf2ZSMXB8F6YGrSGId5aAGikoU-AHiXw_Ev669Jh0GxPMof5llzvDDR6NSzsQJ0TZ45vExwRNwWL6RT3VbJ8-Ee_FpjhoD6O-0yX"/>
-<img alt="IG 5" class="w-full aspect-square object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBJ1o5dxld-Y8Dbk12akhciQbYril-adeBMqv1-2ipixmOhwhPdMmiR37P5f5Bin14_iTWlHcKbH6qBe2owWh3q09oaXf9PGORkL26fnytoNuDYboljLjfYLH85jwU69Z1usyiL07ZTswEXEZzoYrJ01fPrk2ryVZBe822jWFkCgikROpi8aA2EPf3sEXCGfDlOU1CrfKuZJxvT3m129zZU2NCwE5WBGaY0Ffu_ePXMXU0-aEbbzZsbUqItEGPzvS5ML9Hzw89htGq"/>
-<img alt="IG 6" class="w-full aspect-square object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgc9EVzGsDdB0-OusWPAbOhZ2Uhi8Y9tDcJY9yzsvv9jSiWY2O6cTuq-P2IqyBwVv-r7SWfQ25zsKp8jwm2C-ndS-VdpeZ2t7aMMpdI6LprXVujt9YeMB0ZqdLzJr-RNbB2kzUewjN__NRnKr6J1mGRfQFQtUFWqjJeRu7GF8j4bLrBxy2ON0YK3eYb_sA1xZVrinGap95LL0SX5_LClM63p6y6f7kuuh61v_Y-0SZHRwkXo1CMIXV3TuJLCZkLFbl9P3H1E6gQK1w"/>
-</div>
-</div>
-</section>
-<!-- Newsletter -->
-<section class="py-16 md:py-24 px-6 md:px-12 bg-primary">
-<div class="max-w-4xl mx-auto text-center text-on-primary">
-<h3 class="font-headline text-3xl md:text-5xl mb-4 md:mb-6">Join the Artisan Circle</h3>
-<p class="font-body text-on-primary/80 text-base md:text-lg mb-8 md:mb-12">Sign up for exclusive previews and stories. Get 10% off your first order.</p>
-<form class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
-<input class="flex-grow bg-surface/10 border-on-primary/30 text-on-primary placeholder:text-on-primary/50 focus:ring-0 focus:border-on-primary py-4 px-6 rounded-lg font-body outline-none h-14" placeholder="Email Address" type="email"/>
-<button class="bg-surface text-secondary px-10 py-4 font-label uppercase tracking-widest text-sm rounded-lg hover:bg-secondary hover:text-surface transition-colors h-14">Join Now</button>
-</form>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="w-full py-16 md:py-20 px-6 md:px-12 mt-0 bg-surface-container-low text-center flex flex-col items-center gap-10 md:gap-12">
-<div class="flex flex-col items-center gap-6">
-<span class="text-2xl md:text-3xl font-headline font-bold text-secondary">AJL-HANDICRAFT</span>
-<div class="flex flex-wrap justify-center gap-6 md:gap-8">
-<a class="font-label text-xs md:text-sm tracking-wide text-secondary hover:underline decoration-primary underline-offset-4" href="#">Newsletter</a>
-<a class="font-label text-xs md:text-sm tracking-wide text-secondary hover:underline decoration-primary underline-offset-4" href="#">Shipping Policy</a>
-<a class="font-label text-xs md:text-sm tracking-wide text-secondary hover:underline decoration-primary underline-offset-4" href="#">Artisans</a>
-<a class="font-label text-xs md:text-sm tracking-wide text-secondary hover:underline decoration-primary underline-offset-4" href="#">Contact</a>
-</div>
-</div>
-<div class="flex gap-8">
-<a class="text-secondary opacity-80 hover:opacity-100 transition-opacity" href="#"><span class="material-symbols-outlined" data-icon="facebook">social_leaderboard</span></a>
-<a class="text-secondary opacity-80 hover:opacity-100 transition-opacity" href="#"><span class="material-symbols-outlined" data-icon="camera">camera</span></a>
-<a class="text-secondary opacity-80 hover:opacity-100 transition-opacity" href="#"><span class="material-symbols-outlined" data-icon="mail">mail</span></a>
-</div>
-<p class="font-label text-[10px] md:text-xs tracking-widest text-primary uppercase">
-            © 2024 AJL-HANDICRAFT. Crafted with Soul.
+
+</div><div id="shopify-section-template--19312862986314__secondary-cta" class="shopify-section"><style data-shopify>
+  .secondary-cta {
+        padding: 120px 0;
+        background-color: #F3F1ED; /* Subtle contrast from the main background */
+        border-top: 1px solid var(--color-border);
+        text-align: center;
+    }
+
+    .cta-content {
+        max-width: 700px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .cta-title {
+        font-family: 'EB Garamond', serif;
+        font-size: clamp(2.2rem, 5vw, 3.2rem); /* Responsive typography */
+        font-weight: 400;
+        line-height: 1.1;
+        color: var(--color-text);
+    }
+
+    .cta-description {
+        font-size: 1.05rem;
+        line-height: 1.6;
+        opacity: 0.8;
+        font-weight: 300;
+        margin-bottom: 12px;
+    }
+
+    /* Reusing existing primary button styles for brand consistency */
+    .secondary-cta .btn-primary-hero {
+        width: auto;
+        padding: 20px 45px;
+        background-color: var(--color-accent);
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .secondary-cta .btn-primary-hero:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        background-color: #3d4d40;
+    }
+
+    /* --- MOBILE RESPONSIVE ADJUSTMENTS --- */
+    @media (max-width: 768px) {
+        .secondary-cta {
+            padding: 80px 0;
+        }
+        
+        .cta-content {
+            padding: 0 20px;
+        }
+        
+        .secondary-cta .btn-primary-hero {
+            width: 100%; /* Full-width button for better thumb-reach on mobile */
+            max-width: 320px;
+        }
+    }
+</style>
+
+<section class="secondary-cta" data-reveal>
+    <div class="cta-content">
+        <span class="section-label">Your Next Heirloom</span>
+        <h2 class="cta-title">Ready to start your collection?</h2>
+        <p class="cta-description">
+            Every piece is slow-crafted and made-to-order, ensuring that what you own is truly unique and built to last generations.
         </p>
-</footer>
-</body></html>
+        <div class="cta-action">
+            <a href="#shop" class="btn-primary-hero">View All Arrivals</a>
+        </div>
+    </div>
+</section></div>
+      </div>
+    </main>
+
+    <div id="shopify-section-footer" class="shopify-section"><footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>The Workshop</h4>
+                    <p class="workshop-desc">
+                        AJL-Handicraft is a small-batch studio dedicated to the honest use of wood and leather. We value utility over ornament and longevity over trends.
+                    </p>
+                    <a href="#" style="text-decoration: underline; font-weight: 500; font-family: 'EB Garamond', serif; font-size: 1.1rem; opacity: 1;">Read Our Story</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Collections</h4>
+                    <ul>
+                        <li><a href="#shop">New Arrivals</a></li>
+                        <li><a href="#shop">Best Sellers</a></li>
+                        <li><a href="#shop">Furniture</a></li>
+                        <li><a href="#shop">Leather Goods</a></li>
+                        <li><a href="#shop">Studio Finds</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Client Care</h4>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">Care Instructions</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Wholesale</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <div class="newsletter-box">
+                        <h4>Join the Circle</h4>
+                        <p>Enjoy 10% off your first order and gain early access to our seasonal small-batch drops.</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email address" aria-label="Email" required>
+                            <button type="submit">Unlock Offer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 AJL-Handicraft. Every piece tells a story. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22s1-5 1.4-7c-.5-1.5-.1-4 1.4-4 1.2 0 1.7 1.4 1.7 2.4 0 2.4-1.5 4.5-1.5 6.3 0 1.8 1.4 3.3 3.2 3.3 3.8 0 6.4-4 6.4-9.8 0-4.6-3-8.2-8.5-8.2-6 0-9.5 4.5-9.5 9.2 0 1.8.7 3.8 1.6 4.9.2.2.2.4.1.7-.1.4-.4 1.5-.4 1.7 0 .3-.2.4-.5.3-2.1-.9-3.4-3.8-3.4-6.1 0-7.4 5.3-14.3 15.6-14.3 8.2 0 14.5 5.9 14.5 13.5 0 8.1-5.1 14.7-12.2 14.7-2.4 0-4.6-1.2-5.4-2.7l-1.4 5.5c-.5 1.8-1.8 4.1-2.7 5.5"></path></svg></a>
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                </div>
+            </div>
+        </div>
+    </footer></div>
+
+    
+     <script defer>
+      // Native Scroll Reveal Observer
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            // Optional: stop observing once revealed (parang 'once: true' sa AOS)
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.1 // Lalabas ang animation kapag 10% ng element ay kita na
+});
+
+// Start observing all elements with data-reveal attribute
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+
+const header = document.getElementById('main-header');
+const overlay = document.getElementById('drawer-overlay');
+const mobileToggle = document.getElementById('mobile-toggle');
+const userBtn = document.getElementById('user-icon-btn');
+const cartBtn = document.getElementById('cart-icon-btn');
+const navMenu = document.getElementById('nav-menu');
+const userDrawer = document.getElementById('user-drawer');
+const cartDrawer = document.getElementById('cart-drawer');
+
+function switchAuth(type) {
+    const loginPane = document.getElementById('login-pane');
+    const signupPane = document.getElementById('signup-pane');
+    const title = document.getElementById('auth-title');
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+    if(type === 'login') {
+        loginPane.classList.add('active'); signupPane.classList.remove('active');
+        title.innerText = 'Welcome back'; tabs[0].classList.add('active');
+    } else {
+        signupPane.classList.add('active'); loginPane.classList.remove('active');
+        title.innerText = 'Create Account'; tabs[1].classList.add('active');
+    }
+}
+
+function closeAll() {
+    navMenu.classList.remove('active');
+    mobileToggle.classList.remove('active-burger');
+    userDrawer.classList.remove('active');
+    cartDrawer.classList.remove('active');
+    overlay.classList.remove('active');
+    header.classList.remove('has-active-drawer');
+    document.body.style.overflow = 'initial';
+}
+
+function openDrawer(drawerElement) {
+    closeAll();
+    drawerElement.classList.add('active');
+    overlay.classList.add('active');
+    header.classList.add('has-active-drawer');
+    header.classList.remove('header-hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+mobileToggle.addEventListener('click', () => navMenu.classList.contains('active') ? closeAll() : (openDrawer(navMenu), mobileToggle.classList.add('active-burger')));
+userBtn.addEventListener('click', () => userDrawer.classList.contains('active') ? closeAll() : openDrawer(userDrawer));
+cartBtn.addEventListener('click', () => cartDrawer.classList.contains('active') ? closeAll() : openDrawer(cartDrawer));
+overlay.addEventListener('click', closeAll);
+
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (userDrawer.classList.contains('active') || cartDrawer.classList.contains('active') || navMenu.classList.contains('active')) return;
+    currentScroll > lastScroll && currentScroll > 100 ? header.classList.add('header-hidden') : header.classList.remove('header-hidden');
+    lastScroll = currentScroll;
+});
+     </script>
+</body>
+</html>

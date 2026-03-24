@@ -1,0 +1,31 @@
+/*
+
+    global start
+
+*/
+:root {
+    --color-bg: #F9F8F6;
+    --color-text: #2F2F2F;
+    --color-accent: #4A5D4E;
+    --color-border: #E0DDD5;
+    --margin-elegant: clamp(1.5rem, 7vw, 10rem); 
+    --max-content-width: 1400px;
+    --announcement-height: 40px;
+    --header-height: 70px;
+    --drawer-top-offset: calc(var(--announcement-height) + var(--header-height));
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/*
+
+    global end
+
+*/
