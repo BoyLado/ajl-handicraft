@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hand-Thrown Ceramic Bowl - AJL Handicraft</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --primary: #86452b;
+            --primary-container: #a45d41;
+            --on-primary: #ffffff;
+            --secondary: #53643a;
+            --secondary-container: #d6eab5;
+            --background: #fcf9f4;
+            --surface: #fcf9f4;
+            --surface-container: #f0ede8;
+            --surface-container-low: #f6f3ee;
+            --surface-container-high: #ebe8e3;
+            --surface-container-highest: #e5e2dd;
+            --on-surface: #1c1c19;
+            --on-surface-variant: #53433d;
+            --outline-variant: #d9c2ba;
+            --font-headline: 'Noto Serif', serif;
+            --font-body: 'Manrope', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--on-surface);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Utility Styles */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .bg-linen-overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--background);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--surface-container-low);
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-brand {
+            font-family: var(--font-headline);
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.05em;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links { display: flex; }
+        }
+
+        .nav-links a {
+            color: #57534e;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 4px;
+            transition: opacity 0.2s;
+            position: relative;
+        }
+
+        .nav-btn:hover { opacity: 0.8; }
+
+        .cart-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: var(--on-primary);
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- CART SIDE DRAWER STYLES --- */
+                #cart-overlay {
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(0, 0, 0, 0.4);
+                    backdrop-filter: blur(2px);
+                    z-index: 100;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all 0.3s ease;
+                }
+
+                #cart-drawer {
+                    position: fixed;
+                    top: 0;
+                    right: -100%;
+                    width: 100%;
+                    max-width: 400px;
+                    height: 100%;
+                    background: var(--background);
+                    z-index: 101;
+                    box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+                    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    display: flex;
+                    flex-direction: column;
+                    padding: 2rem;
+                }
+
+                #cart-drawer.open {
+                    right: 0;
+                }
+
+                #cart-overlay.show {
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                .drawer-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 2rem;
+                    border-bottom: 1px solid var(--outline-variant);
+                    padding-bottom: 1rem;
+                }
+
+                .drawer-header h2 {
+                    font-family: var(--font-headline);
+                    font-size: 1.5rem;
+                }
+
+                .close-drawer {
+                    cursor: pointer;
+                    color: var(--on-surface-variant);
+                }
+
+                .cart-items-list {
+                    flex-grow: 1;
+                    overflow-y: auto;
+                }
+
+                .empty-cart-msg {
+                    text-align: center;
+                    color: var(--on-surface-variant);
+                    margin-top: 3rem;
+                }
+
+                .btn-add {
+                    width: 100%;
+                    background: var(--primary);
+                    color: white;
+                    border: none;
+                    padding: 1.25rem;
+                    border-radius: var(--radius-lg);
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: opacity 0.2s;
+                }
+
+                .btn-add:hover {
+                    opacity: 0.9;
+                }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            margin: 3rem 0;
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+        }
+
+        .breadcrumbs a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumbs a:hover { color: var(--primary); }
+
+        /* Product Hero */
+        .product-hero {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            margin-bottom: 8rem;
+        }
+
+        @media (min-width: 1024px) {
+            .product-hero { grid-template-columns: repeat(12, 1fr); }
+        }
+
+        .gallery {
+            grid-column: span 1 / span 1;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+        }
+
+        @media (min-width: 1024px) {
+            .gallery { grid-column: span 7 / span 7; }
+        }
+
+        .thumbnails {
+            grid-column: span 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .thumb {
+            aspect-ratio: 1;
+            background: var(--surface-container);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-img-container {
+            grid-column: span 5;
+            background: var(--surface-container-low);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .main-img-container img {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Product Info */
+        .product-info {
+            grid-column: span 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 1024px) {
+            .product-info { grid-column: span 5 / span 5; }
+        }
+
+        .series-tag {
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .product-title {
+            font-family: var(--font-headline);
+            font-size: 2.25rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .price-rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price { font-size: 1.5rem; font-weight: 300; }
+
+        .divider { width: 1px; height: 16px; background: var(--outline-variant); }
+
+        .rating-summary { display: flex; align-items: center; gap: 0.25rem; font-size: 0.875rem; font-weight: 500; }
+
+        .description {
+            color: var(--on-surface-variant);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .variation-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .swatches { display: flex; gap: 0.75rem; margin-bottom: 2rem; }
+
+        .swatch {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            padding: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .swatch.active { border-color: var(--primary); }
+
+        .swatch span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .size-options { display: flex; gap: 0.75rem; margin-bottom: 2.5rem; }
+
+        .size-btn {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid transparent;
+            border-radius: 0.375rem;
+            background: var(--surface-container-low);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .size-btn.active {
+            background: var(--surface-container-highest);
+            border-color: var(--on-surface);
+        }
+
+        .actions { display: flex; flex-direction: column; gap: 1rem; }
+
+        .btn-primary {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-container));
+            color: var(--on-primary);
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(134, 69, 43, 0.2);
+            transition: opacity 0.2s;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 1.25rem;
+            background: var(--surface-container-highest);
+            color: var(--on-surface);
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .shipping-hint {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--surface-container-low);
+            border-radius: 0.5rem;
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .shipping-hint .material-symbols-outlined { color: var(--primary); }
+
+        /* Details Section */
+        .details-section {
+            margin-top: 8rem;
+            padding-top: 6rem;
+            border-top: 1px solid rgba(217, 194, 186, 0.2);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .details-section { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .details-title { font-family: var(--font-headline); font-size: 1.5rem; margin-bottom: 1.5rem; }
+
+        .details-list { list-style: none; color: var(--on-surface-variant); }
+
+        .details-list li { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+
+        .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+
+        .details-text { color: var(--on-surface-variant); line-height: 1.6; }
+
+        /* Artisan Quote */
+        .artisan-quote {
+            margin: 8rem 0;
+            padding: 6rem 1.5rem;
+            background: rgba(214, 234, 181, 0.4);
+            border-radius: 0.75rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem; display: block; }
+
+        .quote-text {
+            font-family: var(--font-headline);
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--primary-container);
+            max-width: 48rem;
+            margin: 0 auto 1.5rem;
+            line-height: 1.5;
+        }
+
+        .artisan-name {
+            font-size: 0.875rem;
+            letter-spacing: 0.15em;
+            color: var(--secondary);
+            text-transform: uppercase;
+        }
+
+        /* Related Products */
+        .related-section { margin-bottom: 8rem; }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+        }
+
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 0.25rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .product-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .product-card { cursor: pointer; }
+
+        .card-img-container {
+            aspect-ratio: 3/4;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: var(--surface-container);
+            margin-bottom: 1rem;
+            transition: box-shadow 0.3s;
+        }
+
+        .product-card:hover .card-img-container {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover img { transform: scale(1.05); }
+
+        .card-title { font-family: var(--font-headline); font-size: 1.125rem; margin-bottom: 0.25rem; }
+
+        .card-price { font-size: 0.875rem; color: var(--on-surface-variant); }
+
+        .offset-card { transform: translateY(0); }
+
+        @media (min-width: 768px) {
+            .offset-card { transform: translateY(2rem); }
+        }
+
+        /* Reviews */
+        .reviews-container {
+            background: var(--surface-container-low);
+            border-radius: 0.75rem;
+            padding: 3rem;
+            margin-bottom: 8rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+        }
+
+        @media (min-width: 1024px) {
+            .reviews-container { grid-template-columns: repeat(12, 1fr); }
+        }
+
+        .rating-sidebar { grid-column: span 1; }
+
+        @media (min-width: 1024px) {
+            .rating-sidebar { grid-column: span 4; }
+        }
+
+        .rating-large { font-size: 3.75rem; font-weight: 300; color: var(--primary); display: block; margin-bottom: 1rem; }
+
+        .stars-row { display: flex; color: var(--primary); margin-bottom: 0.5rem; }
+
+        .review-count { font-size: 0.875rem; color: var(--on-surface-variant); margin-bottom: 2rem; }
+
+        .bars-container { display: flex; flex-direction: column; gap: 0.75rem; }
+
+        .bar-row { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; }
+
+        .bar-bg { flex: 1; height: 6px; background: var(--surface-container-highest); border-radius: 999px; overflow: hidden; }
+
+        .bar-fill { height: 100%; background: var(--primary); }
+
+        .review-feed { grid-column: span 1; display: flex; flex-direction: column; gap: 3rem; }
+
+        @media (min-width: 1024px) {
+            .review-feed { grid-column: span 8; }
+        }
+
+        .review-item { padding-bottom: 2rem; border-bottom: 1px solid rgba(217, 194, 186, 0.3); }
+
+        .review-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+
+        .review-body { font-style: italic; color: var(--on-surface-variant); margin-bottom: 1rem; line-height: 1.6; }
+
+        .reviewer-name { font-size: 0.875rem; font-weight: 500; }
+
+        .read-all-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--surface-container-low);
+            border-top: 1px solid #e7e5e4;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .footer-logo { font-family: var(--font-headline); font-size: 1.125rem; color: var(--primary); margin-bottom: 1.5rem; }
+
+        .footer-about { font-size: 0.875rem; color: #57534e; line-height: 1.6; max-width: 20rem; }
+
+        .footer-heading { font-weight: 500; margin-bottom: 1.5rem; }
+
+        .footer-links { display: flex; flex-direction: column; gap: 1rem; }
+
+        .footer-links a { font-size: 0.875rem; color: #78716c; text-decoration: none; transition: color 0.2s; }
+
+        .footer-links a:hover { color: var(--on-surface); }
+
+        .newsletter-desc { font-size: 0.875rem; color: #78716c; margin-bottom: 1rem; }
+
+        .newsletter-form { display: flex; }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            background: var(--surface-container);
+            font-size: 0.875rem;
+        }
+
+        .newsletter-btn {
+            padding: 0.75rem 1rem;
+            background: var(--primary);
+            color: var(--on-primary);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom { flex-direction: row; justify-content: space-between; }
+        }
+
+        .copyright { font-size: 0.875rem; color: #78716c; }
+
+        .legal-links { display: flex; gap: 2rem; }
+
+        .legal-links a { font-size: 0.875rem; color: #78716c; text-decoration: none; }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+<div class="container navbar-content">
+<div style="display: flex; align-items: center; gap: 3rem;">
+<a class="nav-brand" href="#">AJL-handicraft</a>
+<div class="nav-links">
+<a href="#">Pottery</a>
+<a href="#">Textiles</a>
+<a href="#">Woodwork</a>
+<a href="#">Artisans</a>
+<a href="#">Journal</a>
+</div>
+</div>
+<div class="nav-actions">
+<button class="nav-btn"><span class="material-symbols-outlined">search</span></button>
+<button class="nav-btn"><span class="material-symbols-outlined">person</span></button>
+<button class="nav-btn" id="cart-trigger">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="cart-badge">1</span>
+</button>
+</div>
+</div>
+</nav>
+<div id="cart-overlay"></div>
+<aside id="cart-drawer">
+    <div class="drawer-header">
+        <h2>Your Bag</h2>
+        <span class="material-symbols-outlined close-drawer" id="cart-close">close</span>
+    </div>
+    <div class="cart-items-list">
+        <div class="empty-cart-msg">
+            <span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.3;">shopping_basket</span>
+            <p style="margin-top: 1rem;">Your basket is looking a bit light.</p>
+        </div>
+    </div>
+    <div class="drawer-footer" style="margin-top: 2rem; border-top: 1px solid var(--outline-variant); padding-top: 1.5rem;">
+        <button class="btn-add" style="background: var(--tertiary);">Checkout</button>
+    </div>
+</aside>
+<main class="container">
+<nav class="breadcrumbs">
+<a href="#">Home</a>
+<span>/</span>
+<a href="#">Pottery</a>
+<span>/</span>
+<span style="color: var(--on-surface); font-weight: 500;">Hand-Thrown Ceramic Bowl</span>
+</nav>
+<section class="product-hero">
+<div class="gallery">
+<div class="thumbnails">
+<div class="thumb" style="border: 1px solid rgba(217,194,186,0.3);"><img alt="Detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZsHt96gJbycPkqr_BBuQM5fuzfBEfUO-kr1OFPcz30KxsXJj9nVIR9rFPsvMx41KrJcE1vYX1BBjnW1ETB7ILoNNb-uRLpE09db2vpUKsMZW9-Qpifk-SW7_dl9WXRdRzcU3Qf8lzZRF1bOmDQQunX_Zxx3ixjdW3QrdIKkpyVujGrv_sYSOw8oNf9eLhPUQW5t0UD-b8zGUvywpXdzGce4SDQhyHkFxoaBZPChRCdc9a4u14IdZjKW2jwm20A-beJjghXa8LFls"/></div>
+<div class="thumb"><img alt="Side View" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG34JOGth9O6s6eTMJcX4a1GBkPRh-bCK7Sd14YRx3UdZqcI_JkODbtn13PizEWIGWPLMfnGKgbb3d4qwLxtOV0O_bGA9LSd7p4i-eWhp78YBjhyTY0oY2z_rvDn48GsoMQschWlWdUfAvSQFyK5IpQHZfWrWjOpCgixxb95U81HLGXO_WiUUIygcb6HlUSZ-pLsnSkFq1581MIPf4YKVo4RvA_mXh4LXEWiQA4OoBRtyO_ITOf3tkFy4sHgTwLvQHiVmORmdIdbQ"/></div>
+<div class="thumb"><img alt="Usage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPtbhPIjExTxwweBCOb9QGaGbMKcI34WxpntGvyiQWcy6WBhciAiUdGGLm6l_2XHG3Jbduu9ZG77zsk072Zx052jt9RjTnHz42TaAcvIMD4sTIcSo_R_6-ZfZ8vPdMI11_TP44GEVxUKXcTq8NElNNuZchRX0iZI7je4dWfZcuQ6o6jWmyQyiQHFOyENz2XD7K5H5clp8CqHSFYP1pfv4bySCvkza2isLxDBvC5SyaSqRavbDFdTSKfJMKIIK_kqv85xF1SygfFCY"/></div>
+</div>
+<div class="main-img-container bg-linen-overlay">
+<img alt="Main product" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA-uYp0oEVLZ8u25pGm41sFwjZgNjQzjAiuPkDkie9YQMTBifHVFM1F1y7C6hZHM9LIvXrGMaMFV_K0N1oQpAiFkveYwTLgKvWPPoijUgruJaO9lu7VOy29xUiWY1-lWOYzzrsV4xUQ-9CwC30H7g--uh4cRLklNCHUgf06Tpu-ng3Wffgu89g0t8Tn6OgI6k1ZgseRRekoPWYgXwERJjA5MvpSIimXTytrf_LOz_DofMBmckRTqyIuCmznQujNrnxTFC25gsSEjQ"/>
+</div>
+</div>
+<div class="product-info">
+<p class="series-tag">The Earth Series</p>
+<h1 class="product-title">Hand-Thrown Ceramic Bowl in Ocre</h1>
+<div class="price-rating">
+<span class="price">$74.00</span>
+<div class="divider"></div>
+<div class="rating-summary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px; color: var(--primary);">star</span>
+<span>4.9 (48 Reviews)</span>
+</div>
+</div>
+<p class="description">
+                    Each bowl is individually hand-thrown on a kick wheel in our Hudson Valley studio. Crafted from local stoneware clay and finished with a custom-mixed matte ocre glaze that reveals the natural iron speckles of the earth.
+                </p>
+<div>
+<label class="variation-label">Select Finish</label>
+<div class="swatches">
+<div class="swatch active"><span style="background: #c28e6c;"></span></div>
+<div class="swatch"><span style="background: #e3e0d4;"></span></div>
+<div class="swatch"><span style="background: #4a5144;"></span></div>
+</div>
+</div>
+<div>
+<label class="variation-label">Dimensions</label>
+<div class="size-options">
+<button class="size-btn active">Small</button>
+<button class="size-btn">Large</button>
+</div>
+</div>
+<div class="actions">
+<button class="btn-primary">
+<span class="material-symbols-outlined">shopping_bag</span>
+                        Add to Cart
+                    </button>
+<button class="btn-secondary">Buy Now</button>
+</div>
+<div class="shipping-hint">
+<span class="material-symbols-outlined">local_shipping</span>
+<div>
+<p style="font-weight: 500;">Free sustainable shipping</p>
+<p style="color: var(--on-surface-variant);">Arrives in 3-5 business days. Plastic-free packaging.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="details-section">
+<div>
+<h3 class="details-title">Materials &amp; Origin</h3>
+<ul class="details-list">
+<li><span class="dot"></span> 100% Hudson Valley stoneware clay</li>
+<li><span class="dot"></span> Lead-free matte mineral glaze</li>
+<li><span class="dot"></span> Small-batch fired (Cones 6-10)</li>
+</ul>
+</div>
+<div>
+<h3 class="details-title">Care Guide</h3>
+<p class="details-text">
+                    While our ceramics are dishwasher and microwave safe, we recommend hand-washing with mild detergent to preserve the unique texture of the glaze over time. Avoid sudden temperature shocks.
+                </p>
+</div>
+<div>
+<h3 class="details-title">Details</h3>
+<p class="details-text">
+                    Diameter: 6.5" approx<br/>
+                    Height: 3" approx<br/>
+                    Weight: 14oz<br/>
+                    Capacity: 20 fl oz
+                </p>
+</div>
+</section>
+<section class="artisan-quote bg-linen-overlay">
+<span class="material-symbols-outlined quote-icon">format_quote</span>
+<h2 class="quote-text">
+                "Every bowl carries the memory of the hands that shaped it. In a world of mass production, we offer the quiet beauty of a unique fingerprint."
+            </h2>
+<p class="artisan-name">— ARIA J. LOWE, MASTER CERAMICIST</p>
+</section>
+<section class="related-section">
+<div class="section-header">
+<div>
+<h2 class="details-title" style="font-size: 1.875rem; margin-bottom: 0.5rem;">Complete the Collection</h2>
+<p style="color: var(--on-surface-variant);">Items commonly curated with the Earth Series.</p>
+</div>
+<a class="view-all" href="#">View All Pottery</a>
+</div>
+<div class="product-grid">
+<div class="product-card">
+<div class="card-img-container">
+<img alt="Mug" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE9jw_Eq3wzT_QYgDvaz0KcqnuiH3btgIZQpI7vyFOhLEAftC78psynl0kBViWVX_2b0sHHnsePfAnW1Xnnu8-cJ-O73MaUzNDZAovVOhHJXYbqFpVECszC6isdOnX4PuCc7H3FsP7T3XFv8I7Ky9g0gR9ptsLgEjVRZ6d1SFzaGNPQMIvWLZebGYcjcP8KjLqVdwwnmiBiP0HSd6awi56l7oxOsFfmFrnLc7JQHRvlvffg83HQLaZDqte0dvo9-LsCGF_aandNqo"/>
+</div>
+<h4 class="card-title">Earth Taper Mug</h4>
+<p class="card-price">$32.00</p>
+</div>
+<div class="product-card offset-card">
+<div class="card-img-container">
+<img alt="Spoon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzpo5hfv1Dsy2rs-IHkafo8BdSeacQ-6EpWvAilcjC5aG5gBThUfYpcv1ZHUe5lTY35OoluFMbNIVgI5_cu8aHfE32wtTCVli9RXowOmpvVr_KIy_4pOsYafTihwlbrPMLxxRrIxIm2iRwZylZ82BRLxn6L6GH91z6_SyKQvh7D7ExZkIoffxuaMRQIo5EfaO4Z7__hnl4TUlZXRoOD5hwLW1TpL4iaYb_uSknF0qGOUdSKLFQ1MjXQMnP-OFGjFdFgPO3jbCyuJU"/>
+</div>
+<h4 class="card-title">Oak Serving Spoon</h4>
+<p class="card-price">$45.00</p>
+</div>
+<div class="product-card">
+<div class="card-img-container">
+<img alt="Runner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVBo2XrZ1bPyI2WJXtkaX-BUMgLFB_3QvHDG8E4aNr-T8bdWtxeaHmT0ZZNtT0vlxjvfhIRLIMt-l3ZmLxVMlzFErs5agezd9DEZItY2JU2iUK0JXD5SGhdlCWkOdlJ_ZVi-O-hnUt9Nd8mr0AyrzOLcH_FgtMxjSM5k2ML-DzfYgbhPA6mO-L8fBt-7ONVMEtMRy6shYGX8ybBoP3aFcSW2GsJYRzEK1uLB-DSa_u_Wjc9vZ8_YOqFdDIWQ1-HNzsuipturkup8I"/>
+</div>
+<h4 class="card-title">Linen Table Runner</h4>
+<p class="card-price">$88.00</p>
+</div>
+<div class="product-card offset-card">
+<div class="card-img-container">
+<img alt="Plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo2KDYsHwZ4OXfoyHrqvLbqPhnBpKtubxr2iIDGBXzgRmMGTu_eYjObWe1zghmskI-OBURDAvTiQYsxRdM6TLnXY-tjoauGNkFx_hv4sv2cNNeC58IItRUhMWy2LfnkRDXAWluEBjkrsVJKz-LFlRH4Osff8IKC7phk47LEaPci7Yp6SN3so7VFFooSHobahHTWRXtsNEyX34GoHVW4LFvkcRQTRyDfVwgSMjhs-E1CuMZ1YWL2v0v0mVpCDE3BldB3wRveadfnj8"/>
+</div>
+<h4 class="card-title">Earth Shallow Plate</h4>
+<p class="card-price">$58.00</p>
+</div>
+</div>
+</section>
+<section class="reviews-container">
+<div class="rating-sidebar">
+<h2 class="details-title" style="font-size: 1.875rem;">Customer Notes</h2>
+<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+<span class="rating-large">4.9</span>
+<div>
+<div class="stars-row">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="review-count">Based on 48 reviews</p>
+</div>
+</div>
+<div class="bars-container">
+<div class="bar-row">
+<span style="width: 12px;">5</span>
+<div class="bar-bg"><div class="bar-fill" style="width: 92%;"></div></div>
+</div>
+<div class="bar-row">
+<span style="width: 12px;">4</span>
+<div class="bar-bg"><div class="bar-fill" style="width: 8%;"></div></div>
+</div>
+<div class="bar-row">
+<span style="width: 12px;">3</span>
+<div class="bar-bg"><div class="bar-fill" style="width: 0%;"></div></div>
+</div>
+</div>
+</div>
+<div class="review-feed">
+<div class="review-item">
+<div class="review-header">
+<div>
+<h4 style="font-size: 1.125rem; font-weight: 500;">Sublime texture and weight</h4>
+<div class="stars-row" style="font-size: 12px; transform: scale(0.85); transform-origin: left; margin-top: 4px;">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<span style="font-size: 0.875rem; color: var(--on-surface-variant);">Jan 12, 2024</span>
+</div>
+<p class="review-body">"The way the light hits the glaze is even more beautiful than the photos. It feels substantial in the hands but remains incredibly elegant on the table."</p>
+<p class="reviewer-name">— Sarah M.</p>
+</div>
+<div class="review-item">
+<div class="review-header">
+<div>
+<h4 style="font-size: 1.125rem; font-weight: 500;">Perfectly irregular</h4>
+<div class="stars-row" style="font-size: 12px; transform: scale(0.85); transform-origin: left; margin-top: 4px;">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<span style="font-size: 0.875rem; color: var(--on-surface-variant);">Dec 28, 2023</span>
+</div>
+<p class="review-body">"You can see the slight traces of the potter's hands. It's exactly what I was looking for to break up the sterile look of my kitchen."</p>
+<p class="reviewer-name">— Julian R.</p>
+</div>
+<button class="read-all-btn">Read All Reviews</button>
+</div>
+</section>
+</main>
+<footer>
+<div class="container footer-grid">
+<div>
+<div class="footer-logo">AJL-handicraft</div>
+<p class="footer-about">
+                    Celebrating the tactile beauty of human-made objects. Sustainably sourced, intentionally crafted.
+                </p>
+</div>
+<div>
+<h4 class="footer-heading">Shop</h4>
+<div class="footer-links">
+<a href="#">Pottery</a>
+<a href="#">Textiles</a>
+<a href="#">Woodwork</a>
+</div>
+</div>
+<div>
+<h4 class="footer-heading">Support</h4>
+<div class="footer-links">
+<a href="#">Shipping</a>
+<a href="#">Returns</a>
+<a href="#">Contact Us</a>
+</div>
+</div>
+<div>
+<h4 class="footer-heading">Join the Studio</h4>
+<p class="newsletter-desc">Receive stories from the workshop and early access to new collections.</p>
+<div class="newsletter-form">
+<input class="newsletter-input" placeholder="Your email" type="email"/>
+<button class="newsletter-btn">Join</button>
+</div>
+</div>
+</div>
+<div class="container footer-bottom">
+<p class="copyright">© 2024 AJL-handicraft. Crafted with intention.</p>
+<div class="legal-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms</a>
+</div>
+</div>
+</footer>
+
+<script>
+    const cartTrigger = document.getElementById('cart-trigger');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartClose = document.getElementById('cart-close');
+    const cartOverlay = document.getElementById('cart-overlay');
+
+    // Function to open drawer
+    cartTrigger.addEventListener('click', () => {
+        cartDrawer.classList.add('open');
+        cartOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden'; // Stop scrolling when cart is open
+    });
+
+    // Function to close drawer
+    const closeDrawer = () => {
+        cartDrawer.classList.remove('open');
+        cartOverlay.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    };
+
+    cartClose.addEventListener('click', closeDrawer);
+    cartOverlay.addEventListener('click', closeDrawer);
+</script>
+
+</body></html>

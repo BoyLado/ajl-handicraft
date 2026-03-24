@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --primary: #86452b;
+            --primary-container: #a45d41;
+            --on-primary: #ffffff;
+            --on-primary-container: #fff2ee;
+            --secondary: #53643a;
+            --secondary-container: #d6eab5;
+            --on-secondary-container: #596a40;
+            --tertiary: #635546;
+            --background: #fcf9f4;
+            --on-background: #1c1c19;
+            --surface: #fcf9f4;
+            --surface-container-low: #f6f3ee;
+            --surface-container-high: #ebe8e3;
+            --surface-container-highest: #e5e2dd;
+            --surface-variant: #e5e2dd;
+            --on-surface: #1c1c19;
+            --on-surface-variant: #53433d;
+            --outline-variant: #d9c2ba;
+            --headline-font: 'Noto Serif', serif;
+            --body-font: 'Manrope', sans-serif;
+            --max-width: 1280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--on-background);
+            font-family: var(--body-font);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, .font-serif {
+            font-family: var(--headline-font);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            font-family: var(--body-font);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5rem;
+            background-color: var(--background);
+            z-index: 1000;
+            border-bottom: 1px solid var(--surface-container-low);
+        }
+
+        .nav-content {
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.05em;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+            }
+        }
+
+        .nav-links a {
+            color: #57534e;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--primary);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            cursor: pointer;
+        }
+
+        main {
+            padding-top: 5rem;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            height: 819px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(28, 28, 25, 0.2);
+        }
+
+        .hero-card {
+            background-color: rgba(252, 249, 244, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 3rem;
+            max-width: 42rem;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-card {
+                padding: 5rem;
+            }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--on-surface);
+            letter-spacing: -0.02em;
+        }
+
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 4.5rem;
+            }
+        }
+
+        .hero h1 .italic {
+            font-style: italic;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--on-surface-variant);
+        }
+
+        /* Mission Section */
+        .mission {
+            padding: 6rem 0;
+            background-color: var(--surface-container-low);
+        }
+
+        .mission-grid {
+            display: grid;
+            gap: 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .mission-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+            }
+        }
+
+        .mission-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2rem;
+        }
+
+        .mission h2 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            color: var(--on-surface);
+        }
+
+        @media (min-width: 768px) {
+            .mission h2 {
+                font-size: 3rem;
+            }
+        }
+
+        .mission p {
+            font-size: 1.125rem;
+            color: var(--on-surface-variant);
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(to bottom right, var(--primary), var(--primary-container));
+            color: var(--on-primary);
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .mission-images {
+            position: relative;
+        }
+
+        .main-img-wrapper {
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            border-radius: 0.25rem;
+        }
+
+        .main-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .floating-img {
+            display: none;
+            position: absolute;
+            bottom: -2.5rem;
+            left: -2.5rem;
+            width: 16rem;
+            height: 16rem;
+            border: 8px solid var(--surface);
+            border-radius: 0.25rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        @media (min-width: 1024px) {
+            .floating-img {
+                display: block;
+            }
+        }
+
+        .floating-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Quote */
+        .quote-section {
+            padding: 8rem 0;
+        }
+
+        .quote-card {
+            background-color: rgba(214, 234, 181, 0.4);
+            padding: 4rem 1.5rem;
+            border-radius: 0.25rem;
+            text-align: center;
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .quote-card {
+                padding: 6rem;
+            }
+        }
+
+        .quote-card h3 {
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: var(--on-surface);
+        }
+
+        @media (min-width: 768px) {
+            .quote-card h3 {
+                font-size: 1.875rem;
+            }
+        }
+
+        .quote-author {
+            font-size: 0.875rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--secondary);
+            text-transform: uppercase;
+        }
+
+        /* Makers */
+        .makers {
+            padding: 6rem 0;
+            background-color: var(--surface);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 42rem;
+            margin: 0 auto 5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header p {
+            color: var(--on-surface-variant);
+        }
+
+        .makers-grid {
+            display: grid;
+            gap: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .makers-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .maker-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .asymmetric-down {
+            margin-top: 2.5rem;
+        }
+
+        .maker-img {
+            aspect-ratio: 3/4;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+
+        .maker-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.7s;
+        }
+
+        .maker-img:hover img {
+            filter: grayscale(0%);
+        }
+
+        .maker-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .maker-title {
+            font-size: 0.875rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .maker-bio {
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+        }
+
+        /* Process */
+        .process {
+            padding: 8rem 0;
+            background-color: var(--surface-container-high);
+        }
+
+        .process-steps {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(2, 1fr);
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .process-steps {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .step-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.25rem;
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background-color 0.2s;
+        }
+
+        .step-card:hover {
+            background-color: var(--surface-container-high);
+        }
+
+        .step-num {
+            font-family: var(--headline-font);
+            font-size: 2.25rem;
+            color: var(--outline-variant);
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-desc {
+            font-size: 0.75rem;
+            color: var(--on-surface-variant);
+        }
+
+        .process-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            height: 16rem;
+        }
+
+        @media (min-width: 768px) {
+            .process-gallery {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .process-gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
+
+        /* Sustainability */
+        .eco {
+            padding: 6rem 0;
+        }
+
+        .eco-banner {
+            background-color: var(--primary-container);
+            color: var(--on-primary-container);
+            padding: 3rem 1.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .eco-banner {
+                padding: 6rem;
+                flex-direction: row;
+            }
+        }
+
+        .eco-info {
+            flex: 1;
+        }
+
+        .eco-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .eco-info p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .eco-badges {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge .text {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .eco-image-wrapper {
+            width: 100%;
+            max-width: 20rem;
+        }
+
+        .eco-circle {
+            aspect-ratio: 1/1;
+            border-radius: 9999px;
+            overflow: hidden;
+            border: 4px solid rgba(255, 219, 206, 0.2);
+        }
+
+        .eco-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 8rem 0;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 3rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        @media (min-width: 768px) {
+            .cta h2 {
+                font-size: 3.75rem;
+            }
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            color: var(--on-surface-variant);
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        @media (min-width: 640px) {
+            .cta-buttons {
+                flex-direction: row;
+            }
+        }
+
+        .btn-large {
+            padding: 1.25rem 2.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            transition: all 0.2s;
+        }
+
+        .btn-solid {
+            background-color: var(--primary);
+            color: var(--on-primary);
+        }
+
+        .btn-solid:hover {
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .btn-ghost {
+            background-color: var(--surface-container-highest);
+            color: var(--on-surface);
+        }
+
+        .btn-ghost:hover {
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--surface-container-low);
+            padding-top: 4rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .footer-grid {
+            display: grid;
+            gap: 3rem;
+            padding-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .footer-col-brand h5 {
+            font-size: 1.125rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-col-brand p {
+            font-size: 0.875rem;
+            color: #57534e;
+        }
+
+        .footer-links h5 {
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            font-size: 0.875rem;
+            color: #57534e;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #1c1917;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            color: #57534e;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(229, 231, 235, 0.5);
+            padding: 2rem 0;
+        }
+
+        .footer-bottom p {
+            font-size: 0.875rem;
+            color: #78716c;
+        }
+    </style>
+</head>
+<body>
+<!-- TopNavBar -->
+<nav>
+<div class="container nav-content">
+<div class="logo">AJL-handicraft</div>
+<div class="nav-links">
+<a href="#">Pottery</a>
+<a href="#">Textiles</a>
+<a href="#">Woodwork</a>
+<a href="#">Artisans</a>
+<a href="#">Journal</a>
+</div>
+<div class="nav-actions">
+<span class="material-symbols-outlined">search</span>
+<span class="material-symbols-outlined">person</span>
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="hero">
+<div class="hero-bg">
+<img alt="Artisan hands shaping clay on pottery wheel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcweMHSVE3ha-OAgooJgoeVezuG5FA2sAjkDmZ19UzVx9pgiKamJO8OWSAJLoOtWzuZWn3L2dGZgkL5XVoI7N3-qvYBvA-LPrLqKVpHQVBfdWiaIZSGUP1lKckzBFcTVRuOYxchCfQxVeIVfHUS7up3Rs3oNEH7jsH-1PkSHccvNqpCi5BCAPFO3TPLfi6BB1Cpq9yo2vFzfuGMabgHzYhFBajqNBN6628FAyTbb8bpbbv4u26YLLNsLGxmA4ACqGnTXOCpttSii4"/>
+<div class="hero-overlay"></div>
+</div>
+<div class="container">
+<div class="hero-card">
+<h1>Honoring the <br/><span class="italic">Human Touch</span></h1>
+<p>In a world of mass production, we choose the deliberate, the soulful, and the hand-carved.</p>
+</div>
+</div>
+</section>
+<!-- Our Mission -->
+<section class="mission">
+<div class="container mission-grid">
+<div class="mission-text">
+<span class="mission-label">Our Philosophy</span>
+<h2>The beauty of imperfection is where soul resides.</h2>
+<p>
+                        AJL-handicraft was born from a simple observation: the objects that surround us should tell a story. We partner with local master artisans to bring centuries-old techniques into the modern home, ensuring that every piece carries the thumbprint of its maker.
+                    </p>
+<button class="btn-primary">
+                        Our Full Story <span class="material-symbols-outlined">arrow_right_alt</span>
+</button>
+</div>
+<div class="mission-images">
+<div class="main-img-wrapper">
+<img alt="Interior workshop filled with wooden crafts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrx1Oz6ID8fK98a92c6pkQZHuX-pE1c-wQiSAO_AxhfVuD2CPnP4_2ulptitERaoIJNJXfvLQRnrYWbJIX3HstbYy_B-NRRenOshvCW08M30q0zp15g6oXz_kxWv_KU8KzZ4jxI2ZtEC0TtFdChXKTomQBwMu0aBs0KNrCSsfoGUp0Qar4WzwqZxhEfQYABOkxbklJ1HzCZeNYLdH2EQKu2xxqZOCP09uEXtQkuSqijiOOxJM7_z0gi1elZfvmfJcRLcR3BrqYgI0"/>
+</div>
+<div class="floating-img">
+<img alt="Close up of artisan weaving textiles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUCV1ypKklKYqo8WnKvxGrtLXEhE91HrZhjMUV7i-CvM0ijVPcsIqQtnBChE1ljn-NcupXyklOsjlIYwjVlh415af81jo5p6laSmFnscHfogxkMaZ8Q4dR3EhY0RHa_OcvR1M4iHvwI7aI48Wf1AiCFfSJTilS5bwBmVj_cK65AH6zH-seN-jsNBvmzWp9HeZOmKtah_FHl0YS8EWgCbHL_dVS_WQYRSK_TEayKmQtTqNQej0P44Zom3E7MVp_blaOhpx0oYxvV3M"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Artisan Quote -->
+<section class="quote-section">
+<div class="container">
+<div class="quote-card">
+<h3>
+                        "When I work with wood, I'm not just making a chair. I'm listening to the grain and continuing the tree's journey into someone's home. That connection is what mass production can never replicate."
+                    </h3>
+<div class="quote-author">— MASTER WOODWORKER ELIAS</div>
+</div>
+</div>
+</section>
+<!-- Meet the Makers -->
+<section class="makers">
+<div class="container">
+<div class="section-header">
+<h2>Meet the Makers</h2>
+<p>The talented individuals behind every unique piece in our collection.</p>
+</div>
+<div class="makers-grid">
+<div class="maker-card">
+<div class="maker-img">
+<img alt="Portrait of Sarah the weaver" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaYxEC7eLrbNkh7hMroZorB4FKOvBuLNYqJmgjPWiczPqGqInXdQHLULesRJuo_wy1s1j98nbEzp_OYV_RdDxAU9NeI-KAheiLfLKY3SyvxB32Ji2PzhjJTcAQuD8Q3ShAPIUdIuSl90GJFXWIqpNxootPGeXHyL0Dg703Th1Y-Vj5LdbFNS8RRICQaLHc94PNUVx2t55TKqUZ7upjZwDv3M7gBHRrNUoMJdY5xuIaKCrMZyJ5CzCcOI3fmmqevlG39NVGWBW1Gho"/>
+</div>
+<div>
+<h4 class="maker-name">Sarah K.</h4>
+<p class="maker-title">Master Weaver</p>
+<p class="maker-bio">Working with organic linen for over 20 years, Sarah translates landscape palettes into soft textiles.</p>
+</div>
+</div>
+<div class="maker-card asymmetric-down">
+<div class="maker-img">
+<img alt="Portrait of Julian the potter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1lau-JvIAWjcB347_q9QL5mc1cPpRbCSu2FBYKcH3ZHhT-eLfmCLoyh86jIDEF2UyFZi2QgrnUlHlq8C0TaWL4u-MrIBFmI8QgBm25wk711dJ99njhklDMDAtAnM1MX4--U1n0AKwRbJMdjOPSOLfCGCEJ4lBrD4RS_RbDoG85Xk-JTl0_ldvuXu2z8YDnVe3lCa57e7dIupF4uZVr5M9Szu0m360_CFubpuUC7pNVcjGqOR2_Wg1YgF1_PYzHbJJqS-3xzUbjRw"/>
+</div>
+<div>
+<h4 class="maker-name">Julian M.</h4>
+<p class="maker-title">Ceramicist</p>
+<p class="maker-bio">Julian's work focuses on the intersection of ancient clay techniques and minimalist form.</p>
+</div>
+</div>
+<div class="maker-card">
+<div class="maker-img">
+<img alt="Portrait of Thomas the carver" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGn55x-Bc0rIYt8QZmaRQAuT-dZNJcXyWgNdo3dYHx2_tBtJx5ZSddHw85JiWuLh77H6Ri59MZJDOiPkxH_MVFi9pnX7pYLBOSLVf77gt30xPnQm96qS-hLfu-s3ocsp3rzbdlg7m21ITm3Za5eMGLneY3eTKv-gh_GL-vmXZ2-tUpuj8Z9n1lOGmuxbqMuXCA8GLbLtmlh549ZWA6o4Fs_kcrct7wVGnEcpwMqs0ma9F7yiOvqfl9PTBZEvIvb11TGx7bkzGMl6E"/>
+</div>
+<div>
+<h4 class="maker-name">Thomas R.</h4>
+<p class="maker-title">Wood Artisan</p>
+<p class="maker-bio">Specializing in reclaimed oak, Thomas creates furniture meant to last generations.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Process Section -->
+<section class="process">
+<div class="container">
+<h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 4rem;">From Earth to Home</h2>
+<div class="process-steps">
+<div class="step-card">
+<span class="step-num">01</span>
+<div>
+<h5 class="step-title">Sourcing</h5>
+<p class="step-desc">Selecting sustainable, raw materials from local suppliers.</p>
+</div>
+</div>
+<div class="step-card">
+<span class="step-num">02</span>
+<div>
+<h5 class="step-title">Refining</h5>
+<p class="step-desc">Processing raw clay and timber using traditional methods.</p>
+</div>
+</div>
+<div class="step-card">
+<span class="step-num">03</span>
+<div>
+<h5 class="step-title">Creation</h5>
+<p class="step-desc">Days of manual labor to shape, fire, and weave each piece.</p>
+</div>
+</div>
+<div class="step-card">
+<span class="step-num">04</span>
+<div>
+<h5 class="step-title">Curation</h5>
+<p class="step-desc">Final quality checks before packaging in plastic-free wrap.</p>
+</div>
+</div>
+</div>
+<div class="process-gallery">
+<img alt="Clay raw material" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGILmFkn03wH2VaS5QkMSMaRumtZ0H1Zd668ir596KzLm_L1m9z93NSRS3dxDl2yLEJMAZMAk574pLh8gKBIqkymElR7l830MgG75SKCbW_FaSl4DfYQK0kpu48gB6I-4EIZ2AVzc8l_rkDz8aWbtavSqva1Kg3LaTpPZKrx5C7fUQgwm2CPLlNII55pkY5cS5TLgrtVS9MsBucgolvK0YTSd7ChHtzRgw0hDOn30-v7Ykb32lez_7e0LwAsCLO5RLMYiu3ykrWg8"/>
+<img alt="Pottery tools set" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAopDHSclUPRGXWVjwD2zJuvXW8WWD0xwgnEemAOz8EvJrpqvZKif1sYZoyl-dGbFpDVkFsaPfg5rERP3bp2mtgiIxJCjSFaq2Fqk7T8KpAX7RO5F9wughtQiI8kW1Mahww7pX4qx6NEWgQtlF2YMg_QQBzxHB1TtJ1QN2CzVMz5tCUs3aVxlBQxBURTylFMb3UTt76oR15Gvv-P0ZzTGw-6WLLx_SC2BtEZ6HKZ8YZIpz1SiQdtJpKST990ZN_x6FCE7FXqBoyJn4"/>
+<img alt="Weaving loom close-up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCZnvNbxasymL7xk680RriSUoIbH44_HtfJMr6XwgkMDKdFhqff0WZePDvttlpVbCntXIERETx_uN4UasjT8-EhWKGUDCkp3MQFUlRLwxddDlTJMlDy0JP507LcOkk780QZKrkyiKQgx_pu5HJrZvfjRZdttMNjBeAcAKx6vOuXny8jQj3n-5oa-bgyjbZw2uHygQ1eya_XdAf7Dkzaw7A7AQrTPzc7lqzPCZfmj2D_xBbk_yptJ3Hj4lCYTIUwg3o8yqcbD57cAM"/>
+<img alt="Finished product on shelf" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALBxGx3lq5juN5w4INqA06TjebQ4vqz7atCt0IWNKX_BscTYhJ5_gTH09dpwjrndm-eaz57hiGWN4kB52gy8KO4JPiHla8FMqwmR-LuEgpzxCy7Hu9J7OYE_DOR8XX7gTTwM1_rxUyV8U_I60Xe90Ol2uBSIGi3JfRsIaRgkaYnKWKuwi9eDCSjJcK2L0sJIsR48d7cxNjsuFftDA4Ja8WhUELU5f6SSVQZ_hJhxgP9SHqZYG-ZrGfWQh_h47mi6y6ChgsvAhtIx0"/>
+</div>
+</div>
+</section>
+<!-- Sustainability -->
+<section class="eco">
+<div class="container">
+<div class="eco-banner">
+<div class="eco-info">
+<h2>Earth-First Intentions</h2>
+<p>We believe craft shouldn't come at the cost of the environment. 98% of our packaging is biodegradable, and we plant one tree for every wooden piece sold. Our workshop operates on 100% renewable energy.</p>
+<div class="eco-badges">
+<div class="badge">
+<span class="material-symbols-outlined">eco</span>
+<span class="text">Plastic Free</span>
+</div>
+<div class="badge">
+<span class="material-symbols-outlined">forest</span>
+<span class="text">Reforestation</span>
+</div>
+</div>
+</div>
+<div class="eco-image-wrapper">
+<div class="eco-circle">
+<img alt="Sustainable forest management" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDprQCKi0p-mdqo-IlTA_cPkzntuhMBvQtd8zlV-D6hD_sOEvQObNH_sde5OhXR0lhdeEZgyWARA6PFkrQ17i0ICM2X4LeHP1oqpGZ_BEYp2RpL_-NCaoi2V6VbkS3Us6b_eO9EJR2f4GGzloDrK1sHg8aMeFPQJoBSVyYt-Ac28E9qFEqOkTnGyC3zC1yAaafFxDgxsQQxe1KxUWOGEmwp0ZQP5UgMtPNFsR-s1fMChnmuvHphlLr2OzTVuuRoMFdqdzVbwH0778E"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="cta">
+<div class="container cta-content">
+<h2>Ready to find your story?</h2>
+<p>Each handcrafted object is waiting to become a part of your daily ritual.</p>
+<div class="cta-buttons">
+<button class="btn-large btn-solid">Explore Collection</button>
+<button class="btn-large btn-ghost">View Journal</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-col-brand">
+<h5 class="font-serif italic">AJL-handicraft</h5>
+<p>Curating the finest artisanal objects for the intentional home.</p>
+</div>
+<div class="footer-links">
+<h5>Shop</h5>
+<ul>
+<li><a href="#">Pottery</a></li>
+<li><a href="#">Textiles</a></li>
+<li><a href="#">Woodwork</a></li>
+</ul>
+</div>
+<div class="footer-links">
+<h5>Support</h5>
+<ul>
+<li><a href="#">Shipping</a></li>
+<li><a href="#">Returns</a></li>
+<li><a href="#">Contact Us</a></li>
+</ul>
+</div>
+<div class="footer-links">
+<h5>Follow</h5>
+<div class="footer-social">
+<span class="material-symbols-outlined">share</span>
+<span class="material-symbols-outlined">favorite</span>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2024 AJL-handicraft. Crafted with intention.</p>
+</div>
+</div>
+</footer>
+</body></html>
